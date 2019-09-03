@@ -4,7 +4,8 @@
         var route = window.location.href.split("/")[3];
         console.log(route);
         this.pathChange(route);
-        
+
+
     },
     data() {
         return {            

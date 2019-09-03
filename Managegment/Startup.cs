@@ -34,7 +34,7 @@ namespace Managegment
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Models.MailContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mail")));
+            services.AddDbContext<Models.MailSystemContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mail")));
             //services.AddDbContext<Models.AppointmentsContext>(options => options.UseMySQL(Configuration.GetConnectionString("Appointment")));
 
 

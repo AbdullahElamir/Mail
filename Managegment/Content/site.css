@@ -1,19 +1,84 @@
-﻿@import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900";
-@import "css/bootstrap.min.css";
-@import "css/font-awesome.min.css";
-@import "css/owl.carousel.css";
-@import "css/owl.transitions.css";
-@import "css/meanmenu/meanmenu.min.css";
-@import "css/animate.css";
-@import "css/normalize.css";
-
-@import "css/scrollbar/jquery.mCustomScrollbar.min.css";
-@import "css/jvectormap/jquery-jvectormap-2.0.3.css";
-@import "css/notika-custom-icon.css";
-@import "css/wave/waves.min.css";
-
-@import "css/main.css";
-@import "css/style.css";
-@import "css/responsive.css";
+﻿@import "main.css";
+@import "fonts/font-awesome.min.css";
 
 
+
+.el-form-item__content {
+    margin-left: 0px !important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.UploadButton {
+    margin-top: 27px;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+.Color-Code {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 1.6cm;
+    }
+}
+
+@media print {
+    html, body {
+        border: 1px solid white;
+        height: 99%;
+        page-break-after: avoid;
+        page-break-before: avoid;
+    }
+}
+
+@media print {
+    div {
+        page-break-inside: avoid;
+    }
+}
+
+.AddButton {
+    float: right;
+    margin-bottom: 16px;
+}
+
+.el-alert__title {
+    font-size: 32px;
+    line-height: 18px;
+}
+
+.el-alert {
+    height: 92px;
+}
+
+.el-scrollbar__wrap {
+    overflow: no-display;
+}
+
+@font-face {
+    font-family: 'DroidArabicKufiRegular';
+    src: url('fonts/DroidKufi-Regular.eot') format('embedded-opentype'), url('fonts/DroidKufi-Regular.woff') format('woff'), url('fonts/DroidKufi-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'DroidArabicKufiRegular';
+}

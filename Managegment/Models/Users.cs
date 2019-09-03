@@ -25,5 +25,8 @@ namespace Managegment.Models
         public long CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public long? ModifiedBy { get; set; }
+        public long? BranchId { get; set; }
+
+        public Branches Branch { get; set; }
     }
 }

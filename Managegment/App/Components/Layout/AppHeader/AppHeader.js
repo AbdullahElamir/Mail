@@ -6,19 +6,36 @@
     data() {
         return {            
             loginDetails: null,
+            ProfileMenu: 'dropdown-menu settings-menu dropdown-menu-right',
             active:1
         };
     },
   
     methods: {
-        OpenDropDown() {
-            var root = document.getElementById("DropDown");
-            if (root.getAttribute('class') == 'dropdown') {
-                root.setAttribute('class', 'dropdown open');
+        href(path) {
+            if (this.ProfileMenu === 'dropdown-menu settings-menu dropdown-menu-right') {
+                this.ProfileMenu = 'dropdown-menu settings-menu dropdown-menu-right show';
             } else {
-                root.setAttribute('class', 'dropdown');
+                this.ProfileMenu = 'dropdown-menu settings-menu dropdown-menu-right';
             }
+            this.$router.push(path);
+        },
 
+        OpenSubMenu() {
+            if (this.ProfileMenu === 'dropdown-menu settings-menu dropdown-menu-right') {
+                this.ProfileMenu = 'dropdown-menu settings-menu dropdown-menu-right show';
+            } else {
+                this.ProfileMenu = 'dropdown-menu settings-menu dropdown-menu-right';
+            }
+        },
+
+        HideDashboard() {
+            var root = document.getElementById("Body");
+            if (root.getAttribute('class') == 'app sidebar-mini rtl pace-done sidenav-toggled') {
+                root.setAttribute('class', 'app sidebar-mini rtl pace-done');
+            } else {
+                root.setAttribute('class', 'app sidebar-mini rtl pace-done sidenav-toggled');
+            }
         },
 
         // ********************** Template InterActive ***********

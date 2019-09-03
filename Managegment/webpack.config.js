@@ -13,10 +13,10 @@ module.exports = (env) => {
     return [{
         stats: { modules: false },
         entry: {
-            main: ['./App/app.js', './Content/site.css'],   
-            mainApp: ['./Content/js/vendor/jquery-1.12.4.min.js', './Content/js/bootstrap.min.js', './Content/js/wow.min.js',
-                './Content/js/owl.carousel.min.js', './Content/js/jquery.scrollUp.min.js'],   
+            main: ['./App/app.js', './Content/site.css'],
             vueui: [path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css'), path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
+            login: ['./Content/login.css'],
+
             vendor: ['vue', 'vue-router', 'axios']
         },
         output: {
@@ -32,7 +32,7 @@ module.exports = (env) => {
                 'vue$': 'vue/dist/vue.common.js'
             }
         },
-        module: {           
+        module: {
             rules: [
                 {
                     test: /\.vue$/,
@@ -43,7 +43,7 @@ module.exports = (env) => {
                     test: /\.js$/,
                     include: /App/,
                     use: 'babel-loader',
-					exclude: /node_modules/
+                    exclude: /node_modules/
                 },
                 {
                     test: /\.css$/,
@@ -67,7 +67,7 @@ module.exports = (env) => {
                     test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
                     use: {
                         loader: 'file-loader',
-                        options: {                            
+                        options: {
                             name: 'fonts/[name].[ext]?[hash]'
                         }
                     }
@@ -75,10 +75,17 @@ module.exports = (env) => {
             ]
         },
         plugins: [
-           
+
             new webpack.optimize.CommonsChunkPlugin({
                 name: ['vendor', 'manifest'],
                 minChunks: Infinity
+            }),
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jquery: 'jquery',
+                'window.jQuery': 'jquery',
+                jQuery: 'jquery',
+
             }),
             new CopyWebpackPlugin([{ from: 'Content/Images', to: 'img' }])
         ].concat(isDevBuild ? [
@@ -96,7 +103,7 @@ module.exports = (env) => {
                 //}),
                 new webpack.optimize.UglifyJsPlugin(),
                 new ExtractTextPlugin('css/[name].css')
-                
+
                 //new PurifyCSSPlugin({
                 //    paths: glob.sync(path.join(__dirname, 'App/*.html'))
                 //})

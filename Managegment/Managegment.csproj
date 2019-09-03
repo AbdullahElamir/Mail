@@ -29,7 +29,6 @@
     <None Remove="Content\veustyles.less" />
     <None Remove="yarn.lock" />
     <None Remove="package-lock.json" />
-    <Compile Remove="App\Components\Home\NewFolder\**" />
     <Compile Remove="App\Components\Library\CourseChaptersKill\**" />
     <Compile Remove="App\Components\Library\Library\**" />
     <Compile Remove="App\Components\Library\ModuleDetails\**" />
@@ -42,6 +41,7 @@
     <Compile Remove="Content\Quiz\**" />
     <Compile Remove="Content\vuetify\**" />
     <Compile Remove="Modelss\**" />
+    <Compile Remove="Modelsv1\**" />
     <Compile Remove="Uploads\**" />
     <Compile Remove="Views\Game\**" />
 
@@ -49,9 +49,9 @@
     <Content Remove="App\**" />
     <Content Remove="Content\**" />
     <Content Remove="Modelss\**" />
+    <Content Remove="Modelsv1\**" />
     <Content Remove="Uploads\**" />
     <Content Remove="Views\Game\**" />
-    <EmbeddedResource Remove="App\Components\Home\NewFolder\**" />
     <EmbeddedResource Remove="App\Components\Library\CourseChaptersKill\**" />
     <EmbeddedResource Remove="App\Components\Library\Library\**" />
     <EmbeddedResource Remove="App\Components\Library\ModuleDetails\**" />
@@ -64,9 +64,9 @@
     <EmbeddedResource Remove="Content\Quiz\**" />
     <EmbeddedResource Remove="Content\vuetify\**" />
     <EmbeddedResource Remove="Modelss\**" />
+    <EmbeddedResource Remove="Modelsv1\**" />
     <EmbeddedResource Remove="Uploads\**" />
     <EmbeddedResource Remove="Views\Game\**" />
-    <None Remove="App\Components\Home\NewFolder\**" />
     <None Remove="App\Components\Library\CourseChaptersKill\**" />
     <None Remove="App\Components\Library\Library\**" />
     <None Remove="App\Components\Library\ModuleDetails\**" />
@@ -79,6 +79,7 @@
     <None Remove="Content\Quiz\**" />
     <None Remove="Content\vuetify\**" />
     <None Remove="Modelss\**" />
+    <None Remove="Modelsv1\**" />
     <None Remove="Uploads\**" />
     <None Remove="Views\Game\**" />
     <Compile Remove="Controllers\CoursesController.cs" />
