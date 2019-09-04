@@ -5,16 +5,16 @@
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
             <div class="app-sidebar__user">
-                <!--<img class="app-sidebar__user-avatar" :src="'http://localhost:8080/Admin/'+loginDetails.adminId+'/GetUserImage'" alt="User Image" style="width: 60px;">-->
                 <div>
-                    <p class="app-sidebar__user-name">{{loginDetails.fullName.slice(0,20)}}</p>
-                    <p class="app-sidebar__user-designation" v-if="loginDetails.userType==1">System Administrator</p>
-                    <p class="app-sidebar__user-designation" v-if="loginDetails.userType==2">Doctor</p>
-                    <p class="app-sidebar__user-designation" v-if="loginDetails.userType==3">Nurse</p>
+                    <p class="app-sidebar__user-name">Marwa</p>
+                    <p class="app-sidebar__user-designation">System Administrator</p>
+                    <!-- <p class="app-sidebar__user-designation" v-if="loginDetails.userType==2">Doctor</p>
+     <p class="app-sidebar__user-designation" v-if="loginDetails.userType==3">Nurse</p>-->
                 </div>
             </div>
             <ul class="app-menu">
-                <li><a class="app-menu__item active" href="#" @click.prevent="href('/')"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+                <li><a class="app-menu__item active" href="#" @click.prevent="href('/')">
+                    <i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
                 <li class="treeview">
                     <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-location-arrow"></i><span class="app-menu__label">Settings</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">

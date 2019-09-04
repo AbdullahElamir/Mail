@@ -14,6 +14,7 @@
     "jquery": "^3.4.1",
     "moment": "^2.15.2",
     "normalize.css": "^7.0.0",
+    "rtlcss": "^2.4.0",
     "rtlcss-loader": "^1.0.2",
     "sweetalert": "2.1.0",
     "vue": "^2.5.16",
