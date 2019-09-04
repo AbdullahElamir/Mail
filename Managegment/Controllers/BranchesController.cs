@@ -98,20 +98,23 @@ namespace Management.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult AddCountry([FromBody] Branches Branch)
+        public IActionResult AddBranches([FromBody] Branches Branch)
         {
             try
             {
                 if (Branch == null)
                 {
-                    return BadRequest("Error sending data please re-enter");
+                    return BadRequest("حذث خطأ في ارسال البيانات الرجاء إعادة الادخال");
+          
                 }
 
                 var userId = this.help.GetCurrentUser(HttpContext);
 
                 if (userId <= 0)
                 {
-                    return StatusCode(401, "Please make sure you are logged-in");
+
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
+            
                 }
 
                 Branch.CreatedBy = userId;
@@ -119,8 +122,8 @@ namespace Management.Controllers
                 Branch.Status = 1;
                 db.Branches.Add(Branch);
                 db.SaveChanges();
-
-                return Ok("Branch saved successfully");
+                return Ok("لقد قمت بتسـجيل الاداره بنــجاح");
+         
             }
             catch (Exception e)
             {
@@ -130,7 +133,7 @@ namespace Management.Controllers
 
 
         [HttpPost("Edit")]
-        public IActionResult EditBranch([FromBody] Branches Branch)
+        public IActionResult EditBranches([FromBody] Branches Branch)
         {
             try
             {
@@ -138,7 +141,7 @@ namespace Management.Controllers
 
                 if (userId <= 0)
                 {
-                    return StatusCode(401, "Please make sure you are logged-in");
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
 
                 var Branches = (from p in db.Branches
@@ -148,7 +151,8 @@ namespace Management.Controllers
 
                 if (Branches == null)
                 {
-                    return BadRequest("ERROR: The Branches does not exist");
+                    return BadRequest("حذث خطأ في ارسال البيانات الرجاء إعادة الادخال");
+
                 }
 
                 Branches.Name =  Branch.Name;
@@ -157,7 +161,7 @@ namespace Management.Controllers
                 Branches.ModifiedBy = userId;
                 Branches.ModifiedOn = DateTime.Now;
                 db.SaveChanges();
-                return Ok("Branch data has been successfully modified");
+                return Ok("تم تعديل بيانات الاداره بنجاح");
             }
             catch (Exception e)
             {

@@ -10,8 +10,8 @@
             pages: 0,
             form: {
                 Name: '',
-                Description: '',
-                ContinentId:''
+                Description: ''
+            
             },
           
          
@@ -26,24 +26,24 @@
             if (!this.form.Name) {
                 this.$message({
                     type: 'error',
-                    message: 'Please Enter Country in Arabic'
+                    message: 'الرجاء ادخال اسم المكتب'
                 });
                 return;
             }
 
-            if (!this.form.NameEng) {
+            if (!this.form.Description) {
                 this.$message({
                     type: 'error',
-                    message: 'Please Enter Country in English'
+                    message: 'الرجاء ادخال تفاصيل'
                 });
                 return;
             }
-            this.form.ContinentId = this.$parent.ContinentId;
+       
 
-            this.$http.AddCountries(this.form)
+            this.$http.AddBranches(this.form)
                 .then(response => {
                     this.$parent.state = 0;
-                    this.$parent.GetCountries(this.pageNo);
+                    this.$parent.GetBranches(this.pageNo);
                     this.$message({
                         type: 'info',
                         message: response.data
