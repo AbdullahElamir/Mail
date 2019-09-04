@@ -1,10 +1,17 @@
-﻿@import "main.css";
+@import "assets/css/bootstrap.min.rtl.css";
+@import "assets/css/animate.min.css";
+@import "assets/css/light-bootstrap-dashboard.rtl.css";
+@import "assets/css/demo.rtl.css";
+@import "fonts/font-awesome.min.css";
+@import "assets/css/pe-icon-7-stroke.css";
+/*@import "csselement.css";*/
+@import "main.css";
 @import "fonts/font-awesome.min.css";
 
 
 
 .el-form-item__content {
-    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
 input[type="file"] {
@@ -55,7 +62,7 @@ input[type="file"] {
 }
 
 .AddButton {
-    float: right;
+    float: left;
     margin-bottom: 16px;
 }
 
