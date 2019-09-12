@@ -11,13 +11,14 @@ export default {
        
     },
     created() {
+     
         this.$blockUI.$loading = this.$loading;
-        var loginDetails = localStorage.getItem('currentUser');
+        var loginDetails = sessionStorage.getItem('currentUser');
         this.loginDetails = JSON.parse(loginDetails);
         if (loginDetails != null) {
             this.loginDetails = JSON.parse(loginDetails);
         } else {
-            window.location.href = '/Admin/Login';
+            window.location.href = '/Security/Login';
         }
 
         $(document).ready(function ($) {
