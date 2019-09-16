@@ -3,12 +3,11 @@
     created() {
         this.returnurl = location.pathname;
         this.SetRules();
-      
+
 
     },
     data() {
         return {
-            ForgetPassword:false,
             returnurl: '',
             form: {
                 Password: null,
@@ -22,7 +21,7 @@
             warning: { confirmButtonText: 'OK', type: 'warning', dangerouslyUseHTMLString: true, center: true },
             rules: {},
             forgetPassowrd: false,
-            
+
 
 
         };
@@ -32,56 +31,32 @@
         //    this.$emit('authenticated');
         //},
 
-                 Send(form) {
-
-            let $blockUI = this.$loading({
-                fullscreen: true,
-                text: 'loading ...'
-            });
-            this.$http.ResetPassword(this.form2.Email.trim())
-                .then(response => {
-                    $blockUI.close();       
-                    this.form2.Email = null;
-                    this.forgetPassowrd = false;
-                    this.$alert('<h4>' + response.data + '</h4>', '', this.success);
-                })
-                .catch((error) => {
-                    $blockUI.close();       
-
-                    if (error.response.status == 400) {
-                        this.$alert('<h4>' + error.response.data + '</h4>', '', this.warning);
-                    } else if (error.response.status == 404) {
-                        this.$alert('<h4>' + error.response.data + '</h4>', '', this.error);
-                    } else {
-                        console.log(error.response);
-                    }
+        login() {
+            if (!this.form.Email) {
+                this.$message({
+                    type: 'error',
+                    message: 'الرجاء إدخال لبريد الإلكتروني'
                 });
-        
+                return;
+            }
+            if (!this.form.Password) {
+                this.$message({
+                    type: 'error',
+                    message: 'الرجاء إدخال الرقم السري'
+                });
+                return;
+            }
 
-        },
-
-        Save() {
-            console.log(this.form)
             let $blockUI = this.$loading({
                 fullscreen: true,
                 text: 'loading ...'
             });
             this.$http.loginUserAccount(this.form)
                 .then(response => {
-                    $blockUI.close();       
+                    $blockUI.close();
+                    debugger;
                     sessionStorage.setItem('currentUser', JSON.stringify(response.data));
-                    //if (response.data.userType == 1) {
-                    //    window.location.href = '/Branches';
-                    //}    
-                    //else if (response.data.userType == 2) {                    
-                    //    window.location.href = '/Branches';
-                    //}
-                  
-                    // else {
-                    //    window.location.href = '/';                  
-                    //}
-                   
-                   
+                    window.location.href = '/';
                 })
                 .catch((error) => {
                     $blockUI.close()
@@ -105,23 +80,23 @@
                         text: 'loading ...'
                     });
                     this.$http.ResetPassword(this.form2.Email.trim())
-                    .then(response => {
-                        $blockUI.close()                        
-                        this.form2.Email = null;
-                        this.forgetPassowrd = false;
-                        this.$alert('<h4>' + response.data + '</h4>', '', this.success);
-                    })
-                    .catch((error) => {
-                        $blockUI.close()                        
+                        .then(response => {
+                            $blockUI.close()
+                            this.form2.Email = null;
+                            this.forgetPassowrd = false;
+                            this.$alert('<h4>' + response.data + '</h4>', '', this.success);
+                        })
+                        .catch((error) => {
+                            $blockUI.close()
 
-                        if (error.response.status == 400) {
-                            this.$alert('<h4>' + error.response.data + '</h4>', '', this.warning);
-                        } else if (error.response.status == 404) {
-                            this.$alert('<h4>' + error.response.data + '</h4>', '', this.error);
-                        } else {
-                            console.log(error.response);
-                        }
-                    });
+                            if (error.response.status == 400) {
+                                this.$alert('<h4>' + error.response.data + '</h4>', '', this.warning);
+                            } else if (error.response.status == 404) {
+                                this.$alert('<h4>' + error.response.data + '</h4>', '', this.error);
+                            } else {
+                                console.log(error.response);
+                            }
+                        });
                 } else {
                     console.log("form not complete");
                     return false;

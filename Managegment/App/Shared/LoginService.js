@@ -2,7 +2,7 @@
 
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-//const baseUrl = 'https://localhost:44393/api';
+
 
 
 export default {

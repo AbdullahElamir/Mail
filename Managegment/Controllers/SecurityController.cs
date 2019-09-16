@@ -78,7 +78,7 @@ namespace Management.Controllers
             return View();
         }
 
-  
+
         public class user
         {
             public string Email { get; set; }
@@ -136,24 +136,28 @@ namespace Management.Controllers
                 }
                 if (cUser.Status == 2)
                 {
-                    if (cUser.LoginTryAttemptDate != null) { 
-                    DateTime dt = cUser.LoginTryAttemptDate.Value;
-                    double minuts = 30;
-                    dt = dt.AddMinutes(minuts);
-                    if(dt >= DateTime.Now) { 
-                    return BadRequest("لايمكنك الدخول للنظام: تم ايقافك");}
-                    else
+                    if (cUser.LoginTryAttemptDate != null)
                     {
-                        cUser.Status = 1;
-                    
-                    db.SaveChanges();
-                }}
+                        DateTime dt = cUser.LoginTryAttemptDate.Value;
+                        double minuts = 30;
+                        dt = dt.AddMinutes(minuts);
+                        if (dt >= DateTime.Now)
+                        {
+                            return BadRequest("لايمكنك الدخول للنظام: تم ايقافك");
+                        }
+                        else
+                        {
+                            cUser.Status = 1;
+
+                            db.SaveChanges();
+                        }
+                    }
                     else { return BadRequest("لايمكنك الدخول للنظام: تم ايقافك"); }
                 }
 
                 if (!Security.VerifyHash(loginUser.Password, cUser.Password, HashAlgorithms.SHA512))
                 {
-                   
+
                     cUser.LoginTryAttempts++;
                     if (cUser.LoginTryAttempts >= 5 && cUser.Status == 1)
                     {
@@ -173,14 +177,14 @@ namespace Management.Controllers
                 cUser.LastLoginOn = DateTime.Now;
                 db.SaveChanges();
                 long branchId = -1;
-               // int branchType = -1;
+                // int branchType = -1;
                 string brancheName = "";
-               
+
                 if (cUser.UserType == 1)
                 {
                     var Branche = (from p in db.Branches
-                                  where (p.BranchId == cUser.BranchId) && p.Status != 9
-                                  select p).SingleOrDefault();
+                                   where (p.BranchId == cUser.BranchId) && p.Status != 9
+                                   select p).SingleOrDefault();
 
                     if (Branche == null)
                     {
@@ -192,27 +196,27 @@ namespace Management.Controllers
                     }
                     branchId = (long)cUser.BranchId;
                     brancheName = cUser.Branch.Name;
-                   // branchType = (int)cUser.Office.OfficeType;
-                 
-               //     if (officeType==1)
-               //     {
-               //          issusId = db.Offices.AsEnumerable().Where(x => x.OfficeIndexId == officeId)
-               //.Select(r => (long?)r.OfficeId)
-               //.ToArray();
+                    // branchType = (int)cUser.Office.OfficeType;
 
-               //          CivilId = db.Offices.AsEnumerable().Where(x => issusId.ToList().Contains(x.OfficeIndexId))
-               //     .Select(r => (long?)r.OldOfficeId)
-               //     .ToArray();
-               //     } else if(officeType == 2)
-               //     {
-               //          CivilId = db.Offices.AsEnumerable().Where(x => x.OfficeIndexId == officeId)
-               //    .Select(r => (long?)r.OldOfficeId).ToArray();
+                    //     if (officeType==1)
+                    //     {
+                    //          issusId = db.Offices.AsEnumerable().Where(x => x.OfficeIndexId == officeId)
+                    //.Select(r => (long?)r.OfficeId)
+                    //.ToArray();
 
-               //     }
-               //     else {
-               //         CivilId = db.Offices.AsEnumerable().Where(x => x.OfficeId == officeId)
-               // .Select(r => (long?)r.OldOfficeId).ToArray();
-               //     }
+                    //          CivilId = db.Offices.AsEnumerable().Where(x => issusId.ToList().Contains(x.OfficeIndexId))
+                    //     .Select(r => (long?)r.OldOfficeId)
+                    //     .ToArray();
+                    //     } else if(officeType == 2)
+                    //     {
+                    //          CivilId = db.Offices.AsEnumerable().Where(x => x.OfficeIndexId == officeId)
+                    //    .Select(r => (long?)r.OldOfficeId).ToArray();
+
+                    //     }
+                    //     else {
+                    //         CivilId = db.Offices.AsEnumerable().Where(x => x.OfficeId == officeId)
+                    // .Select(r => (long?)r.OldOfficeId).ToArray();
+                    //     }
 
 
                 }
@@ -230,7 +234,7 @@ namespace Management.Controllers
                     //cUser.Office.OfficeName,
                     Gender = cUser.Gender,
                     Status = cUser.Status,
-                    Phone=cUser.Phone
+                    Phone = cUser.Phone
                     //OfficeStatus=cUser.Office.Status        
                 };
 
@@ -385,12 +389,12 @@ namespace Management.Controllers
 
                 if (user == null)
                 {
-                     return NotFound("البريد الإلكتروني غير مسجل بالنظـام !");
+                    return NotFound("البريد الإلكتروني غير مسجل بالنظـام !");
                 }
 
                 if (user.Status == 0)
                 {
-                     return BadRequest("تم إيقاف هذا المستخدم من النظام !");
+                    return BadRequest("تم إيقاف هذا المستخدم من النظام !");
                 }
 
 
@@ -413,7 +417,7 @@ namespace Management.Controllers
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential("noreply@cra.gov.ly", "Qwerty@!@#123"),
                     Port = Int32.Parse(Configuration.GetSection("Links")["SMTPPORT"]),
-                    EnableSsl = Configuration.GetSection("Links")["SMTSSL"] =="1"
+                    EnableSsl = Configuration.GetSection("Links")["SMTSSL"] == "1"
                 };
                 smtp.Send(mail);
                 //Task.Factory.StartNew(() => smtp.Send(mail));
@@ -437,8 +441,9 @@ namespace Management.Controllers
         [AllowAnonymous]
         [HttpPost("Security/ActivateUser")]
         public IActionResult ActivateUser([FromBody] UserActivation userActivate)
-        {  
-           try {
+        {
+            try
+            {
                 if (!Security.VerifyHash(userActivate.confirm.ToString() + "@cra.gov.ly", Security.DecryptBase64(userActivate.account), HashAlgorithms.SHA512))
                 {
                     return BadRequest("الرابط غير مفعل");
@@ -491,7 +496,7 @@ namespace Management.Controllers
                         return StatusCode(500, null);
 
                     }
-                }    
+                }
             }
             catch (Exception)
             {

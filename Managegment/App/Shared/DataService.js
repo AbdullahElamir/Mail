@@ -66,23 +66,16 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.post(`/Api/Admin/Branches/Edit`, Branch);
     },
-    //GetCompanies_v1(pageNo, pageSize) {
-    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-    //    return axios.get(baseUrl + `/Admin/Companies/GetCompanies?pageno=${pageNo}&pagesize=${pageSize}`);
-    //},
-    //DeleteCompany(CompanyId) {
-    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-    //    return axios.post(baseUrl + `/admin/Companies/${CompanyId}/delete`);
-    //},
-    //AddCompany(Company) {
-    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-    //    return axios.post(baseUrl + `/admin/Companies/Add`, Company);
-    //},
-    //EditCompany(Company) {
-    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-    //    return axios.post(baseUrl + `/admin/Companies/Edit`, Company);
-    //},
+    AddBranches(Branch) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post( `/Api/Admin/Branches/Add`, Branch);
+    },
 
+    EditBranches(Branch) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post(`/Api/Admin/Branches/Edit`, Branch);
+    },
+ 
 
 
 

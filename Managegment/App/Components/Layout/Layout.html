@@ -4,12 +4,12 @@
     <div>
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-            <div class="app-sidebar__user">
-                <div>
-                    <p class="app-sidebar__user-name">Marwa</p>
-                    <p class="app-sidebar__user-designation">System Administrator</p>
-                    <!-- <p class="app-sidebar__user-designation" v-if="loginDetails.userType==2">Doctor</p>
-     <p class="app-sidebar__user-designation" v-if="loginDetails.userType==3">Nurse</p>-->
+            <div class="app-sidebar__user" align="center">
+                <div >
+                    <p class="app-sidebar__user-name"  >{{loginDetails.fullName.slice(0,20)}}</p>
+                    <!--<p class="app-sidebar__user-designation">System Administrator</p>-->
+                     <p class="app-sidebar__user-designation" v-if="loginDetails.userType==1">مدير النظام</p>
+     <p class="app-sidebar__user-designation" v-if="loginDetails.userType==2">موظف</p>
                 </div>
             </div>
             <ul class="app-menu">

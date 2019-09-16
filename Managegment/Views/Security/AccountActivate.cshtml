@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Appointment - Generate Password</title>
+    <title>مصلحة الاحوال المدنية - اعادة ضبط الرقم السري</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
@@ -267,7 +267,7 @@ iframe {
                         <form class="login100-form validate-form">
                             <span class="login100-form-title p-b-48">
                                 <i class="zmdi zmdi-font">
-                                    <img class="images img-rsp" border="0" width="198" height="56" src="/img/logo.jpg">
+                                    <img class="images img-rsp" border="0" style="height:150px;width:150px" src="~/img/clogo.jpg">
                                 </i>
                             </span>
                             <br><br>
@@ -297,7 +297,7 @@ iframe {
                             <div class="text-center p-t-115">
                                 <center>
                                     <span class="txt1">
-                                        Act-Libya - Citizenship Matters System
+                                        CRA - Civil Registry Authority
                                     </span>
                                 </center>
                             </div>
@@ -366,7 +366,7 @@ iframe {
 
                         this.ShowLoading = true;
 
-                        axios.post(baseUrl + `/api/security/ActivateUser/`, this.activate)
+                        axios.post(`/Security/ActivateUser/`, this.activate)
                             .then(function (response) {
                                 this.ShowLoading = false;
                                 swal({
