@@ -20,332 +20,188 @@
     <div class="row" v-if="state==0">
         <div class="col-md-12">
             <div class="tile">
-
-
                 <div class="tile-body">
                     <div class="AddButton">
-                        <el-button class="btn btn-primary" type="primary"
-                                   @click.prevent="AddUser()">إضافة مستخدم</el-button>
+                        <el-button type="primary"
+                                   class="btn btn-primary" @click.prevent="AddUser()">إضافة مستخدم </el-button>
                     </div>
 
-
-                    <div class="headerCustom">
-                        <div>
-
-                            <div class="selectCompany">
-
-                                <el-select class="SelectUser"
-                                           v-model="PermissionModale"
-                                           @change="SelectedPermissionFun()"
-                                           filterable placeholder="الصلاحية">
-                                    <el-option v-for="item in Permissions"
-                                               :key="item.id"
-                                               :label="item.name"
-                                               :value="item.id">
-                                    </el-option>
-                                </el-select>
-
-
-                                <el-input class="SelectUser" placeholder="الرقم الوطني"
-                                          v-model="NID" v-if="(PermissionModale==1 || PermissionModale==2 || PermissionModale==4 || PermissionModale==5|| Office!=0)&& loginDetails.userType==1"></el-input>
-                            </div>
-                        </div>
-                        <p class="category"></p>
+                    <div class="selectCompany">
+                        <el-select class="SelectUser" v-model="UserType" @change="SelectUserType()" filterable placeholder="الصلاحية">
+                            <el-option v-for="item in [{ id: '0',name: 'الكل'},{id:1,name:'مدير النظام'},{id:2,name:'موظف'}]"
+                                       :key="item.id"
+                                       :label="item.name"
+                                       :value="item.id">
+                            </el-option>
+                        </el-select>
                     </div>
-                    <div style="width:auto">
-                        <!--view companet-->
-                        <div style="padding: 35px;font-size: 35px;" v-if="Users==0">
-                            <el-alert title="عفــوا! لاتوجد بيانات للمستخدمين"
-                                      type="info">
-                            </el-alert>
-                        </div>
-                        <br />
-
-
-                        <div class="content table-responsive table-full-width" v-if="Users!=0">
-                            <table class="table table-hover table-striped">
-                                <tbody style="text-align:center">
-                                    <tr>
-                                        <th>
-                                            الاسم
-                                        </th>
-                                        <!--<th>
-                                            الايميل
-                                        </th>-->
-                                        <th>
-                                            اسم المستخدم
-                                        </th>
-                                        <th>
-                                            الصلاحية
-                                        </th>
-                                        <th>
-                                            المكتب
-                                        </th>
-                                        <th>
-                                            صورة
-                                        </th>
-                                        <th v-if="loginDetails.userType==1">
-                                            الإضافة بواسطة
-                                        </th>
-                                        <th v-if="loginDetails.userType==1">
-                                            التعديل بواسطة
-                                        </th>
-                                        <th>
-                                            العمليات
-                                        </th>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr v-for="User in Users" style="font-size:16px;text-align:center;">
-                                        <td>{{User.fullName}}</td>
-                                        <!--<td dir="ltr">{{User.email}}</td>-->
-                                        <td dir="ltr">{{User.loginName}}</td>
-                                        <td v-if="User.userType==1">seالمدير</td>
-                                        <td v-if="User.userType==2">الشـهائد العام</td>
-                                        <td v-if="User.userType==3">
-                                            <span v-if="User.officeType==1">
-                                                إدارة الفروع
-                                            </span>
-                                            <span v-if="User.officeType==2">
-                                                مكتب الإصدار
-                                            </span>
-                                            <span v-if="User.officeType==3">
-                                                مكتب التوثيق
-                                            </span>
-                                            <span v-if="User.officeType==4">
-                                                مكتب السجلات
-                                            </span>
-                                        </td>
-                                        <td v-if="User.userType==5">إيقاف متوفي<span v-if="User.hospital!=null">  ({{User.hospital.name}}) </span></td>
-                                        <td v-if="User.userType==3">{{User.officeName}}</td>
-                                        <td v-if="User.userType==4">البحث العام</td>
-                                        <td v-if="User.userType!=3">لايوجد</td>
-
-                                        <td><a :href="'http://localhost:443/Api/Admin/User/' + User.userId + '/image'"><img :src="'http://localhost:443/Api/Admin/User/' + User.userId + '/image'" style="height: 80px; width:80px" /></a></td>
-                                        <td>
-                                            <span v-if="(User.userName=='' || User.userName==null) && loginDetails.userType==1">
-                                                لايوجد
-                                            </span>
-                                            <span v-if="(User.userName!='' && User.userName!=null) && loginDetails.userType==1">
-                                                {{User.userName}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span v-if="(User.modifiedBy=='' || User.modifiedBy==null)  && loginDetails.userType==1">
-                                                لايوجد
-                                            </span>
-                                            <span v-if="(User.modifiedBy!='' && User.modifiedBy!=null) && loginDetails.userType==1">
-                                                {{User.modifiedBy}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <a href="#" @click.prevent="EditUser(User)" v-if="loginDetails.userType==1">
-                                                <i class="fa fa-pencil-square-o" title="تعديل"></i>&nbsp;
-                                            </a>
-                                            <a href="#" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
-                                                <i class="fa fa-lock" title="ايقاف"></i>
-                                            </a>
-                                            <a href="#" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
-                                                <i class="fa fa-unlock" title="تفعيل"></i>
-                                            </a>
-
-
-                                            <el-button v-if="loginDetails.userType==1" type="text" @click.prevent="dialogForm =true;changePassword(User.userId)"> <i class="fa fa-user" title="تعيين كلمة المرور"></i>&nbsp;</el-button>
-
-                                            <el-button v-if="loginDetails.userType==1" type="text" @click.prevent="dialogTableVisible =true;print(User)"> <i class="fa fa-print" data-text="show" title="طباعة"></i>&nbsp;</el-button>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="text-align: center; margin-top: 10px;">
-                                <el-pagination background
-                                               layout="prev, pager, next"
-                                               :current-page="pageNo"
-                                               :page-size="pageSize"
-                                               :total="pages"
-                                               @current-change="GetUsers($event)">
-                                </el-pagination>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
 
                 </div>
+                <p class="category"></p>
             </div>
-        </div>
-    </div>
-    <el-dialog dir="rtl" :visible.sync="dialogForm"
-               :modalAppendToBody="false" center>
 
-        <div class="container-fluid" dir="rtl">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
 
-                        <div class="card-header card-header-primary card-header-icon">
-                            <div class="card-icon">
-                                <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
+            <div style="padding-left:22px">
+
+                <!--view companet-->
+                <div style="padding: 35px;font-size: 35px;" v-if="Users==0">
+                    <el-alert title="عفــوا! لاتوجد بيانات للمستخدمين"
+                              type="info">
+                    </el-alert>
+                </div>
+                <br />
+
+
+                <main :style="{ background: back }">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6" v-for="User in Users" v-if="Users!=0">
+                            <div class="card">
+
+                                <img class="avatar1" :src="'http://localhost:4810/Users/GetUserImage?userId='+User.userId+''"
+                                     style="height: 80px; width:80px" />
+
+
+                                <div class="infos">
+                                    <div class="name capitalize">
+                                        {{User.fullName}}
+                                    </div>
+                                    <div class="email">
+                                        {{User.email}}
+                                    </div>
+                                    <div class="birth">
+                                        {{User.loginName}}
+                                    </div>
+                                    <div class="email">
+                                        {{User.dateOfBirth | moment}}
+                                    </div>
+                                    <div v-if="User.userType==1" class="phone">
+                                        المدير
+
+                                    </div>
+                                    <div v-if="User.userType==2" class="nationality capitalize">
+                                        موظف
+                                    </div>
+                                </div>
 
                             </div>
 
-                            <div class="card-title" style="font-size:18px;font-weight:bold" dir="rtl">تعيين كلمة المرور</div>
-
-                        </div>
-
-                        <div class="content" style="color:black!important" dir="rtl">
-                            <form>
+                            <div class="refresh">
 
 
+                                <i class="fas fa-user-edit" data-text="تعديل" @click.prevent="EditUser(User)"></i>&nbsp;
 
 
-                                <div class="row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <label>كلمة المرور الجديده</label>
-                                            <input v-model="form2.NewPassword" type="password" class="form-control" placeholder="كلمة المرور الجديده">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <label>تأكيد كلمة المرور</label>
-                                            <input v-model="ConfimPassword" type="password" class="form-control" placeholder="تأكيد كلمة المرور">
-                                        </div>
-                                    </div>
-                                </div>
+                                <i class="fa fa-lock" data-text="ايقاف" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
+
+                                </i>
+                                <i class="fa fa-unlock" data-text="تفعيل" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
+
+                                </i>
 
 
 
-                                <div class="row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="submit" @click.prevent="update()" class="el-button btn btn-rose pull-right el-button--primary">حفظ</button>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <el-button type="danger" @click="dialogForm= false;" class=" btn btn-white">رجوع</el-button>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </form>
+
+                            </div>
                         </div>
                     </div>
+                </main>
+
+                <div style="direction:rtl;text-align: center; margin-top: 10px;">
+                    <el-pagination background
+                                   layout="prev, pager, next"
+                                   :current-page="pageNo"
+                                   :page-size="pageSize"
+                                   :total="pages"
+                                   @current-change="GetUsers($event)">
+                    </el-pagination>
+
                 </div>
+
             </div>
-        </div>
+            <div style="width:auto">
 
-    </el-dialog>
+             
+                <div class="content table-responsive table-full-width" v-if="Users!=0">
+                    <table class="table table-hover table-striped">
+                        <tbody style="text-align:center">
+                            <tr class="TableHeaderBackground">
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        الاسم
+                                    </span>
+                                </td>
 
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        اسم المستخدم
+                                    </span>
+                                </td>
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        تاريخ الميلاد
+                                    </span>
+                                </td>
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        الصلاحية
+                                    </span>
+                                </td>
 
-    <el-dialog dir="rtl" :visible.sync="dialogFormVisible"
-               :modalAppendToBody="false" center>
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        صورة
+                                    </span>
+                                </td>
+                                <td>
+                                    <span style="font-size:14px;font-weight:bold">
+                                        العمليات
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr v-for="User in Users" style="font-size:14px;text-align:center;">
+                                <td>{{User.fullName}}</td>
+                                <td dir="ltr">{{User.loginName}}</td>
+                                <td dir="ltr">{{User.dateOfBirth | moment}}</td>
 
-        <div class="container-fluid" dir="rtl">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
+                                <td v-if="User.userType==1">المدير</td>
+                                <td v-if="User.userType==2">موظف</td>
 
-                        <div class="card-header card-header-primary card-header-icon">
-                            <div class="card-icon">
-                                <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
-
-                            </div>
-
-                            <div class="card-title" style="font-size:18px;font-weight:bold" dir="rtl">بيانات نموذج الطباعه </div>
-
-                        </div>
-
-                        <div class="content" style="color:black!important" dir="rtl">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>الاسم المسلم</label>
-                                            <input type="text" class="form-control" placeholder="الاسم المسلم" v-model="form.SenderName">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>الصفه المسلم</label>
-                                            <input type="text" class="form-control" placeholder="الصفه المسلم" v-model="form.Sender">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>اسم المستلم</label>
-                                            <input type="text" v-model="form.RecipientName" class="form-control" placeholder="اسم المستلم">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>صفه المستلم</label>
-                                            <div class="block">
-                                                <input type="text" v-model="form.Recipient"
-                                                       class="form-control"
-                                                       placeholder="صفه المستلم">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                <td><img :src="'http://localhost:4810/Users/GetUserImage?userId='+User.userId+''" style="height: 80px; width:80px" /></td>
+                                <td>
 
 
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">اسم  المعتمد</label>
-                                            <input v-model="form.AuthorizerName" type="text" class="form-control" placeholder="اسم المعتمد">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>الصفه</label>
-                                            <input v-model="form.Authorizer" type="text" class="form-control" placeholder="صفه المعتمد">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="form-group" style="    margin-right: 96px;">
-                                            <label>كلمة المرور</label>
-                                            <input v-model="Password" type="text" class="form-control" placeholder="كلمة المرور">
-                                        </div>
-                                    </div>
-
-                                </div>
+                                    <a href="#" @click.prevent="EditUser(User)">
+                                        <i class="far fa-edit"></i>&nbsp;
+                                    </a>
+                                    <a href="#" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
+                                        <i class="fa fa-lock" title="ايقاف"></i>
+                                    </a>
+                                    <a href="#" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
+                                        <i class="fa fa-unlock" title="تفعيل"></i>
+                                    </a>
 
 
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="submit" @click.prevent="Save()" class="btn btn-white">طباعة</button>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <el-button type="danger" @click="dialogFormVisible= false;" class="el-button btn btn-rose pull-right el-button--primary">رجوع</el-button>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <el-pagination background
+                                       layout="prev, pager, next"
+                                       :current-page="pageNo"
+                                       :page-size="pageSize"
+                                       :total="pages"
+                                       @current-change="GetUsers($event)">
+                        </el-pagination>
                     </div>
                 </div>
+
+
             </div>
+
+
         </div>
-
-    </el-dialog>
-
+        </div>
 </main>
