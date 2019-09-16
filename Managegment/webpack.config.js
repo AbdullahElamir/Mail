@@ -14,8 +14,8 @@ module.exports = (env) => {
         stats: { modules: false },
         entry: {
             main: ['./App/app.js', './Content/site.css'],
+            login: ['./App/login.js', './Content/login.css'],
             vueui: [path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css'), path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
-            login: ['./Content/login.css'],
 
             vendor: ['vue', 'vue-router', 'axios']
         },

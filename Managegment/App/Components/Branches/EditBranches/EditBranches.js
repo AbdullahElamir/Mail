@@ -2,10 +2,10 @@
     name: 'EditBranches',    
     created() {
        
-        var country = this.$parent.CountryEditObject;
-        this.form.Name = country.name;
-        this.form.NameEng = country.nameEng;
-        this.form.Description = country.description;
+        var branch = this.$parent.branchEditObject;
+        this.form.Name = branch.name;
+        this.form.BranchId = branch.branchId;
+        this.form.Description = branch.description;
        
     },
     data() {
@@ -15,8 +15,8 @@
             pages: 0,
             form: {
                 Name: '',
-                Description: '',
-                ContinentId: ''   
+                Description: '' , 
+                BranchId: ''  
             },     
         };
     },
@@ -29,24 +29,25 @@
             if (!this.form.Name) {
                 this.$message({
                     type: 'error',
-                    message: 'Please enter country name in arabic'
+                    message: 'الرجاء ادخال اداره الفروع'
                 });
                 return;
             }
 
-            if (!this.form.NameEng) {
+            if (!this.form.Description) {
                 this.$message({
                     type: 'error',
-                    message: 'Please enter country name in english'
+                    message: 'الرجاء إدخال المعلومات عن اداره الفروع '
                 });
                 return;
             }
-            this.form.ContinentId = this.$parent.ContinentId;
 
-            this.$http.EditCountry(this.form)
+
+            this.$http.EditBranches(this.form)
                 .then(response => {
                     this.$parent.state = 0;
-                    this.$parent.GetCoursesBySuperPackageId();
+                    this.$parent.GetBranches(this.pageNo);
+                 
                     this.$message({
                         type: 'info',
                         message: response.data

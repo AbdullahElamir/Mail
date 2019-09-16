@@ -86,7 +86,6 @@
     <Compile Remove="Controllers\CustometsController.cs" />
     <Compile Remove="Controllers\DateController.cs" />
     <Compile Remove="Controllers\Security.cs" />
-    <Compile Remove="Controllers\SecurityController.cs" />
     <Compile Remove="Controllers\Validation.cs" />
     <Content Remove="package-lock.json" />
    

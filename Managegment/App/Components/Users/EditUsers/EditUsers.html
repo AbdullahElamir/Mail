@@ -1,0 +1,164 @@
+﻿<div class="container-fluid" dir="rtl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
+                    </div>
+                    <h4 class="card-title">بيانات  المستـخدم </h4>
+
+                </div>
+                <div class="card-body">
+                
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الاسم التلاثي</label>
+                                    <input disabled type="text" class="form-control" placeholder="اسم التلاثي" v-model="form.FullName">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>اسم الدخول</label>
+                                    <input disabled type="text" class="form-control" placeholder="اسم الدخول" v-model="form.LoginName">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>رقم  الهاتف</label>
+                                    <input type="text" class="form-control" placeholder="رقم الهاتف" v-model="form.Phone">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <input type="text" class="form-control" placeholder="البريد الإلكتروني" v-model="form.Email">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الجنس</label>
+                                    <el-select style="width: 100%;" v-model="form.Gender" filterable placeholder="الجنس" disabled>
+                                        <el-option v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
+                                                   :key="item.id"
+                                                   :label="item.Gender"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تاريخ الميلاد</label>
+                                    <div class="block">
+                                        <el-date-picker disabled v-model="form.DateOfBirth"
+                                                        type="date"
+                                                        placeholder="تاريخ الميلاد" style="width:100%;">
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الصلاحيه</label>
+                                    <el-select style="width: 100%;" v-model="form.UserType" @change="SelectedPermissionFun()" filterable placeholder="الصلاحية">
+                                        <el-option v-for="item in Permissions"
+                                                   :key="item.id"
+                                                   :label="item.name"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" v-if="form.UserType==3">
+                                <div class="form-group">
+                                    <label>المكاتب</label>
+                                    <el-select style="width:100%;" @change="SelectedOfficeTypeFun()" v-model="OfficeTypeModel" filterable placeholder="انواع المكاتب">
+                                        <el-option v-for="item in OfficeType"
+                                                   :key="item.id"
+                                                   :label="item.name"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="col-md-4" v-if="form.UserType==3 && OfficeTypeModel!=null">
+                                <div class="form-group">
+                                    <label>المكاتب</label>
+                                    <el-select style="width:100%;" v-if="OfficeTypeModel!=null" v-model="form.OfficeId" filterable :placeholder="OfficePaceholder">
+                                        <el-option v-for="item in AllOffice"
+                                                   :key="item.officeId"
+                                                   :label="item.officeName"
+                                                   :value="item.officeId">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="form.UserType!=5">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>صـلاحيات البحــث</label><br />
+                                    <el-checkbox v-model="form.SearchByRegistryNumber" label="رقـم القيد" border></el-checkbox>
+                                    <el-checkbox v-model="form.SearchByNationalId" label="الـرقم الوطني" border></el-checkbox>
+                                    <el-checkbox v-model="form.SearchByName" label="الاسم الرباعي" border></el-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="form.UserType==5">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>المـستشفي</label>
+                                    <el-select style="width: 100%;" v-model="form.HospitalId" filterable placeholder="المستشفي">
+                                        <el-option v-for="item in Hospital"
+                                                   :key="item.hospitalId"
+                                                   :label="item.name"
+                                                   :value="item.hospitalId">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="
+    width: 219px;">
+                                <div class="form-group">
+                                    <label>صـلاحيات الوفيات</label><br />
+                                    <el-checkbox v-model="form.DeathInfoPrivilege" label="عرض " border></el-checkbox>
+                                    <el-checkbox v-model="form.DeathEntryPrivilege" label="ادراج " border></el-checkbox>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4" v-if="PermissionModale==5">
+                                <div class="form-group">
+                                    <label>العدد</label><br />
+                                    <input type="text" class="form-control" placeholder="العدد" v-model="form.SearchDeathsQouta">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" @click.prevent="Edit()" class="btn btn-info btn-fill pull-right">حـفظ</button>
+                        <button type="submit" @click.prevent="Back()" class="btn btn-danger btn-fill pull-right" style="margin-left: 4px;">رجوع</button>
+                        <div class="clearfix"></div>
+
+                    </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+

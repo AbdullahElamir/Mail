@@ -8,6 +8,9 @@ import BlockUIService from './Shared/BlockUIService.js';
 import Layout from './Components/Layout/Layout.vue';
 import Home from './Components/Home/Home.vue';
 import Branches from './Components/Branches/Branches.vue';
+import Users from './Components/Users/Users.vue';
+import EditUsersProfile from './Components/Users/EditUsersProfile/EditUsersProfile.vue';
+import ChangePassword from './Components/Users/ChangePassword/ChangePassword.vue';
 
 import DataService from './Shared/DataService';
 import messages from './i18n';
@@ -39,6 +42,9 @@ const router = new VueRouter({
     routes: [
         { path: '/', component: Home }, 
         { path: '/Branches', component: Branches }, 
+        { path: '/Users', component: Users },
+        { path: '/EditUsersProfile', component: EditUsersProfile },
+        { path: '/ChangePassword', component: ChangePassword },  
     ]
 
 });

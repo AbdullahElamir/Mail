@@ -1,0 +1,88 @@
+﻿<div>
+    <header></header>
+    <div class="center">
+        <div class="login register">
+            <div class="logo"></div>
+            <div class="content">
+                <form id="app" dir="rtl" v-if="!ForgetPassword">
+                    <h4 style="text-align: center;font-size: 17px;" class="title">هذا النظام للمخولين فقط بمصلحة الاحوال المدنية</h4>
+                    <div class="mail-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" auto-complete="off" v-model="form.Email" placeholder="you@example.com" class="form-control" />
+                        <!--<span class="help-block">For account activation & notifications</span>-->
+                    </div>
+                    <div class="password-group">
+                        <label for="password">الرقم السري</label>
+                        <input type="password" auto-complete="off" v-model="form.Password" placeholder="*************" class="form-control" v- />
+                        <!--<span class="help-block">Min six characters</span>-->
+                    </div>
+                    <button class="btn" @click.prevent="Save()">الــدخول</button>
+                </form>
+
+                <form id="app" dir="rtl" v-if="ForgetPassword">
+                    <h4 style="text-align: center;font-size: 17px;" class="title">هذا النظام للمخولين فقط بمصلحة الاحوال المدنية</h4>
+                    <div class="mail-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" auto-complete="off" v-model="form2.Email" placeholder="you@example.com" class="form-control" />
+                        <!--<span class="help-block">For account activation & notifications</span>-->
+                    </div>
+                    <button class="btn" @click.prevent="Send('form2')">إرســال</button>
+                </form>
+
+            </div>
+            <footer dir="rtl">
+                <p>
+                    <a v-if="!ForgetPassword" href="#" @click.prevent="ForgetPassword=true" class="terms">هل نسيت كلمة الـمرور ؟</a>
+                    <a v-if="ForgetPassword" href="#" @click.prevent="ForgetPassword=false" class="terms">رجــوع</a>
+                </p>
+
+                <!--<p>
+                    لأي استفسار الرجاء التواصل مع مدراء النظام <a href="" class="terms">اتصل بنـــا</a>
+                </p>-->
+            </footer>
+        </div>
+    </div>
+
+
+    <!--<div class="login-dialog">
+        <div class="logo-img">
+            <img src="../../Content/Images/logo.jpg">
+        </div>
+
+        <span class="welcome">Welcome</span>
+
+        <div class="normal-login" v-if="!forgetPassowrd">
+            <el-form :model="form" :rules="rules" ref="form" novalidate>
+                <span style="padding-left:15px;">EMAIL & PASSWORD:</span>
+
+                <el-form-item prop="Email" style="margin-top:10px;">
+                    <el-input v-model="form.Email" auto-complete="off" placeholder="Email Address"></el-input>
+                </el-form-item>
+                <el-form-item prop="Password">
+                    <el-input type="password" v-model="form.Password" auto-complete="off" placeholder="Password"></el-input>
+                </el-form-item>
+                <div>
+                    <div></div>
+                    <button type="button" @click.prevent="loginUser('form')">Login</button>
+                </div>
+            </el-form>
+            <a href="#" @click.prevent="forgetPassowrd = true">Forgot Your Password?</a>
+        </div>
+        <div class="normal-login" v-if="forgetPassowrd">
+            <el-form :model="form2" :rules="rules" ref="form2" novalidate>
+                <span style="padding-left:15px;">Forgot Your Password:</span>
+                <el-form-item prop="Email" style="margin-top:10px;">
+                    <el-input v-model="form2.Email" auto-complete="off" placeholder="Enter Your Email Address"></el-input>
+                </el-form-item>
+                <div>
+                    <div></div>
+                    <button type="button" @click.prevent="ResetPassword('form2')">Send </button>
+                    <button type="button" @click.prevent="forgetPassowrd = false">Cancel </button>
+
+                </div>
+            </el-form>
+        </div>
+
+    </div>-->
+
+</div>

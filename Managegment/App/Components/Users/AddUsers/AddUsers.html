@@ -1,0 +1,138 @@
+﻿<div class="container-fluid" dir="rtl">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
+                    </div>
+                    <h4 class="card-title">بيانات  المستـخدم - {{PermissionLable}} </h4>
+
+                </div>
+                <div class="card-body">
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>الاسم التلاثي</label>
+                                    <input type="text" disabled class="form-control" placeholder="اسم التلاثي" v-model="form.FullName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>اسم الدخول</label>
+                                    <input type="text" class="form-control" placeholder="اسم الدخول" v-model="form.LoginName">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <input type="text" class="form-control" placeholder="البريد الإلكتروني" v-model="form.Email">
+
+                                    <input type="text" id="case" name="myText" style="display:none">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الجنس</label>
+                                    <el-select  disabled style="width: 100%;" v-model="form.Gender" filterable placeholder="الجنس">
+                                        <el-option v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
+                                                   :key="item.id"
+                                                   :label="item.Gender"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تاريخ الميلاد</label>
+                                    <div class="block">
+                                        <el-date-picker style="width:100%" disabled v-model="form.DateOfBirth"
+                                                        type="date"
+                                                        placeholder="تاريخ الميلاد">
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الرقم السري</label>
+                                    <input type="password" class="form-control" placeholder="الرقم السري" v-model="form.Password">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تأكيد الرقم السري</label>
+                                    <input type="password" class="form-control" placeholder="تأكيد الرقم السري" v-model="ConfimPassword">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>رقم  الهاتف</label>
+                                    <input type="text" class="form-control" placeholder="رقم الهاتف" v-model="form.Phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="this.$parent.PermissionModale!=5">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>صـلاحيات البحــث</label><br />
+                                    <el-checkbox v-model="form.SearchByRegistryNumber" label="رقـم القيد" border></el-checkbox>
+                                    <el-checkbox v-model="form.SearchByNationalId" label="الـرقم الوطني" border></el-checkbox>
+                                    <el-checkbox v-model="form.SearchByName" label="الاسم الرباعي" border></el-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="this.$parent.PermissionModale==5">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>المـستشفي</label>
+                                    <el-select style="width: 100%;" v-model="form.HospitalId" filterable placeholder="المستشفي">
+                                        <el-option v-for="item in Hospital"
+                                                   :key="item.hospitalId"
+                                                   :label="item.name"
+                                                   :value="item.hospitalId">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="
+    width: 219px;">
+                                <div class="form-group" v-if="this.$parent.PermissionModale==5">
+                                    <label>صـلاحيات إيقاف متوفي</label><br />
+                                    <el-checkbox v-model="form.DeathInfoPrivilege" label="عرض " border></el-checkbox>
+                                    <el-checkbox v-model="form.DeathEntryPrivilege" label="ادراج " border></el-checkbox>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-4" v-if="this.$parent.PermissionModale==5">
+                                <div class="form-group">
+                                    <label> مرات البحث</label><br />
+                                    <input type="number" class="form-control" placeholder="عدد مرات البحث" v-model="form.SearchDeathsQouta">
+                                </div>
+                            </div>
+
+
+                        </div>
+                            <button type="submit" @click.prevent="Save()" class="btn btn-info btn-fill pull-right">حـفظ</button>
+                            <button type="submit" @click.prevent="Back()" class="btn btn-danger btn-fill pull-right" style="margin-left: 4px;">رجوع</button>
+                            <div class="clearfix"></div>
+</form>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+
+
