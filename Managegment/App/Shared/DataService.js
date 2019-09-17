@@ -60,6 +60,11 @@ export default {
     ChangePassword(userPassword) {
         return axios.post(`/Security/ChangePassword`, userPassword);
     },
+    GetUsers(pageNo, pageSize, UserType) {
+        console.log(UserType);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get( `api/admin/User/GetUsers?pageno=${pageNo}&pagesize=${pageSize}&UserType=${UserType}`);
+    },
     //*******************************************  Branches Service *********************************
     GetBranches(pageNo, pageSize) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
