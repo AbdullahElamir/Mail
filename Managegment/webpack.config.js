@@ -1,9 +1,6 @@
 const path = require('path');
-const glob = require('glob-all');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const outputDir = './wwwroot';
@@ -14,10 +11,10 @@ module.exports = (env) => {
         stats: { modules: false },
         entry: {
             main: ['./App/app.js', './Content/site.css'],
-            login: ['./App/login.js', './Content/login.css'],    
-            vueui: [path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css'), path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
-        
-
+            vueui: [path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css'),
+            path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')
+            ],
+            login: ['./App/login.js', './Content/login.css'],
             vendor: ['vue', 'vue-router', 'axios']
         },
         output: {
@@ -38,14 +35,36 @@ module.exports = (env) => {
                 {
                     test: /\.vue$/,
                     include: /App/,
-                    use: 'vue-loader'
+                    use: 'vue-loader',
+                    exclude: /node_modules/
                 },
+                //{
+                //    test: /\.vue$/,
+                //    include: '/node_modules/vue-full-calendar',
+                //    use: 'vue-loader'
+                //},
+
                 {
                     test: /\.js$/,
                     include: /App/,
                     use: 'babel-loader',
                     exclude: /node_modules/
                 },
+                //{
+                //    enforce: 'pre',
+                //    test: /\.js$/,
+                //    exclude: /node_modules/,
+                //    loader: 'eslint-loader'
+                //},
+                //{
+                //    enforce: 'pre',
+                //    test: /\.(js|vue)$/,
+                //    exclude: /node_modules/,
+                //    loader: "eslint-loader",
+                //    options: {
+                //    formatter: require('eslint-friendly-formatter')
+                //  }
+                //},
                 {
                     test: /\.css$/,
                     use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader' })
@@ -76,38 +95,21 @@ module.exports = (env) => {
             ]
         },
         plugins: [
-
             new webpack.optimize.CommonsChunkPlugin({
                 name: ['vendor', 'manifest'],
                 minChunks: Infinity
             }),
             new webpack.ProvidePlugin({
-                $: 'jquery',
-                jquery: 'jquery',
-                'window.jQuery': 'jquery',
-                jQuery: 'jquery',
-
-            }),
+                $: "jquery",
+                jQuery: "jquery",
+                "window.jQuery": "jquery"
+            })
+            ,
             new CopyWebpackPlugin([{ from: 'Content/Images', to: 'img' }])
         ].concat(isDevBuild ? [
-            // Plugins that apply in development builds only
-            //new webpack.SourceMapDevToolPlugin({
-            //    filename: '[file].map', // Remove this line if you prefer inline source maps
-            //    moduleFilenameTemplate: path.relative(outputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-            //})
         ] : [
-                // Plugins that apply in production builds only                
-                //new OptimizeCSSPlugin({
-                //    cssProcessorOptions: {
-                //        safe: true
-                //    }
-                //}),
                 new webpack.optimize.UglifyJsPlugin(),
                 new ExtractTextPlugin('css/[name].css')
-
-                //new PurifyCSSPlugin({
-                //    paths: glob.sync(path.join(__dirname, 'App/*.html'))
-                //})
             ])
-    }];
-};
+    }]
+}

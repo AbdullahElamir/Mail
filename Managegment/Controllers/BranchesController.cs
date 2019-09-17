@@ -60,7 +60,34 @@ namespace Management.Controllers
             }
         }
 
+        [HttpGet("GetBranchs")]
+        public IActionResult GetBranches()
+        {
+            try
+            {
 
+                IQueryable<Branches> BranchesQuery;
+
+                BranchesQuery = from p in db.Branches
+                                where p.Status == 1
+                                select p;  
+               
+                var BranchesList = (from p in BranchesQuery
+                                    orderby p.CreatedOn descending
+                                    select new Branches
+                                    {
+                                        Name = p.Name, 
+                                        BranchId = p.BranchId
+
+                                    }).ToList();
+
+                return Ok(new { Branches = BranchesList });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
 
 
         [HttpPost("{BranchId}/delete")]

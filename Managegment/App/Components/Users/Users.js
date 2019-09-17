@@ -15,6 +15,7 @@ export default {
             window.location.href = '/Security/Login';
         }
         this.GetUsers(this.pageNo);
+        this.SelectBranchName();
     },
     components: {
         'add-Users': addUsers,
@@ -40,8 +41,9 @@ export default {
             state: 0,
             PermissionModale: [],
             EditUsersObj: [],
-            NID: '',
             AllData: [],
+            Branches: [],
+            BrachId: ''
 
         };
     },
@@ -119,6 +121,21 @@ export default {
         SelectUserType() {
             this.GetUsers();
         },
+        SelectBranchName() {
+            this.$http.GetBranchsV1()
+                .then(response => {
+                    this.$blockUI.Stop();
+                    this.Branches = response.data.branches;
+
+                })
+                .catch((err) => {
+                    this.$blockUI.Stop();
+
+                })
+        },
+
+
+
         GetUsers(pageNo) {
             this.pageNo = pageNo;
             if (this.pageNo === undefined) {

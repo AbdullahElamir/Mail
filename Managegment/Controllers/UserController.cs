@@ -41,7 +41,7 @@ namespace Management.Controllers
                 IQueryable<Users> UsersQuery;
                
                 UsersQuery = (from p in db.Users
-                               where p.UserId == userId && p.Status != 9
+                               where  p.Status != 9
                                select p);
                
                 var userBranch = UsersQuery.First().BranchId;
@@ -67,6 +67,7 @@ namespace Management.Controllers
                                      UserId = p.UserId,
                                      Status = p.Status,
                                      Phone = p.Phone,
+                                     userType=p.UserType,
                                      CreatedBy = p.CreatedBy,
                                      UserName = db.Users.Where(k => k.UserId == p.CreatedBy).SingleOrDefault().FullName,
                                      ModifiedBy = db.Users.Where(k => k.UserId == p.ModifiedBy).SingleOrDefault().FullName,

@@ -3,7 +3,7 @@
 <main class="app-content">
     <add-Users v-if="state==1"></add-Users>
     <edit-Users v-if="state==2"></edit-Users>
-    <div class="app-title">
+    <div class="app-title" v-if="state==0">
         <div>
             <h1><i class="fa fa-th-list"></i> الادارة</h1>
             <!--<p>This table shows Branches used in the system</p>-->
@@ -23,7 +23,7 @@
                 <div class="tile-body">
                     <div class="AddButton">
                         <el-button type="primary"
-                                   class="btn btn-primary" @click.prevent="AddUser()">إضافة مستخدم </el-button>
+                                   class="btn btn-primary" @click.prevent="AddUser()">إضافة مستخدم</el-button>
                     </div>
 
                     <div class="selectCompany">
@@ -34,174 +34,103 @@
                                        :value="item.id">
                             </el-option>
                         </el-select>
+                        <el-select class="SelectUser" v-model="BrachId" @change="SelectBranchName()" filterable placeholder="الادارات">
+                            <el-option v-for="item in Branches"
+                                       :key="item.brachId"
+                                       :label="item.name"
+                                       :value="item.branchId">
+                            </el-option>
+                        </el-select>
                     </div>
 
+                    <div>
+
+                    </div>
+
+
+
+                    <p class="category"></p>
                 </div>
-                <p class="category"></p>
-            </div>
 
 
-            <div style="padding-left:22px">
+                <div style="padding-left:22px">
 
-                <!--view companet-->
-                <div style="padding: 35px;font-size: 35px;" v-if="Users==0">
-                    <el-alert title="عفــوا! لاتوجد بيانات للمستخدمين"
-                              type="info">
-                    </el-alert>
-                </div>
-                <br />
+                    <!--view companet-->
+                    <div style="padding: 35px;font-size: 35px;" v-if="Users==0">
+                        <el-alert title="عفــوا! لاتوجد بيانات للمستخدمين"
+                                  type="info">
+                        </el-alert>
+                    </div>
+                    <br />
 
-
-                <main :style="{ background: back }">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-6" v-for="User in Users" v-if="Users!=0">
-                            <div class="card">
-
-                                <img class="avatar1" :src="'http://localhost:4810/Users/GetUserImage?userId='+User.userId+''"
-                                     style="height: 80px; width:80px" />
+                    <div style="width:auto">
 
 
-                                <div class="infos">
-                                    <div class="name capitalize">
-                                        {{User.fullName}}
-                                    </div>
-                                    <div class="email">
-                                        {{User.email}}
-                                    </div>
-                                    <div class="birth">
-                                        {{User.loginName}}
-                                    </div>
-                                    <div class="email">
-                                        {{User.dateOfBirth | moment}}
-                                    </div>
-                                    <div v-if="User.userType==1" class="phone">
-                                        المدير
+                        <table class="table table-hover table-bordered" id="sampleTable" v-if="Users!=0">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>اسم المستخدم</th>
+                                    <th> تاريخ الميلاد</th>
+                                    <th> الصلاحية</th>
+                                    <th>صورة</th>
 
-                                    </div>
-                                    <div v-if="User.userType==2" class="nationality capitalize">
-                                        موظف
-                                    </div>
-                                </div>
+                                    <th>العمليات</th>
+                                </tr>
+                            </thead>
 
-                            </div>
+                            <tbody>
+                                <tr v-for="User in Users">
+                                    <td>{{User.fullName}}</td>
+                                    <td dir="ltr">{{User.loginName}}</td>
+                                    <td dir="ltr">{{User.dateOfBirth | moment}}</td>
 
-                            <div class="refresh">
+                                    <td v-if="User.userType==1">المدير</td>
+                                    <td v-else="User.userType==2">موظف</td>
+
+                                    <td>
+                                        <img :src="'http://localhost:4810/Api/Admin/User/' + User.userId + '/image'" 
+                                             style="height: 80px; width:80px" />
+                                    </td>
+
+                                    <td>
+                                        <!--countryId-->
+                                        <a href="#" @click.prevent="EditUser(User)">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </a>
+                                        <a href="#" @click.prevent="DeactivateUser(User.userId)">
+                                            <i class="fa fa-remove"></i>
+                                        </a> <a href="#" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
+                                            <i class="fa fa-lock" title="ايقاف"></i>
+                                        </a>
+                                        <a href="#" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
+                                            <i class="fa fa-unlock" title="تفعيل"></i>
+                                        </a>
+                                    </td>
 
 
-                                <i class="fas fa-user-edit" data-text="تعديل" @click.prevent="EditUser(User)"></i>&nbsp;
+                                </tr>
+                            </tbody>
+                        </table>
 
-
-                                <i class="fa fa-lock" data-text="ايقاف" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
-
-                                </i>
-                                <i class="fa fa-unlock" data-text="تفعيل" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
-
-                                </i>
-
-
-
-
-                            </div>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <el-pagination background
+                                           layout="prev, pager, next"
+                                           :current-page="pageNo"
+                                           :page-size="pageSize"
+                                           :total="pages"
+                                           @current-change="GetUsers($event)">
+                            </el-pagination>
                         </div>
                     </div>
-                </main>
 
-                <div style="direction:rtl;text-align: center; margin-top: 10px;">
-                    <el-pagination background
-                                   layout="prev, pager, next"
-                                   :current-page="pageNo"
-                                   :page-size="pageSize"
-                                   :total="pages"
-                                   @current-change="GetUsers($event)">
-                    </el-pagination>
-
-                </div>
-
-            </div>
-            <div style="width:auto">
-
-             
-                <div class="content table-responsive table-full-width" v-if="Users!=0">
-                    <table class="table table-hover table-striped">
-                        <tbody style="text-align:center">
-                            <tr class="TableHeaderBackground">
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        الاسم
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        اسم المستخدم
-                                    </span>
-                                </td>
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        تاريخ الميلاد
-                                    </span>
-                                </td>
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        الصلاحية
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        صورة
-                                    </span>
-                                </td>
-                                <td>
-                                    <span style="font-size:14px;font-weight:bold">
-                                        العمليات
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr v-for="User in Users" style="font-size:14px;text-align:center;">
-                                <td>{{User.fullName}}</td>
-                                <td dir="ltr">{{User.loginName}}</td>
-                                <td dir="ltr">{{User.dateOfBirth | moment}}</td>
-
-                                <td v-if="User.userType==1">المدير</td>
-                                <td v-if="User.userType==2">موظف</td>
-
-                                <td><img :src="'http://localhost:4810/Users/GetUserImage?userId='+User.userId+''" style="height: 80px; width:80px" /></td>
-                                <td>
-
-
-                                    <a href="#" @click.prevent="EditUser(User)">
-                                        <i class="far fa-edit"></i>&nbsp;
-                                    </a>
-                                    <a href="#" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
-                                        <i class="fa fa-lock" title="ايقاف"></i>
-                                    </a>
-                                    <a href="#" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
-                                        <i class="fa fa-unlock" title="تفعيل"></i>
-                                    </a>
-
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div style="text-align: center; margin-top: 10px;">
-                        <el-pagination background
-                                       layout="prev, pager, next"
-                                       :current-page="pageNo"
-                                       :page-size="pageSize"
-                                       :total="pages"
-                                       @current-change="GetUsers($event)">
-                        </el-pagination>
-                    </div>
                 </div>
 
 
             </div>
 
 
+
         </div>
-        </div>
+    </div>
 </main>
