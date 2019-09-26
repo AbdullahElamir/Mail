@@ -1,0 +1,136 @@
+﻿
+
+<main class="app-content">
+    <add-Users v-if="state==1"></add-Users>
+    <edit-Users v-if="state==2"></edit-Users>
+    <div class="app-title" v-if="state==0">
+        <div>
+            <h1><i class="fa fa-th-list"></i> الادارة</h1>
+            <!--<p>This table shows Branches used in the system</p>-->
+        </div>
+        <!--<ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
+        </ul>-->
+
+
+
+    </div>
+    <div class="row" v-if="state==0">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="AddButton">
+                        <el-button type="primary"
+                                   class="btn btn-primary" @click.prevent="AddUser()">إضافة مستخدم</el-button>
+                    </div>
+
+                    <div class="selectCompany">
+                        <el-select class="SelectUser" v-model="UserType" @change="SelectUserType()" filterable placeholder="الصلاحية">
+                            <el-option v-for="item in [{ id: '0',name: 'الكل'},{id:1,name:'مدير النظام'},{id:2,name:'موظف'}]"
+                                       :key="item.id"
+                                       :label="item.name"
+                                       :value="item.id">
+                            </el-option>
+                        </el-select>
+                        <el-select class="SelectUser" v-model="BrachId" @change="SelectBranchName()" filterable placeholder="الادارات">
+                            <el-option v-for="item in Branches"
+                                       :key="item.brachId"
+                                       :label="item.name"
+                                       :value="item.branchId">
+                            </el-option>
+                        </el-select>
+                    </div>
+
+                    <div>
+
+                    </div>
+
+
+
+                    <p class="category"></p>
+                </div>
+
+
+                <div style="padding-left:22px">
+
+                    <!--view companet-->
+                    <div style="padding: 35px;font-size: 35px;" v-if="Users==0">
+                        <el-alert title="عفــوا! لاتوجد بيانات للمستخدمين"
+                                  type="info">
+                        </el-alert>
+                    </div>
+                    <br />
+
+                    <div style="width:auto">
+
+
+                        <table class="table table-hover table-bordered" id="sampleTable" v-if="Users!=0">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>اسم المستخدم</th>
+                                    <th> تاريخ الميلاد</th>
+                                    <th> الصلاحية</th>
+                                    <th>صورة</th>
+
+                                    <th>العمليات</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr v-for="User in Users">
+                                    <td>{{User.fullName}}</td>
+                                    <td dir="ltr">{{User.loginName}}</td>
+                                    <td dir="ltr">{{User.dateOfBirth | moment}}</td>
+
+                                    <td v-if="User.userType==1">المدير</td>
+                                    <td v-else="User.userType==2">موظف</td>
+
+                                    <td>
+                                        <img :src="'http://localhost:4810/Api/Admin/User/' + User.userId + '/image'" 
+                                             style="height: 80px; width:80px" />
+                                    </td>
+
+                                    <td>
+                                        <!--countryId-->
+                                        <a href="#" @click.prevent="EditUser(User)">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </a>
+                                        <a href="#" @click.prevent="DeactivateUser(User.userId)">
+                                            <i class="fa fa-remove"></i>
+                                        </a> <a href="#" v-if="User.status==1" @click.prevent="DeactivateUser(User.userId)">
+                                            <i class="fa fa-lock" title="ايقاف"></i>
+                                        </a>
+                                        <a href="#" v-if="User.status==2 || User.status==0" @click.prevent="ActivateUser(User.userId)">
+                                            <i class="fa fa-unlock" title="تفعيل"></i>
+                                        </a>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="text-align: center; margin-top: 10px;">
+                            <el-pagination background
+                                           layout="prev, pager, next"
+                                           :current-page="pageNo"
+                                           :page-size="pageSize"
+                                           :total="pages"
+                                           @current-change="GetUsers($event)">
+                            </el-pagination>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</main>

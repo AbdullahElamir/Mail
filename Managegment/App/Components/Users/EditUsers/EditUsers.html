@@ -1,0 +1,86 @@
+﻿<div class="container-fluid" dir="rtl">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
+                    </div>
+                    <div class="card-title" style="font-size:18px;font-weight:bold">بيانات المستخدم </div>
+
+
+                </div>
+
+
+                <div class="content" style="color:black!important">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>الاسم التلاثي</label>
+                                    <input type="text" class="form-control" placeholder="اسم التلاثي" v-model="form.FullName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>اسم الدخول</label>
+                                    <input disabled type="text" class="form-control" placeholder="اسم الدخول" v-model="form.LoginName">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <input type="text" class="form-control" placeholder="البريد الإلكتروني" v-model="form.Email">
+
+                                    <input type="text" id="case" name="myText" style="display:none">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الجنس</label>
+                                    <el-select style="width: 100%;" v-model="form.Gender" filterable placeholder="الجنس">
+                                        <el-option v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
+                                                   :key="item.id"
+                                                   :label="item.Gender"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تاريخ الميلاد</label>
+                                    <div class="block">
+                                        <el-date-picker v-model="form.DateOfBirth"
+                                                        type="date"
+                                                        placeholder="تاريخ الميلاد">
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>رقم  الهاتف</label>
+                                    <input type="text" class="form-control" placeholder="رقم الهاتف" v-model="form.Phone">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" @click.prevent="Edit()" class="btn btn-info btn-fill pull-right">تعديل</button>
+                        <button type="submit" @click.prevent="Back()" class="btn btn-danger btn-fill pull-right" style="margin-left: 4px;">رجوع</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -8,8 +8,14 @@ import BlockUIService from './Shared/BlockUIService.js';
 import Layout from './Components/Layout/Layout.vue';
 import Home from './Components/Home/Home.vue';
 import Branches from './Components/Branches/Branches.vue';
+
 import Inbox from './Components/Messages/Inbox/Inbox.vue';
 import Sent from './Components/Messages/Sent/Sent.vue';
+
+import Users from './Components/Users/Users.vue';
+import EditUsersProfile from './Components/Users/EditUsersProfile/EditUsersProfile.vue';
+import ChangePassword from './Components/Users/ChangePassword/ChangePassword.vue';
+
 import DataService from './Shared/DataService';
 import messages from './i18n';
 
@@ -42,6 +48,11 @@ const router = new VueRouter({
         { path: '/Branches', component: Branches },
         { path: '/Inbox', component: Inbox },
         { path: '/Sent', component: Sent }, 
+        { path: '/Branches', component: Branches }, 
+        { path: '/Users', component: Users },
+        { path: '/EditUsersProfile', component: EditUsersProfile },
+        { path: '/ChangePassword', component: ChangePassword },  
+
     ]
 });
 

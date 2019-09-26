@@ -1,0 +1,109 @@
+﻿<div class="container-fluid" dir="rtl">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-edit"></i>اضافه مستخدم</h1>
+            <!--<p>This page is for adding countries</p>-->
+        </div>
+        <!--<ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Forms</li>
+            <li class="breadcrumb-item"><a href="#">Form Components</a></li>
+        </ul>-->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
+                    </div>
+                    <div class="card-title" style="font-size:18px;font-weight:bold">بيانات المستخدم </div>
+
+
+                </div>
+
+                <div class="content" style="color:black!important">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>الاسم التلاثي</label>
+                                    <input type="text" class="form-control" placeholder="اسم التلاثي" v-model="form.FullName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>اسم الدخول</label>
+                                    <input type="text" class="form-control" placeholder="اسم الدخول" v-model="form.LoginName">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <input type="text" class="form-control" placeholder="البريد الإلكتروني" v-model="form.Email">
+
+                                    <input type="text" id="case" name="myText" style="display:none">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الجنس</label>
+                                    <el-select style="width: 100%;" v-model="form.Gender" filterable placeholder="الجنس">
+                                        <el-option v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
+                                                   :key="item.id"
+                                                   :label="item.Gender"
+                                                   :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تاريخ الميلاد</label>
+                                    <div class="block">
+                                        <el-date-picker v-model="form.DateOfBirth"
+                                                        type="date"
+                                                        placeholder="تاريخ الميلاد">
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الرقم السري</label>
+                                    <input type="password" class="form-control" placeholder="الرقم السري" v-model="form.Password">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تأكيد الرقم السري</label>
+                                    <input type="password" class="form-control" placeholder="تأكيد الرقم السري" v-model="ConfimPassword">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>رقم  الهاتف</label>
+                                    <input type="text" class="form-control" placeholder="رقم الهاتف" v-model="form.Phone">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" @click.prevent="Save()" class="btn btn-info btn-fill pull-right">حـفظ</button>
+                        <button type="submit" @click.prevent="Back()" class="btn btn-danger btn-fill pull-right" style="margin-left: 4px;">رجوع</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{form}}
+</div>
+
