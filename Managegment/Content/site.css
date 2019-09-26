@@ -10,6 +10,10 @@
 
 
 
+ol,ul{
+    padding-left:0px!important;
+}
+
 .el-form-item__content {
     margin-right: 0px !important;
 }
@@ -52,6 +56,7 @@ input[type="file"] {
         height: 99%;
         page-break-after: avoid;
         page-break-before: avoid;
+     
     }
 }
 

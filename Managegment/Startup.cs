@@ -35,6 +35,7 @@ namespace Managegment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Models.MailSystemContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mail")));
+
             //services.AddDbContext<Models.AppointmentsContext>(options => options.UseMySQL(Configuration.GetConnectionString("Appointment")));
 
 
@@ -43,13 +44,13 @@ namespace Managegment
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    
+
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
 
             services.AddMvc();
-          
+
 
             services.AddAuthentication(o =>
             {
@@ -74,7 +75,7 @@ namespace Managegment
                     ClockSkew = TimeSpan.FromDays(60)
                 };
             });
-            
+
 
 
 

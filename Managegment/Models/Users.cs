@@ -5,6 +5,14 @@ namespace Managegment.Models
 {
     public partial class Users
     {
+        public Users()
+        {
+            Conversations = new HashSet<Conversations>();
+            Messages = new HashSet<Messages>();
+            Participations = new HashSet<Participations>();
+            Transactions = new HashSet<Transactions>();
+        }
+
         public long UserId { get; set; }
         public string LoginName { get; set; }
         public string Password { get; set; }
@@ -28,5 +36,9 @@ namespace Managegment.Models
         public long? BranchId { get; set; }
 
         public Branches Branch { get; set; }
+        public ICollection<Conversations> Conversations { get; set; }
+        public ICollection<Messages> Messages { get; set; }
+        public ICollection<Participations> Participations { get; set; }
+        public ICollection<Transactions> Transactions { get; set; }
     }
 }

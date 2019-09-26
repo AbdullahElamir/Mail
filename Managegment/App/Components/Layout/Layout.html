@@ -13,37 +13,48 @@
                 </div>
             </div>
             <ul class="app-menu">
-                <li><a class="app-menu__item active" href="#" @click.prevent="href('/')">
-                    <i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+                <li>
+                    <a class="app-menu__item active" href="#" @click.prevent="href('/')">
+                        <i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" @click.prevent="href('Inbox')" href="bootstrap-components.html">
+                        <i class="app-menu__icon fa fa-inbox"></i><span class="app-menu__label">صندوق الوارد</span>
+                        <span class="badge badge-danger pull-left">2</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" @click.prevent="href('Sent')" href="bootstrap-components.html">
+                        <i class="app-menu__icon fa fa-inbox"></i><span class="app-menu__label">صندوق المرسل</span>
+                    </a>
+                </li>
+
                 <li class="treeview">
                     <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-location-arrow"></i><span class="app-menu__label">Settings</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a class="treeview-item" @click.prevent="href('Branches')" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Branches</a></li>
                         <li><a @click.prevent="href('Cities')" class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Users</a></li>
-
                     </ul>
                 </li>
-                <!--<li class="treeview">
-                    <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-hospital-o"></i><span class="app-menu__label">Hospital Settings</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a class="treeview-item" @click.prevent="href('Departments')" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Depatments</a></li>
-                        <li><a @click.prevent="href('Medications')" class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Medicatios</a></li>
-                    </ul>
-                </li>-->
 
+                <!--<li class="treeview">
+        <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-hospital-o"></i><span class="app-menu__label">Hospital Settings</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+            <li><a class="treeview-item" @click.prevent="href('Departments')" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Depatments</a></li>
+            <li><a @click.prevent="href('Medications')" class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Medicatios</a></li>
+        </ul>
+    </li>-->
                 <!--<li><a class="app-menu__item" href="#" @click.prevent="href('Users')"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Users</span></a></li>
 
 
-                <li class="treeview">
-                    <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-hospital-o"></i><span class="app-menu__label">Hospital System</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a class="treeview-item" @click.prevent="href('Patients')" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Patients</a></li>
-                      
-                    </ul>
-                </li>-->
+    <li class="treeview">
+        <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-hospital-o"></i><span class="app-menu__label">Hospital System</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+            <li><a class="treeview-item" @click.prevent="href('Patients')" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Patients</a></li>
 
-
-
+        </ul>
+    </li>-->
                 <!--<li class="treeview">
         <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Forms</span><i class="treeview-indicator fa fa-angle-right"></i></a>
         <ul class="treeview-menu">

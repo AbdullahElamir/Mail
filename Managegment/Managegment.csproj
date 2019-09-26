@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
   </ItemGroup>
 
@@ -87,6 +87,7 @@
     <Compile Remove="Controllers\DateController.cs" />
     <Compile Remove="Controllers\Security.cs" />
     <Compile Remove="Controllers\Validation.cs" />
+    <Compile Remove="Migrations\MailContextModelSnapshot.cs" />
     <Content Remove="package-lock.json" />
    
   </ItemGroup>
@@ -98,6 +99,10 @@
   <ItemGroup>
     <None Include="Properties\wwwroot\css\site.rtl.less" />
     <None Include="Views\Security\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App\Components\Messages\NewMessage\" />
   </ItemGroup>
 
  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot') ">

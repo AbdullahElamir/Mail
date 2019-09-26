@@ -4,15 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Managegment.Models
 {
-    public partial class MailSystemContext : DbContext
+    public partial class MailDBContext : DbContext
     {
-        public MailSystemContext()
-        {
-        }
-        public MailSystemContext(DbContextOptions<MailSystemContext> options)
-            : base(options)
-        {
-        }
         public virtual DbSet<Attachments> Attachments { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Conversations> Conversations { get; set; }
