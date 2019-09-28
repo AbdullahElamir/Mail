@@ -8,14 +8,14 @@ export default {
         'message-Display': MessageDisplay,
     },
     created() {
-        this.GetInbox();  
+        this.GetInbox(this.pageNo);  
     },
     data() {
         return {
             state: 1,
             inbox: {},
             pageNo: 1,
-            pageSize: 10,
+            pageSize: 20,
             pages: 0,
             isAttachment: "",
             isFavorate: false,
@@ -64,14 +64,17 @@ export default {
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
-                    console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         
-        GetInbox() {
-            this.pageNo = 1;
+        GetInbox(pageNo) {
+            this.pageNo = pageNo;
             if (this.pageNo === undefined) {
                 this.pageNo = 1;
             }
@@ -80,11 +83,15 @@ export default {
                 .then(response => {
                     this.$blockUI.Stop();
                     this.inbox = response.data.inbox;
+                    this.pages = response.data.count;
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
-                    console.error(err);
                     this.pages = 0;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         ArchaveInbox(index, item) {
@@ -113,6 +120,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
             },
         DeleteInbox(index, item) {
@@ -130,6 +141,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         showMessage(msg)
@@ -159,6 +174,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         }
     }

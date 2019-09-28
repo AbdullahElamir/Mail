@@ -15,7 +15,7 @@ import Sent from './Components/Messages/Sent/Sent.vue';
 import Users from './Components/Users/Users.vue';
 import EditUsersProfile from './Components/Users/EditUsersProfile/EditUsersProfile.vue';
 import ChangePassword from './Components/Users/ChangePassword/ChangePassword.vue';
-
+import NewMessage from './Components/Messages/NewMessage/NewMessage.vue';
 import DataService from './Shared/DataService';
 import messages from './i18n';
 
@@ -52,7 +52,7 @@ const router = new VueRouter({
         { path: '/Users', component: Users },
         { path: '/EditUsersProfile', component: EditUsersProfile },
         { path: '/ChangePassword', component: ChangePassword },  
-
+        { path: '/NewMessage', component: NewMessage },
     ]
 });
 

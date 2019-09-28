@@ -10,11 +10,14 @@ namespace Managegment.DTOs
         public string ConversationID { get; set; }
         public string SubjectBody { get; set; }
         public string Subject { get; set; }
+        public string Type { get; set; }
         public string UserName { get; set; }
         public long? UserId { get; set; }
         public string DateConversation { get; set; }
         public string TimeConversation { get; set; }
         public string Priolti { get; set; }
+        public bool? Replay { get; set; }
+
         public List<MessageDTO> MessageDTOs { get; set; }
         public List<AttachmentDTO> AttachmentDTOs { get; set; }
     }

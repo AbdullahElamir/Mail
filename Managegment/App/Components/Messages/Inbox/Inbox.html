@@ -1,7 +1,20 @@
 ﻿    <main class="app-content" dir="rtl">
-        <message-Display v-if="state==2" :ConversationId="conversationId" ></message-Display>
-        
-        <div class="Inbox" v-if="state==1" >
+    <message-Display v-if="state==2" :ConversationId="conversationId"></message-Display>
+
+    <div v-if="inbox==0">
+       
+        <table class="table table-inbox  " style="background-color: white;text-align: center;">
+            <tbody>
+                    <tr style="cursor:none"  >
+                        <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
+                           <span class="fa fa-envelope"> </span> <span class="">  لايوجد رسائل في الصندوق الوارد   </span>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    <template v-if="inbox!=0">
+        <div class="Inbox" v-if="state==1">
             <div class="row">
 
                 <div class="el-col-24">
@@ -32,8 +45,8 @@
                         <div class="tile-body">
                             <table class="table table-inbox  ">
                                 <tbody>
-                                    
-                                    <template v-for="(item,index) in inbox" >
+
+                                    <template v-for="(item,index) in inbox">
                                         <tr style="cursor:none" v-bind:class="{unread:!item.isRead}">
 
                                             <td class="inbox-small-cells " style="min-width:20px;max-width:20px;cursor:pointer">
@@ -47,12 +60,13 @@
 
                                             <td class="view-message " style="min-width:120px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)"> {{item.lastSubjectBody}}</td>
                                             <td style="min-width:50px;max-width:50px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">
-                                                <span class="badge badge-success" v-if="item.messageCountNotRead>0" style="word-spacing:2px;">{{item.messageCountNotRead}} 
-                                                <span style="letter-spacing:2px">ردود</span> 
+                                                <span class="badge badge-success" v-if="item.messageCountNotRead>0" style="word-spacing:2px;">
+                                                    {{item.messageCountNotRead}}
+                                                    <span style="letter-spacing:2px">ردود</span>
                                                 </span>
                                             </td>
                                             <td class="view-message  inbox-small-cells">
-                                            <i class="fa" v-bind:class=" {'fa-paperclip':item.isAttachment}"></i>
+                                                <i class="fa" v-bind:class=" {'fa-paperclip':item.isAttachment}"></i>
                                             </td>
 
                                             <td class="view-message  text-right" style="min-width:30px;max-width:30px;">
@@ -73,7 +87,7 @@
 
                                         </tr>
                                     </template>
-                                   
+
 
 
 
@@ -87,10 +101,10 @@
                             <div style="text-align: center; margin-top: 10px;">
                                 <el-pagination background
                                                layout="prev, pager, next"
-                                               :current-page="1"
-                                               :page-size="10"
-                                               :total="10"
-                                               @current-change="GetBranches($event)">
+                                               :current-page="pageNo"
+                                               :page-size="pageSize"
+                                               :total="pages"
+                                               @current-change="GetInbox($event)">
                                 </el-pagination>
 
                             </div>
@@ -100,4 +114,6 @@
 
             </div>
         </div>
-    </main>
+    </template>
+  
+</main>

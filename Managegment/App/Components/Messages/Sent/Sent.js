@@ -8,7 +8,7 @@ export default {
         'message-Display': MessageDisplay,
     },
     created() {
-        this.GetSent();  
+        this.GetSent(this.pageNo);  
     },
     data() {
         return {
@@ -28,8 +28,8 @@ export default {
             this.conversationId = conversationId;
             this.state = 2;
         },
-        GetSent() {
-            this.pageNo = 1;
+        GetSent(pageNo) {
+            this.pageNo = pageNo;
             if (this.pageNo === undefined) {
                 this.pageNo = 1;
             }
@@ -38,11 +38,16 @@ export default {
                 .then(response => {
                     this.$blockUI.Stop();
                     this.sent = response.data.sent;
+                    this.pages = response.data.count;
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
                     console.error(err);
-                    this.pages = 1;
+                    this.pages = 0;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         IsFavorateMethod(item, index) {
@@ -67,6 +72,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         ArchaveInbox(index, item) {
@@ -93,6 +102,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    });  
                 });
         },
         DeleteInbox(index, item) {
@@ -110,6 +123,10 @@ export default {
                     console.error(err);
                     this.pages = 0;
                     this.resultState = false;
+                    this.$message({
+                        type: 'error',
+                        message: response.data
+                    }); 
                 });
         },
         showMessage(msg) {

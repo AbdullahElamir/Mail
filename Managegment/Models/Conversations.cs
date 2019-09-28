@@ -20,7 +20,9 @@ namespace Managegment.Models
         public long? Creator { get; set; }
         public string Body { get; set; }
         public string Priolti { get; set; }
+        public string AdTypeId { get; set; }
 
+        public AdTypes AdType { get; set; }
         public Users CreatorNavigation { get; set; }
         public ICollection<Attachments> Attachments { get; set; }
         public ICollection<Messages> Messages { get; set; }

@@ -101,10 +101,6 @@
     <None Include="Views\Security\Login.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="App\Components\Messages\NewMessage\" />
-  </ItemGroup>
-
  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

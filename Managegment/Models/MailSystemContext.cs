@@ -13,6 +13,7 @@ namespace Managegment.Models
             : base(options)
         {
         }
+        public virtual DbSet<AdTypes> AdTypes { get; set; }
         public virtual DbSet<Attachments> Attachments { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Conversations> Conversations { get; set; }
@@ -32,6 +33,29 @@ namespace Managegment.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AdTypes>(entity =>
+            {
+                entity.HasKey(e => e.AdTypeId);
+
+                entity.Property(e => e.AdTypeId)
+                    .HasMaxLength(128)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.AdTypesCreatedByNavigation)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK_AdTypes_Users");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.AdTypesModifiedByNavigation)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK_AdTypes_Users1");
+            });
+
             modelBuilder.Entity<Attachments>(entity =>
             {
                 entity.HasKey(e => e.AttachmentId);
@@ -72,7 +96,14 @@ namespace Managegment.Models
                     .HasMaxLength(128)
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.AdTypeId).HasMaxLength(128);
+
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+
+                entity.HasOne(d => d.AdType)
+                    .WithMany(p => p.Conversations)
+                    .HasForeignKey(d => d.AdTypeId)
+                    .HasConstraintName("FK_Conversations_AdTypes");
 
                 entity.HasOne(d => d.CreatorNavigation)
                     .WithMany(p => p.Conversations)

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Managegment.Controllers
 {
+    
     [Produces("application/json")]
     [Route("api/Messages")]
     public class MessagesController : Controller
@@ -31,21 +32,22 @@ namespace Managegment.Controllers
                 var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
-                
-                var result = await db.Participations.Where(w => w.UserId == userId
-                     && w.IsDelete == false
-                     && w.Archive == false &&
-                     (w.Conversation.Creator != userId ||
-                     (w.Conversation.Creator == userId && w.Conversation.Messages.Any())
-                     )).Select(s => new ConversationDTO
+                var Query = db.Participations.Where(w => w.UserId == userId
+                       && w.IsDelete == false
+                       && w.Archive == false &&
+                       (w.Conversation.Creator != userId ||
+                       (w.Conversation.Creator == userId && w.Conversation.Messages.Any())
+                       ));
+
+                var result = await Query.Select(s => new ConversationDTO
                      {
                          ConversationID = s.ConversationId,
                          IsRead = s.IsRead,
                          Subject = s.Conversation.Subject,
-                         LastSubjectBody = s.Conversation.Subject+" - " +  s.Conversation.LastSubject,
-                         DateConversation = s.Conversation.TimeStamp.Value.ToString("hh:mm dd MMM"),
+                         LastSubjectBody = (s.Conversation.Subject+" - " +  s.Conversation.LastSubject).Substring(0,40)+"....",
+                         DateConversation = s.Conversation.TimeStamp.Value.ToString("HH:mm dd MMM"),
                          TimeConversation = s.Conversation.TimeStamp.Value.ToLongTimeString(),
                          SubjectBody = s.Conversation.Body,
                          UserId = s.Conversation.Creator.ToString(),
@@ -57,8 +59,8 @@ namespace Managegment.Controllers
                          Where(w => w.Transactions.Any(a => a.IsRead == false && a.UserId == userId)).Count(),
                          IsAttachment=s.Conversation.Attachments.Any(),
                          IsArchive=s.Archive
-                     }).Skip((1 - 1) * 20).Take(20).ToListAsync();
-                    return Ok(new { Inbox= result });
+                     }).OrderByDescending(oreder=>oreder.DateConversation).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+                    return Ok(new { Inbox= result, count= Query.Count() });
                 
             }
             catch (Exception e)
@@ -73,11 +75,11 @@ namespace Managegment.Controllers
             try
             {
                 var userId = this.help.GetCurrentUser(HttpContext);
-                if (userId<=1)
+                if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
-                
+
                 var result =await db.Participations.SingleOrDefaultAsync(s => s.ConversationId == conversationId &&
                   s.UserId == userId);
                 result.IsFavorate = isFavorate;
@@ -98,7 +100,7 @@ namespace Managegment.Controllers
                 var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
                 var result = await db.Participations.SingleOrDefaultAsync(s => s.ConversationId == conversationId &&
                    s.UserId == userId);
@@ -120,9 +122,9 @@ namespace Managegment.Controllers
                 var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
-                 
+
                 var result = await db.Participations.SingleOrDefaultAsync(s => s.ConversationId == conversationId &&
                    s.UserId == userId);
                 result.IsDelete = isDelete;
@@ -140,10 +142,10 @@ namespace Managegment.Controllers
         {
             try
             {
-                 var userId = this.help.GetCurrentUser(HttpContext);
+                var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
 
                 var isReadUnread = await Read_UnRead(userId, conversationId, isReadUnRead);
@@ -165,7 +167,7 @@ namespace Managegment.Controllers
                 var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
 
                 var isReadUnread =await Read_UnRead(userId, conversationId, true);
@@ -179,6 +181,8 @@ namespace Managegment.Controllers
                     Subject = conversation.Subject,
                     Priolti = conversation.Priolti,
                     SubjectBody = conversation.Body,
+                    Replay= conversation.IsGroup,
+                    Type = conversation.AdType.AdTypeName,
                     UserName = conversation.Participations.
                     SingleOrDefault(user => user.User.UserId == conversation.Creator).User.FullName,
                     UserId = conversation.Creator,
@@ -188,7 +192,7 @@ namespace Managegment.Controllers
                         MessageID = message.MessageId,
                         Subject = message.Subject,
                         UserName = message.Author.FullName,
-                    }).ToList(),
+                    }).OrderByDescending(order=>order.DateTime).ToList(),
                     AttachmentDTOs = conversation.Attachments.Select(attachment => new AttachmentDTO()
                     {
                         AttachmentId = attachment.AttachmentId,
@@ -210,49 +214,109 @@ namespace Managegment.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
         [HttpGet("GetAllInboxSender")]
         public async Task<ActionResult> GetAllInboxSender(int page, int pageSize)
         {
             try
             {
-
                 var userId = this.help.GetCurrentUser(HttpContext);
                 if (userId <= 1)
                 {
-                    return NotFound();
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
                 }
-                var result = await db.Participations.Where(w => w.UserId == userId
-                    && w.IsDelete == false
-                    && w.Archive == false &&
-                    w.Conversation.Creator == userId
-                    ).Select(s => new ConversationDTO
-                    {
-                        ConversationID = s.ConversationId,
-                        IsRead = s.IsRead,
-                        Subject = s.Conversation.Subject,
-                        LastSubjectBody = s.Conversation.Subject + " - " + s.Conversation.LastSubject,
-                        DateConversation = s.Conversation.TimeStamp.Value.ToString("hh:mm dd MMM"),
-                        TimeConversation = s.Conversation.TimeStamp.Value.ToLongTimeString(),
-                        SubjectBody = s.Conversation.Body,
-                        UserId = s.Conversation.Creator.ToString(),
-                        UserName = s.Conversation.Participations.
-                        SingleOrDefault(w => w.User.UserId == s.Conversation.Creator).User.FullName,
-                        IsFavorate = s.IsFavorate,
-                        Priolti = s.Conversation.Priolti,
-                        MessageCountNotRead = s.Conversation.Messages.
-                        Where(w => w.Transactions.Any(a => a.IsRead == false && a.UserId == userId)).Count(),
-                        IsAttachment = s.Conversation.Attachments.Any(),
-                        IsArchive = s.Archive
-                    }).Skip((1 - 1) * 20).Take(20).ToListAsync();
-                return Ok(new { sent =result});
-                 
+                var Query =  db.Participations.Where(w => w.UserId == userId
+                     && w.IsDelete == false
+                     && w.Archive == false &&
+                     w.Conversation.Creator == userId
+                    );
+                var result =await Query.Select(s => new ConversationDTO
+                {
+                    ConversationID = s.ConversationId,
+                    IsRead = s.IsRead,
+                    Subject = s.Conversation.Subject,
+                    LastSubjectBody = (s.Conversation.Subject + " - " + s.Conversation.LastSubject).Substring(0, 40)+"....",
+                    DateConversation = s.Conversation.TimeStamp.Value.ToString("hh:mm dd MMM"),
+                    TimeConversation = s.Conversation.TimeStamp.Value.ToLongTimeString(),
+                    SubjectBody = s.Conversation.Body,
+                    UserId = s.Conversation.Creator.ToString(),
+                    UserName = s.Conversation.Participations.
+                    SingleOrDefault(w => w.User.UserId == s.Conversation.Creator).User.FullName,
+                    IsFavorate = s.IsFavorate,
+                    Priolti = s.Conversation.Priolti,
+                    MessageCountNotRead = s.Conversation.Messages.
+                    Where(w => w.Transactions.Any(a => a.IsRead == false && a.UserId == userId)).Count(),
+                    IsAttachment = s.Conversation.Attachments.Any(),
+                    IsArchive = s.Archive,
+                }).OrderByDescending(oreder => oreder.DateConversation).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+                return Ok(new { sent =result, count = Query.Count() });
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
 
+        }
+        [HttpPost("ReplayMessages")]
+        public async Task<ActionResult> ReplayMessages([FromBody] ReplayMessageDTO replayMessageDTO)
+        {
+            try
+            {
+                var userId = this.help.GetCurrentUser(HttpContext);
+                if (userId <= 1)
+                {
+                    return StatusCode(401, "الرجاء الـتأكد من أنك قمت بتسجيل الدخول");
+                }
+                var getUsersInConversation = await db.Participations.Where(w => w.ConversationId == replayMessageDTO.ConversationId &&
+                   w.IsDelete == false && w.UserId != userId).ToListAsync();
+                foreach (var item in getUsersInConversation)
+                {
+                    if (item.Archive == true)
+                    {
+                        item.Archive = false;
+                    }
+                    item.IsRead = false;
+                    db.Entry(item).State = EntityState.Modified;
+                }
+                var messgarId = await saveMessages(replayMessageDTO, userId);
+                foreach (var item in getUsersInConversation)
+                {
+                    await saveTransactions(item.UserId, messgarId);
+                }
+                await db.SaveChangesAsync();
+                return Ok(new{status =true});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private async Task<string> saveMessages(ReplayMessageDTO replayMessageDTO,long userId)
+        {
+            var messageId = Guid.NewGuid().ToString();
+            await db.Messages.AddAsync(new Messages()
+            {
+                AuthorId = userId,
+                ConversationId = replayMessageDTO.ConversationId,
+                DateTime = DateTime.Now,
+                MessageId = messageId,
+                Subject = replayMessageDTO.MessageReplay,
+            });
+            return messageId;
+        }
+
+        private async Task saveTransactions(long userReciveId,
+           string messageId)
+        {
+            await db.Transactions.AddAsync(new Transactions()
+            {
+                IsRead = false,
+                MessageId = messageId,
+                TimeStamp = DateTime.Now,
+                TransactionId = Guid.NewGuid().ToString(),
+                UserId = userReciveId,
+            });
         }
 
         private async Task<bool> Read_UnRead(long userId,string conversationId,bool isReadUnRead )
@@ -270,6 +334,8 @@ namespace Managegment.Controllers
             db.Entry(result).State = EntityState.Modified;
             return true;
         }
+
+        
          
     }
 }

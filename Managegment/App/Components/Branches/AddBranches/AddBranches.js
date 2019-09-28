@@ -11,10 +11,7 @@
             form: {
                 Name: '',
                 Description: ''
-            
             },
-          
-         
         };
     },
     methods: {
