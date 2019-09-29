@@ -1,0 +1,67 @@
+﻿<main class="app-content" >
+    <add-AdTypes v-if="state==1"></add-AdTypes>
+    <edit-AdTypes v-if="state==2"></edit-AdTypes>
+    <div class="app-title" v-if="state==0">
+        <div>
+            <h1><i class="fa fa-th-list"></i> نوع الرساله</h1>
+            <!--<p>This table shows Branches used in the system</p>-->
+        </div>
+        <!--<ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
+        </ul>-->
+    </div>
+    <div class="row" v-if="state==0">     
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="AddButton">
+                        <el-button  type="primary"
+                                   class="btn btn-primary" @click.prevent="RedirectToAddComponent()">إضافة إدارة/ فرع</el-button>
+                    </div>
+                
+                  
+                    <div v-if="AdTypes==0">
+                        <el-alert title="Oops! No country data"
+                                  type="info">
+                        </el-alert>
+                    </div>
+
+                    <table class="table table-hover table-bordered" id="sampleTable" v-if="AdTypes!=0">
+                        <thead>
+                            <tr>
+                                <th>نوع الرسالة</th>
+                                <th>العمليات</th>
+                            </tr>
+                        
+                        </thead>
+                        <tbody>
+                            <tr v-for="AdType in AdTypes">
+                                <td>{{AdType.adTypeName}}</td>
+                               
+                                
+                                <td>
+                                    <!--countryId-->
+                                    <a href="#" @click.prevent="EditAdTypes(AdType)">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </a>
+                                  
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <el-pagination background
+                                       layout="prev, pager, next"
+                                       :current-page="pageNo"
+                                       :page-size="pageSize"
+                                       :total="pages"
+                                       @current-change="GetAdTypes($event)">
+                        </el-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

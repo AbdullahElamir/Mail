@@ -10,7 +10,7 @@ namespace Managegment.Models
             Conversations = new HashSet<Conversations>();
         }
 
-        public string AdTypeId { get; set; }
+        public long AdTypeId { get; set; }
         public string AdTypeName { get; set; }
         public short? Status { get; set; }
         public DateTime? CreatedOn { get; set; }
