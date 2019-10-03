@@ -19,7 +19,7 @@ namespace Managegment.Models
         public string LoginName { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
-        public short UserType { get; set; }
+        public short? UserType { get; set; }
         public string Email { get; set; }
         public short Gender { get; set; }
         public DateTime DateOfBirth { get; set; }

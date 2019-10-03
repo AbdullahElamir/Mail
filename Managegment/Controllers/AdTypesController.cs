@@ -78,7 +78,9 @@ namespace Management.Controllers
 
                 }
 
-             
+                AddAdType.CreatedBy = userId;
+                AddAdType.CreatedOn = DateTime.Now;
+                AddAdType.Status = 1;
                 db.AdTypes.Add(AddAdType);
                 db.SaveChanges();
                 return Ok("لقد قمت بتسـجيل نوع الرساله بنــجاح");

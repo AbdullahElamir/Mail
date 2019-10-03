@@ -6,15 +6,12 @@
     },
     data() {
         return {
-                      form: {
-                          Password: '',
-              
-                          NewPassword: '',
+
+            form: {
+                Password: '',
+                NewPassword: '',
             },
             ConfimPassword: '',
-           
-       
-
 
         };
     },

@@ -12,6 +12,17 @@
     },
   
     methods: {
+
+        Logout() { 
+            this.$http.logout()
+                .then(response => {
+                    window.location.href='/Security/Login';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
         href(path) {
             if (this.ProfileMenu === 'dropdown-menu settings-menu dropdown-menu-right') {
                 this.ProfileMenu = 'dropdown-menu settings-menu dropdown-menu-right show';

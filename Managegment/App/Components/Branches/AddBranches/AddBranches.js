@@ -1,7 +1,7 @@
 ﻿export default {
     name: 'AddBranches',    
     created() {
-       
+        this.form.BranchLevel=this.$parent.permissionModale;
     },
     data() {
         return {
@@ -10,7 +10,8 @@
             pages: 0,
             form: {
                 Name: '',
-                Description: ''
+                Description: '',
+                BranchLevel:0,
             },
         };
     },
@@ -20,6 +21,7 @@
         },
 
         Save() {
+            this.form.BranchLevel=this.$parent.permissionModale;
             if (!this.form.Name) {
                 this.$message({
                     type: 'error',

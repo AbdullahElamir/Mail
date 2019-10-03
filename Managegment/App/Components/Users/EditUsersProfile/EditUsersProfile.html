@@ -1,128 +1,180 @@
-﻿<div class="content" dir="rtl">
+﻿<div class="app-content" dir="rtl">
+
+    <!--Title-->
+    <div class="app-title">
+
+        <div>
+
+            <h1>
+                <i class="fa fa-list" style="font-size:25px;margin-left:15px"></i>
+                البيانات الشخصية
+            </h1>
+
+        </div>
+
+    </div>
+
     <div class="row">
-        <div class="col-12 col-md-8" style="height: auto">
-            <div class="card" style="height: auto" >
-                <div class="card-header card-header-primary card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-bars" aria-hidden="true" style="color:white;"></i>
-                    </div>   <h4 class="card-title">تعديل البيانات</h4>
+
+        <div class="col-12" style="height: auto">
+
+            <div class="card" style="height: auto">
 
 
-                </div>
-                <div class="card-body">
+                <div class="content" style="color:black!important">
+
                     <form>
+
                         <div class="row">
+
                             <div class="col-md-5 pr-1">
+
                                 <div class="position-relative form-group">
+
                                     <label class="">الإسم التلاتي </label>
-                                    <input  type="text" class="form-control" v-model="form.FullName"  placeholder="الإسم التلاتي" disabled>
+
+                                    <input type="text" class="form-control" v-model="form.FullName" placeholder="الإسم التلاتي" disabled>
+
                                 </div>
+
                             </div>
+
                             <div class="col-md-3 px-1">
+
                                 <div class="position-relative form-group">
+
                                     <label class="">اسم الدخول</label><input type="text" disabled class="form-control" v-model="form.LoginName" placeholder="اسم الدخول">
+
                                 </div>
-                            </div><div class="col-md-4 pl-1">
+
+                            </div>
+
+                            <div class="col-md-4 pl-1">
+
                                 <div class="position-relative form-group">
+
                                     <label class="">الايميل</label>
+
                                     <input placeholder="Email" type="email" class="form-control" v-model="form.Email">
+
                                 </div>
+
                             </div>
-                        </div><div class="row">
-    <div class="col-md-4 pr-1">
-        <div class="position-relative form-group">
-            <label class="">الجنس</label>
-            <div class="form-group">
-                <el-select style="width: 100%;" filterable placeholder="الجنس" v-model="form.Gender" disabled>
-                    <el-option style="border-radius: 0.25rem 0.25rem 0 0;" v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
-                               :key="item.id"
-                               :label="item.Gender"
-                               :value="item.id">
-                    </el-option>
-                </el-select>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 pl-1">
-        <div class="position-relative form-group">
-            <label class="">تاريخ الميلاد</label>
-            <div class="block">
-                <el-date-picker v-model="form.DateOfBirth"
-                                type="date"
-                                placeholder="تاريخ الميلاد" style="width:100%;" disabled>
-                </el-date-picker>
-            </div>
-        </div>
-    </div>   <div class="col-md-4 px-1">
-        <div class="position-relative form-group">
-            <label class="">رقم الهاتف</label><input type="text"  class="form-control" v-model="form.Phone" placeholder="رقم الهاتف">
-        </div>
-    </div>
 
-</div>                    <div class="position-relative form-group">
-
-                            <div class="row">
-                                <div class="col-md-6 pr-1">
-                                    <div class="position-relative form-group">
-                                        <label class="">الصلاحيه</label>
-                                        <div class="form-group">
-
-                                            <input disabled placeholder="الصلاحيه" type="text" class="form-control" v-model="form.UserType">
-
-                                        </div>
-                                    </div>
-                                </div><div class="col-md-6 pl-1" v-if="loginDetails.userType==3">
-    <div class="position-relative form-group">
-        <label class="" >المكتب</label>
-        <input disabled placeholder="المكتب" type="text" class="form-control" v-model="form.OfficeName">
-    </div>
-</div>
-                            </div>
                         </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4 pr-1">
+
+                                <div class="position-relative form-group">
+
+                                    <label class="">الجنس</label>
+
+                                    <div class="form-group">
+
+                                        <el-select style="width: 100%;" filterable placeholder="الجنس" v-model="form.Gender" disabled>
+
+                                            <el-option style="border-radius: 0.25rem 0.25rem 0 0;" v-for="item in [{id:1,Gender:'ذكـر'},{id:2,Gender:'انـثي'}]"
+                                                       :key="item.id"
+                                                       :label="item.Gender"
+                                                       :value="item.id">
+                                            </el-option>
+
+                                        </el-select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 pl-1">
+
+                                <div class="position-relative form-group">
+
+                                    <label class="">تاريخ الميلاد</label>
+
+                                    <div class="block">
+
+                                        <el-date-picker v-model="form.DateOfBirth"
+                                                        type="date"
+                                                        placeholder="تاريخ الميلاد" style="width:100%;" disabled>
+                                        </el-date-picker>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 px-1">
+
+                                <div class="position-relative form-group">
+
+                                    <label class="">رقم الهاتف</label><input type="text" class="form-control" v-model="form.Phone" placeholder="رقم الهاتف">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>الصلاحيه</label>
+
+                                    <input disabled placeholder="الصلاحيه" type="text" class="form-control" v-model="form.UserType">
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="position-relative form-group">
+
+                                    <div class="form-group UploadButton">
+                                            
+                                        <label for="file-upload" class="custom-file-upload">
+                                                
+                                            <i class="fa fa-cloud-upload"></i>
+                                                تـغير الصورة
+                                            
+                                        </label>
+                                            
+                                        <input accept="image/jpg" @change="FileChanged($event)" id="file-upload" type="file" />
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
                         <div class="card-footer justify-content-center" dir="ltr">
 
-                            <button class="btn btn-rose pull-right" @click.prevent="Save()" >تـعديل</button>
+                            <button class="btn btn-rose pull-right" @click.prevent="Save()">تـعديل</button>
+
                         </div>
 
-
                     </form>
+
                 </div>
-            </div>
-        </div><div class="col-12 col-md-4">
-            <div class="card-user card">
-                <div class="image">
-                    <img src="/img/bg5.056eb058.jpg" alt="...">
-                </div><div class="card-body">
-    <div class="author">
-        <a href="#">
 
-            <img class="avatar border-gray" :src="'http://localhost:443/Api/Admin/User/' + loginDetails.userId + '/image'" />
-            <h5 class="title"> {{loginDetails.fullName}}</h5>
-
-        </a> <p class="description">{{loginDetails.loginName}}</p>
-    </div><p class="description text-center" v-if="loginDetails.userType==1">الـمستخدم {{loginDetails.loginName}} لديه صلاحيات الادارة بالكامل</p>
-    <p class="description text-center" v-if="loginDetails.userType==2">الـمستخدم {{loginDetails.loginName}} لديه صلاحيات الشهائد العامة</p>
-    <p class="description text-center" v-if="loginDetails.userType==5">الـمستخدم {{loginDetails.loginName}} لديه صلاحيات إيقاف متوفي</p>
-    <p class="description text-center" v-if="loginDetails.userType==3">
-        الـمستخدم {{loginDetails.loginName}} لديه صلاحيات
-        <label class="" v-if="loginDetails.officeType==1"> المكتب الرئيسي</label>
-        <label class="" v-if="loginDetails.officeType==2"> المكتب الاصدار</label>
-        <label class="" v-if="loginDetails.officeType==3"> المكتب التوثيق</label>
-        <label class="" v-if="loginDetails.officeType==4"> مكتب سجلات المدنية</label>
-        "{{loginDetails.officeName}}"
-    </p>
-    <p class="description text-center" v-if="loginDetails.userType==4">الـمستخدم {{loginDetails.loginName}} لديه صلاحيات البحث العام</p>
-</div><hr><div class="button-container">
-    
-        <div class="form-group UploadButton">
-            <label for="file-upload" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i> تـغير الصورة
-            </label>
-            <input accept="image/jpg" @change="FileChanged($event)" id="file-upload" type="file" />
-        </div>
-   
-</div>
             </div>
+
         </div>
+
+
     </div>
+
 </div>

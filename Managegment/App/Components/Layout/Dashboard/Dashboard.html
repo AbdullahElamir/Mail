@@ -1,56 +1,153 @@
 ﻿<div>
+
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+
     <aside class="app-sidebar">
+
+        <!--USER INFO-->
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+
+            <img class="app-sidebar__user-avatar"
+                 style="height:50px;"
+                 alt="User Image"
+                 :src="'http://localhost:4810/Api/Admin/User/' + loginDetails.userId + '/image'" />
+
             <div>
-                <p class="app-sidebar__user-name">John Doe</p>
-                <p class="app-sidebar__user-designation">Frontend Developer</p>
+
+                <p class="app-sidebar__user-name">{{loginDetails.fullName.slice(0,20)}}</p>
+
+                <p class="app-sidebar__user-designation" v-if="loginDetails.userType==1">مدير النظام</p>
+
+                <p class="app-sidebar__user-designation" v-if="loginDetails.userType==2">موظف</p>
+
+
             </div>
+            
+
+
         </div>
+
+        <!--NEW MESSSAGE-->
+        <div align="center" style="padding:10px">
+            
+            <el-button type="success"
+                       @click.prevent="href('NewMessage')"
+                       href="bootstrap-components.html"
+                       icon="el-icon-plus"
+                       round style="background-color:#009688;
+                       border:none;outline:none"> 
+                        
+                        انشاء تعميم 
+            </el-button>
+        
+        </div>
+
+        <!--MENU-->
         <ul class="app-menu">
-            <li><a class="app-menu__item active" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-            <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
-                    <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-                    <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
-                    <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
-                </ul>
+
+            <li @click="active = 1" :class="{'active':1 == active}">
+
+                <a class="app-menu__item active" href="#" @click.prevent="href('/')">
+
+                    <i class="app-menu__icon fa fa-dashboard"></i>
+
+                    <span class="app-menu__label">
+
+                        الصفحة الرئيسية
+
+                    </span>
+
+                </a>
+
             </li>
-            <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>
-            <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Forms</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="form-components.html"><i class="icon fa fa-circle-o"></i> Form Components</a></li>
-                    <li><a class="treeview-item" href="form-custom.html"><i class="icon fa fa-circle-o"></i> Custom Components</a></li>
-                    <li><a class="treeview-item" href="form-samples.html"><i class="icon fa fa-circle-o"></i> Form Samples</a></li>
-                    <li><a class="treeview-item" href="form-notifications.html"><i class="icon fa fa-circle-o"></i> Form Notifications</a></li>
-                </ul>
+
+            <li @click="active = 2" :class="{'active':2 == active}">
+
+                <a class="app-menu__item" href="#" @click.prevent="href('/Inbox')">
+
+                    <i class="app-menu__icon fa fa-inbox"></i>
+
+                    <span class="app-menu__label">
+
+                        صندوق الوارد
+
+                    </span>
+
+                    <span class="badge badge-danger pull-left">2</span>
+
+                </a>
+
             </li>
-            <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i>
-                <span class="app-menu__label">Tables</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>
-                    <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>
-                </ul>
+
+            <li @click="active = 3" :class="{'active':3 == active}">
+
+                <a class="app-menu__item" href="" @click.prevent="href('/Sent')">
+
+                    <i class="app-menu__icon fa fa-inbox"></i>
+
+                    <span class="app-menu__label">
+
+                        صندوق المرسل
+
+                    </span>
+
+
+                </a>
+
             </li>
+
             <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text">
-                       </i><span class="app-menu__label">Pages</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+
+                <a class="app-menu__item" href="" data-toggle="treeview">
+
+                    <i class="app-menu__icon fa fa-location-arrow"></i>
+
+                    <span class="app-menu__label">
+                        إدارة النظام
+                    </span>
+
+                    <i class="treeview-indicator fa fa-angle-right"></i>
+
+                </a>
+
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>
-                    <li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>
-                    <li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
-                    <li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>
-                    <li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>
-                    <li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>
-                    <li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>
-                    <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
+
+                    <li @click="active = 4" :class="{'active':4 == active}">
+
+                        <a class="treeview-item" @click.prevent="href('/AdTypes')" href="">
+
+                            <i class="icon fa fa-circle-t"></i>
+                            نوع الرسالة
+                        </a>
+
+                    </li>
+
+                    <li @click="active = 5" :class="{'active':5 == active}">
+
+                        <a class="treeview-item" @click.prevent="href('/Branches')" href="">
+
+                            <i class="icon fa fa-circle-o"></i>
+                            إدارة المكاتب
+                        </a>
+
+                    </li>
+
+                    <li @click="active = 6" :class="{'active':6 == active}">
+
+                        <a @click.prevent="href('/Users')" class="treeview-item" href="">
+
+                            <i class="icon fa fa-circle-o"></i>
+                            إدارة المستخدمين
+                        </a>
+
+                    </li>
+
                 </ul>
+
             </li>
+
         </ul>
+
     </aside>
+
 </div>

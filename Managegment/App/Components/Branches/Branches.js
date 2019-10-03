@@ -6,6 +6,27 @@ export default {
     name: 'Branches',    
     created() {
         this.GetBranches(this.pageNo);
+        
+        this.permissions = [
+                {
+                    id: 1,
+                    name: "الإدارات"
+                },
+                {
+                    id: 2,
+                    name: 'إدارة الفروع'
+                },
+                {
+                    id: 3,
+                    name: 'مكاتب اللإصدار'
+                },
+                {
+                    id: 4,
+                    name: 'المكاتب الخدمية'
+                }
+
+        ];
+
     },
     components: {
         'add-Branches': addBranches,
@@ -27,9 +48,33 @@ export default {
             pages: 0,  
             Branches: [],
             state: 0,
+
+            permissions: [],
+            permissionModale: [],
         };
     },
     methods: {
+
+        GetBranches()
+        {
+
+            this.$blockUI.Start();
+            this.$http.GetBranchesByLevel(this.permissionModale)
+
+                .then(response => {
+                    this.$blockUI.Stop();
+                    this.Branches = response.data.branches;
+                })
+                .catch((err) => {
+                    this.$blockUI.Stop();
+                    console.error(err);
+                    this.pages = 0;
+                });
+        },
+
+
+
+
         RefreshTheTable() {
             this.GetCountries(this.pageNo);
         },
@@ -40,7 +85,7 @@ export default {
         },
 
         DeleteBranch(BranchId) {
-            this.$confirm('This will permanently delete the Branch. continue?', 'Warning', {
+            this.$confirm('أنت علي وشك القيام بحدف الإدارة / الفرع هل تريد الإستمرار ؟', 'تنبيه', {
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             type: 'warning'

@@ -197,6 +197,36 @@ namespace Management.Controllers
         }
 
 
+        [HttpGet("GetBranchesByLevel")]
+        public IActionResult GetBranchesByLevel(short branchLevel)
+        {
+            try
+            {
+
+                IQueryable<Branches> BranchesQuery;
+
+                BranchesQuery = from p in db.Branches
+                                where p.Status == 1 && p.BranchLevel==branchLevel
+                                select p;
+
+                var BranchesList = (from p in BranchesQuery
+                                    orderby p.CreatedOn descending
+                                    select new Branches
+                                    {
+                                        Name = p.Name,
+                                        BranchId = p.BranchId
+
+                                    }).ToList();
+
+                return Ok(new { Branches = BranchesList });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+
 
 
     }
