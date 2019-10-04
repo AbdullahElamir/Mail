@@ -1,7 +1,11 @@
 ﻿export default {
-    name: 'AddBranches',    
+    name: 'EditAdTypes',    
     created() {
-        this.form.BranchLevel=this.$parent.permissionModale;
+       
+        var branch = this.$parent.AdTypeEditObject;
+        this.form.AdTypeName = branch.adTypeName;
+        this.form.AdTypeId = branch.adTypeId;
+       
     },
     data() {
         return {
@@ -9,10 +13,9 @@
             pageSize: 10,
             pages: 0,
             form: {
-                Name: '',
-                Description: '',
-                BranchLevel:0,
-            },
+                AdTypeName: '',
+                AdTypeId:''
+            },     
         };
     },
     methods: {
@@ -20,29 +23,21 @@
             this.$parent.state = 0;
         },
 
-        Save() {
-            this.form.BranchLevel=this.$parent.permissionModale;
-            if (!this.form.Name) {
+        Edit() {
+            if (!this.form.AdTypeName) {
                 this.$message({
                     type: 'error',
-                    message: 'الرجاء ادخال اسم المكتب'
+                    message: 'الرجاء ادخال النوع '
                 });
                 return;
             }
 
-            if (!this.form.Description) {
-                this.$message({
-                    type: 'error',
-                    message: 'الرجاء ادخال تفاصيل'
-                });
-                return;
-            }
-       
 
-            this.$http.AddBranches(this.form)
+            this.$http.EditAdTypes(this.form)
                 .then(response => {
                     this.$parent.state = 0;
-                    this.$parent.GetBranches(this.pageNo);
+                    this.$parent.GetAdTypes(this.pageNo);
+                 
                     this.$message({
                         type: 'info',
                         message: response.data
@@ -53,7 +48,8 @@
                         type: 'error',
                         message: err.response.data
                     });
-                });
+                });    
         },
+
     }    
 }

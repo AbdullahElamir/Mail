@@ -1,0 +1,30 @@
+﻿<div>
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-edit"></i>تعديل الادارة/ الفرع </h1>
+           
+        </div>
+      
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="row">
+                    <div class="col-lg-12" dir="ltr">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">النوع</label>
+                                <input class="form-control" v-model="form.AdTypeName" id="exampleInputEmail1" type="text" placeholder="اسم المكتب">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="tile-footer" style="margin-right: 50%;"><button class="btn btn-primary" type="submit" @click.prevent="Edit()">حفظ</button>
+                        <button class="btn btn-danger" type="submit" @click.prevent="Back()">رجوع</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

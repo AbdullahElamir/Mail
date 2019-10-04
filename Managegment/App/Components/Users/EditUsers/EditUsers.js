@@ -35,6 +35,7 @@
                 Email: '',
                 Gender: '',
                 DateOfBirth: '',
+                BranchId:1,
             },
             ConfimPassword: ''
 
@@ -66,35 +67,7 @@
         },
 
         Edit() {
-            //if (!this.form.LoginName) {
-            //    this.$message({
-            //        type: 'error',
-            //        message: 'الـرجاء إدخال اسم الدخول'
-            //    });
-            //    return;
-            //} else if (!this.validLoginName(this.form.LoginName)) {
-            //    this.$message({
-            //        type: 'error',
-            //        message: 'الرجاء إدخال اسم الدخول بطريقه صحيحه '
-            //    });
-            //    return;
-            //}
-
-
-            //if (!this.form.FullName) {
-            //    this.$message({
-            //        type: 'error',
-            //        message: 'الرجاء إدخال الاسم التلاثي '
-            //    });
-            //    return;
-            //} else if (!this.validFullName(this.form.FullName)) {
-            //    this.$message({
-            //        type: 'error',
-            //        message: 'الرجاء إدخال الاسم التلاثي بطريقه صحيحه '
-            //    });
-            //    return;
-            //}
-
+            this.form.BranchId=this.$parent.Users.branchId;
             if (!this.form.Email) {
                 this.$message({
                     type: 'error',
@@ -140,10 +113,9 @@
                 return;
             }
 
-            debugger;
             this.$http.EditUser(this.form)
                 .then(response => {
-
+                    
                     this.$message({
                         type: 'info',
                         message: response.data
@@ -157,7 +129,7 @@
                 .catch((err) => {
                     this.$message({
                         type: 'error',
-                        message: "error"
+                        message: err.response.data
                     });
                 });
         }

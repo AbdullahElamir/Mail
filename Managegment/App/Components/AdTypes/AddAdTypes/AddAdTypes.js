@@ -1,18 +1,17 @@
 ﻿export default {
     name: 'AddBranches',    
     created() {
-        this.form.BranchLevel=this.$parent.permissionModale;
+       
     },
     data() {
         return {
-            pageNo: 1,
-            pageSize: 10,
-            pages: 0,
+        
             form: {
-                Name: '',
-                Description: '',
-                BranchLevel:0,
+                AdTypeName: ''
+            
             },
+          
+         
         };
     },
     methods: {
@@ -21,28 +20,21 @@
         },
 
         Save() {
-            this.form.BranchLevel=this.$parent.permissionModale;
-            if (!this.form.Name) {
+            if (!this.form.AdTypeName) {
                 this.$message({
                     type: 'error',
-                    message: 'الرجاء ادخال اسم المكتب'
+                    message: 'الرجاء ادخال نوع الرسالة'
                 });
                 return;
             }
 
-            if (!this.form.Description) {
-                this.$message({
-                    type: 'error',
-                    message: 'الرجاء ادخال تفاصيل'
-                });
-                return;
-            }
+
        
 
-            this.$http.AddBranches(this.form)
+            this.$http.AddAdTypes(this.form)
                 .then(response => {
                     this.$parent.state = 0;
-                    this.$parent.GetBranches(this.pageNo);
+                    this.$parent.GetAdTypes(this.pageNo);
                     this.$message({
                         type: 'info',
                         message: response.data

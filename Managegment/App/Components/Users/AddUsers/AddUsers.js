@@ -1,8 +1,10 @@
 ﻿export default {
     name: 'AddUser',    
-    created() {
-    
+    created() 
+    {
+        this.BranchId=this.$parent.BrancheModel;
     },
+    
     data() {
         return {
             pageNo: 1,
@@ -10,23 +12,25 @@
             pages: 0,
 
             form: {
+                UserId:0,
                 LoginName: '',
-                Password: null,
+                Password: '',
                 FullName: '',
-                UserType: '',
+                UserType: 0,
                 Email: '',
                 Gender: '',
                 Phone:'',
                 DateOfBirth: '',
-                Status: 0,  
+                Status: 0, 
+                BranchId:1,
+                
               
             },         
             ConfimPassword: '', 
-            
-            //PermissionLable:this.$parent.persmissonLable
         };
     },
     methods: {
+        
         Back() {
             this.$parent.UserType = 0;
             this.$parent.GetUsers();
@@ -65,7 +69,7 @@
 
         Save() {   
             this.form.UserType = this.$parent.UserType;   
-            this.form.BranchId = this.$parent.BrachId;   
+            this.form.BranchId=this.$parent.BrancheModel;
             if (!this.form.LoginName) {
                 this.$message({
                     type: 'error',
@@ -179,8 +183,8 @@
                 return;
             }
 
-        
-
+            
+            console.log(this.form)
             this.$http.AddUser(this.form)
                 .then(response => {
                     this.$parent.state = 0;

@@ -2,22 +2,31 @@
 import AppFooter from './AppFooter/AppFooter.vue';
 import Dashboard from './Dashboard/Dashboard.vue';
 import 'expose-loader?$!expose-loader?jQuery!jquery';
+
 export default {
+    
     name: 'layout',   
-    components: {
+    
+    components: 
+    {
         'app-header': AppHeader,
         'app-footer': AppFooter,
         'app-dasboard': Dashboard,
-       
     },
-    created() {
-     
+    
+    created() 
+    {
         this.$blockUI.$loading = this.$loading;
         var loginDetails = sessionStorage.getItem('currentUser');
+        
         this.loginDetails = JSON.parse(loginDetails);
-        if (loginDetails != null) {
+        
+        if (loginDetails != null) 
+        {
             this.loginDetails = JSON.parse(loginDetails);
-        } else {
+        } 
+        else 
+        {
             window.location.href = '/Security/Login';
         }
 

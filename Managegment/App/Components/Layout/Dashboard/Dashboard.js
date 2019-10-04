@@ -5,6 +5,18 @@
         console.log(route);
         this.pathChange(route);
 
+        var loginDetails = sessionStorage.getItem('currentUser');
+        this.loginDetails = JSON.parse(loginDetails);
+        if (loginDetails != null) {
+            this.loginDetails = JSON.parse(loginDetails);
+            //if (this.loginDetails.userType == 5) {
+            //    this.ColorCode = '#933c3c';
+            //    this.ColorCode1 = '#933c31';
+            //}
+        } else {
+            window.location.href = '/Security/Login';
+        }
+
 
     },
     data() {
@@ -15,18 +27,36 @@
     },
   
     methods: {
-        pathChange(route) {
-            if (route == "Companies") {
+        
+        pathChange(route) 
+        {
+            
+            if (route == "/") 
+            {
+                this.active = 1;
+            } 
+            else if (route == "Inbox") 
+            {
                 this.active = 2;
-            } else if (route == "Students") {
+            } 
+            else if (route == "Sent") 
+            {
                 this.active = 3;
-            } else if (route == "Packages") {
+            }
+            else if (route == "AdTypes") 
+            {
                 this.active = 4;
-            } else if (route =="SubPackages") { 
+            }
+            else if (route == "Branches") 
+            {
                 this.active = 5;
-            } else if (route == "Courses") { 
+            }
+            else if (route == "Users") 
+            {
                 this.active = 6;
-            } else {
+            }
+            else 
+            {
                 this.active = 1;
             }
         },

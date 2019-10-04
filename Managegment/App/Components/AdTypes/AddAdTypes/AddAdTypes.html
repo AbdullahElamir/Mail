@@ -5,13 +5,13 @@
 
         <h1>
             <i class="fa fa-edit" style="font-size:25px;margin-left:15px"></i>
-            اضافه الادارة/ الفرع
+            اضافه نوع
         </h1>
 
     </div>
 
     <div class="row">
-        
+
         <div class="col-md-12">
 
             <div class="card">
@@ -22,43 +22,27 @@
                     <h1 style="margin-top:10px">
 
                         <i class="fa fa-list" dir="rtl" style="font-size:25px;margin-left:10px;"></i>
-                        بيانات الادارة/ الفرع
+                        بيانات النوع
 
                     </h1>
 
                 </div>
 
+                <!--Content-->
                 <div class="content" style="color:black!important">
 
                     <form>
 
-                        <!--Name Branch/Mangment-->
+                        <!--AdType Name-->
                         <div class="row">
 
                             <div class="col-md-12">
 
                                 <div class="form-group">
 
-                                    <label for="exampleInputEmail1">اسم الادارة/ الفرع</label>
+                                    <label for="exampleInputEmail1">النوع</label>
 
-                                    <input class="form-control" v-model="form.Name" id="exampleInputEmail1" type="text" placeholder="اسم المكتب">
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!--Discreption-->
-                        <div class="row">
-
-                            <div class="col-md-12">
-
-                                <div class="form-group">
-
-                                    <label for="exampleTextarea">معــلومات</label>
-                                    
-                                    <textarea placeholder="معــلومات" class="form-control" v-model="form.Description" id="exampleTextarea" rows="3"></textarea>
+                                    <input class="form-control" v-model="form.AdTypeName" id="exampleInputEmail1" type="text" placeholder="النوع">
 
                                 </div>
 
@@ -68,21 +52,21 @@
 
                         <!--Add / Back-->
                         <div class="tile-footer" style="margin-right: 50%;">
-                            
+
                             <button class="btn btn-primary" type="submit" @click.prevent="Save()">حفظ</button>
-                            
+
                             <button class="btn btn-danger" type="submit" @click.prevent="Back()">رجوع</button>
-                        
+
                         </div>
 
                     </form>
 
                 </div>
-
+                 
             </div>
-            
+
         </div>
-    
+
     </div>
 
 </div>

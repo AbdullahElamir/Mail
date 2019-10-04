@@ -26,8 +26,11 @@ export default {
     },
 
     AddUser(User) {
+        //axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        //return axios.post( 'api/admin/User/AddUser', User);
+
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-        return axios.post( 'api/admin/User/AddUser', User);
+        return axios.post(baseUrl + '/Admin/User/AddUser', User);
     },
     ActivateUser(UserId) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
@@ -37,6 +40,12 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.post(baseUrl + `/admin/User/${UserId}/Deactivate`);
     },
+
+    DeleteUser(UserId) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post(baseUrl + `/admin/User/${UserId}/delete`);
+    },
+
     EditUser(User) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         console.log(User);
@@ -47,11 +56,21 @@ export default {
 
         return axios.post(baseUrl + '/Admin/User/EditUsersProfile', User);
     },
+    GetUsersByLevel(pageNo, pageSize, permissionModale) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(baseUrl + `/admin/User/GetUsersByLevel?pageno=${pageNo}&pagesize=${pageSize}&BranchLevel=${permissionModale}`);
+    },
+
+    GetUserByBranch(pageNo, pageSize, BrancheModel) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(baseUrl + `/admin/User/GetUsersByBranch?pageno=${pageNo}&pagesize=${pageSize}&BrancId=${BrancheModel}`);
+    },
+
     GetUsers(pageNo, pageSize, UserType) {
-        console.log(UserType);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(baseUrl + `/admin/User/GetUsers?pageno=${pageNo}&pagesize=${pageSize}&UserType=${UserType}`);
     },
+
     UploadImage(obj) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.post(baseUrl + '/Admin/User/UploadImage', obj);
@@ -60,11 +79,25 @@ export default {
     ChangePassword(userPassword) {
         return axios.post(`/Security/ChangePassword`, userPassword);
     },
-    GetUsers(pageNo, pageSize, UserType) {
-        console.log(UserType);
+
+
+    //*******************************************  AdTypes Service *********************************
+    GetAdTypes(pageNo, pageSize) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-        return axios.get( `api/admin/User/GetUsers?pageno=${pageNo}&pagesize=${pageSize}&UserType=${UserType}`);
+        return axios.get(`/Api/Admin/AdTypes/Get?pageno=${pageNo}&pagesize=${pageSize}`);
     },
+
+
+
+    AddAdTypes(AdTypes) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post(`/Api/Admin/AdTypes/Add`, AdTypes);
+    },
+    EditAdTypes(AdTypes) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post(`/Api/Admin/AdTypes/Edit`, AdTypes);
+    },
+
     //*******************************************  Branches Service *********************************
     GetBranches(pageNo, pageSize) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
@@ -145,6 +178,11 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/getMessageFilter?page=${page}&pagesize=${pageSize}&messageTypeFilter=${messageTypeFilter}&filterType=${filterType}&inputMessgeText=${inputMessgeText}`);
     }
+
+    GetBranchesByLevel(BranchLevel) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/Admin/Branches/GetBranchesByLevel?branchLevel=${BranchLevel}`);
+    },
 
     
 }

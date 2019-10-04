@@ -30,9 +30,7 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.AdTypeId);
 
-                entity.Property(e => e.AdTypeId)
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
+               
             });
 
             modelBuilder.Entity<Attachments>(entity =>
