@@ -37,10 +37,6 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.AdTypeId);
 
-                entity.Property(e => e.AdTypeId)
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
@@ -60,18 +56,17 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.AttachmentId);
 
-                entity.Property(e => e.AttachmentId)
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ContentFile).HasColumnType("binary(100)");
-
-                entity.Property(e => e.ConversationId).HasMaxLength(128);
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Conversation)
                     .WithMany(p => p.Attachments)
                     .HasForeignKey(d => d.ConversationId)
                     .HasConstraintName("FK_Attachments_Conversations");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.Attachments)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK_Attachments_Users");
             });
 
             modelBuilder.Entity<Branches>(entity =>
@@ -91,12 +86,7 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.ConversationId);
 
-                entity.Property(e => e.ConversationId)
-                    .HasColumnName("ConversationID")
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AdTypeId).HasMaxLength(128);
+                entity.Property(e => e.ConversationId).HasColumnName("ConversationID");
 
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
 
@@ -115,12 +105,7 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.MessageId);
 
-                entity.Property(e => e.MessageId)
-                    .HasColumnName("MessageID")
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ConversationId).HasMaxLength(128);
+                entity.Property(e => e.MessageId).HasColumnName("MessageID");
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
@@ -138,8 +123,6 @@ namespace Managegment.Models
             modelBuilder.Entity<Participations>(entity =>
             {
                 entity.HasKey(e => new { e.ConversationId, e.UserId });
-
-                entity.Property(e => e.ConversationId).HasMaxLength(128);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -162,12 +145,7 @@ namespace Managegment.Models
             {
                 entity.HasKey(e => e.TransactionId);
 
-                entity.Property(e => e.TransactionId)
-                    .HasColumnName("TransactionID")
-                    .HasMaxLength(128)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.MessageId).HasMaxLength(128);
+                entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
 
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
 

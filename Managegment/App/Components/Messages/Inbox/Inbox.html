@@ -1,57 +1,60 @@
 ﻿    <main class="app-content" dir="rtl">
     <message-Display v-if="state==2" :ConversationId="conversationId"></message-Display>
 
-      
-        <div v-if="inbox==0">
+   
+    <template >
+        <div class="Inbox" v-if="state==1">
+            <div class="row">
 
-            <table class="table table-inbox  " style="background-color: white;text-align: center;">
-                <tbody>
-                    <tr style="cursor:none">
-                        <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
-                            <span class="fa fa-envelope"> </span> <span class="">  لايوجد رسائل في الصندوق الوارد   </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <template v-if="inbox!=0">
-            <div class="Inbox" v-if="state==1">
-                <div class="row">
-              
-                    <div class="el-col-24">
-                        <div class="card-header card-header-primary card-header-icon" style="border: 1px solid #009688;">
+                <div class="el-col-24">
 
-                            <h1 style="margin-top:10px">
-
-                                <i class="fa fa-inbox" dir="rtl" style="font-size:25px;margin-left:10px;"></i>
-                                صندوق الوارد
-
-                            </h1>
-
-                        </div>
-                        <div class="tile" style="height:auto;min-height:80vh">
-                            <div class="tile-title">
-                                <div class="row">
-                                    <div style="margin-right:20px;margin-left:10px;">
-                                        <i class="fa fa-refresh"></i>
-                                    </div>
-                                    <div style="margin-right:10px;margin-left:50px;">
-                                        <el-dropdown>
-                                            <span class="el-dropdown-link">
-                                                فلترة العناصر  <i class="el-icon-arrow-down el-icon--right"></i>
-                                            </span>
-                                            <el-dropdown-menu slot="dropdown" style="margin-top:-45px;">
-                                                <el-dropdown-item command="a">كل</el-dropdown-item>
-                                                <el-dropdown-item command="b">غير مقروء</el-dropdown-item>
-                                                <el-dropdown-item command="c">مقروء</el-dropdown-item>
-                                                <el-dropdown-item divided command="d">ترتيب تصاعدي</el-dropdown-item>
-                                                <el-dropdown-item command="e">ترتيب تنازلي</el-dropdown-item>
-                                            </el-dropdown-menu>
-                                        </el-dropdown>
-                                    </div>
+                    <div class="tile" style="height:auto;min-height:80vh">
+                        <div class="tile-title">
+                            <div class="row">
+                                <div style="margin-right:20px;margin-left:10px;">
+                                    <a href="#" @click="RefreshInpox"> <i class="fa fa-refresh"></i></a>  
                                 </div>
-                            </div>
+                                <div style="margin-right:10px;margin-left:50px;">
 
+                                    <el-select v-model="filter" placeholder="فلترة العناصر" @change="filterMessage">
+                                        <el-option key="0"
+                                                   label="كل"
+                                                   value="0">
+                                        </el-option>
+                                        <el-option key="2"
+                                                   label="المفضلة"
+                                                   value="2">
+                                        </el-option>
+                                        <el-option key="3"
+                                                   label="مقروء"
+                                                   value="3">
+                                        </el-option>
+                                        <el-option key="4"
+                                                   label="غير مقروء"
+                                                   value="4">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <div>
+                                    <el-input placeholder="بحث عن رسالة" v-model="messageFiltter"  @change="filterMessage"
+                                              prefix-icon="el-icon-search">
+                                    </el-input>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <template v-if="inbox==0">
+                            <table class="table table-inbox  " style="background-color: white;text-align: center;">
+                                <tbody>
+                                    <tr style="cursor:none">
+                                        <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
+                                            <span class="fa fa-envelope"> </span> <span class="">  لاتوجد رسائل لعرضها   </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                        <template v-if="inbox!=0">
                             <div class="tile-body">
                                 <table class="table table-inbox  ">
                                     <tbody>
@@ -114,16 +117,18 @@
                                                    :current-page="pageNo"
                                                    :page-size="pageSize"
                                                    :total="pages"
-                                                   @current-change="GetInbox($event)">
+                                                   @current-change="getPagintion($event)">
                                     </el-pagination>
 
                                 </div>
                             </div>
-                        </div>
+                        </template>
+                     
                     </div>
-
                 </div>
-            </div>
-        </template>
 
+            </div>
+        </div>
+    </template>
+  
 </main>

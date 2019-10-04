@@ -4,6 +4,14 @@
 <script src="./Sent.js"></script>
 <style>
 
+    
+.el-popper{
+    margin-top: -46px !important;
+   
+}
+::-webkit-scrollbar { 
+    display: none; 
+}
 .fa.fa-refresh:hover{
      cursor: pointer;
      color:#409EFF;

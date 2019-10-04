@@ -9,6 +9,7 @@ namespace Managegment.Models
         {
             AdTypesCreatedByNavigation = new HashSet<AdTypes>();
             AdTypesModifiedByNavigation = new HashSet<AdTypes>();
+            Attachments = new HashSet<Attachments>();
             Conversations = new HashSet<Conversations>();
             Messages = new HashSet<Messages>();
             Participations = new HashSet<Participations>();
@@ -40,6 +41,7 @@ namespace Managegment.Models
         public Branches Branch { get; set; }
         public ICollection<AdTypes> AdTypesCreatedByNavigation { get; set; }
         public ICollection<AdTypes> AdTypesModifiedByNavigation { get; set; }
+        public ICollection<Attachments> Attachments { get; set; }
         public ICollection<Conversations> Conversations { get; set; }
         public ICollection<Messages> Messages { get; set; }
         public ICollection<Participations> Participations { get; set; }

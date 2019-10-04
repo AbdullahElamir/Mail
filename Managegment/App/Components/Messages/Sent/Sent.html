@@ -1,18 +1,8 @@
 ﻿    <main class="app-content" dir="rtl">
     <message-Display v-if="state==2" :ConversationId="conversationId"></message-Display>
-    <div v-if="sent==0">
-    <table class="table table-inbox  " style="background-color: white;text-align: center;">
-        <tbody>
-            <tr style="cursor:none">
-                <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
-                    <span class="fa fa-envelope"> </span> <span class="">  لايوجد رسائل في الصندوق المرسل   </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
+ 
 
-    <template v-if="sent!=0">
+    <template >
         <div class="Inbox" v-if="state==1">
             <div class="row">
 
@@ -22,80 +12,102 @@
                         <div class="tile-title">
                             <div class="row">
                                 <div style="margin-right:20px;margin-left:10px;">
-                                    <i class="fa fa-refresh"></i>
+                                    <a href="#" @click="RefreshInpox"> <i class="fa fa-refresh"></i></a>
                                 </div>
                                 <div style="margin-right:10px;margin-left:50px;">
-                                    <el-dropdown>
-                                        <span class="el-dropdown-link">
-                                            فلترة العناصر  <i class="el-icon-arrow-down el-icon--right"></i>
-                                        </span>
-                                        <el-dropdown-menu slot="dropdown" style="margin-top:-45px;">
-                                            <el-dropdown-item command="a">كل</el-dropdown-item>
-                                            <el-dropdown-item command="b">غير مقروء</el-dropdown-item>
-                                            <el-dropdown-item command="c">مقروء</el-dropdown-item>
-                                            <el-dropdown-item divided command="d">ترتيب تصاعدي</el-dropdown-item>
-                                            <el-dropdown-item command="e">ترتيب تنازلي</el-dropdown-item>
-                                        </el-dropdown-menu>
-                                    </el-dropdown>
+
+                                    <el-select v-model="filter" placeholder="فلترة العناصر" @change="filterMessage">
+                                        <el-option key="0"
+                                                   label="كل"
+                                                   value="0">
+                                        </el-option>
+                                        <el-option key="2"
+                                                   label="المفضلة"
+                                                   value="2">
+                                        </el-option>
+                                       
+                                    </el-select>
                                 </div>
+                                <div>
+                                    <el-input placeholder="بحث عن رسالة" v-model="messageFiltter" @change="filterMessage"
+                                              prefix-icon="el-icon-search">
+                                    </el-input>
+                                </div>
+
                             </div>
                         </div>
 
                         <div class="tile-body">
-                            <table class="table table-inbox table-hover">
-                                <tbody>
-
-                                    <template v-for="(item,index) in sent">
+                            <template v-if="sent==0">
+                                <table class="table table-inbox  " style="background-color: white;text-align: center;">
+                                    <tbody>
                                         <tr style="cursor:none">
-                                            <td class="inbox-small-cells " style="min-width:20px;max-width:20px;cursor:pointer">
-                                                <i class="fa fa-star" :plain="true" v-bind:class="{'inbox-started':item.isFavorate}" @click="IsFavorateMethod(item,index)"></i>
+                                            <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
+                                                <span class="fa fa-envelope"> </span> <span class="">  لايوجد رسائل في الصندوق المرسل   </span>
                                             </td>
-                                            <td class="inbox-small-cells" style="min-width:60px;max-width:80px;">
-                                                <span class="">{{item.dateConversation}}</span>
-                                            </td>
-                                            <td class="view-message  dont-show" style="cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">{{item.userName}}</td>
-                                            <td><span class="badge badge-danger">{{item.priolti}}</span></td>
-
-                                            <td class="view-message" style="min-width:120px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)"> {{item.lastSubjectBody}}</td>
-                                            <td style="min-width:50px;max-width:50px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">
-                                                <span class="badge badge-success" v-if="item.messageCountNotRead>0" style="word-spacing:2px;">
-                                                    {{item.messageCountNotRead}}
-                                                    <span style="letter-spacing:2px">ردود</span>
-                                                </span>
-                                            </td>
-                                            <td class="view-message  inbox-small-cells">
-                                                <i class="fa" v-bind:class=" {'fa-paperclip':item.isAttachment}"></i>
-                                            </td>
-
-                                            <td class="view-message  text-right" style="min-width:20px;max-width:20px;">
-                                                <a href="#" v-on:click="DeleteInbox(index,item)">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
-                                            </td>
-                                            <td class="view-message text-right" style="min-width:20px;max-width:20px;">
-                                                <a href="#" v-on:click="ArchaveInbox(index,item)">
-                                                    <i class="fa fa-archive"></i>
-                                                </a>
-                                            </td>
-
-
                                         </tr>
-                                    </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                           
+                            <template v-if="sent!=0">
+                                <table class="table table-inbox table-hover">
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                        <template v-for="(item,index) in sent">
+                                            <tr style="cursor:none">
+                                                <td class="inbox-small-cells " style="min-width:20px;max-width:20px;cursor:pointer">
+                                                    <i class="fa fa-star" :plain="true" v-bind:class="{'inbox-started':item.isFavorate}" @click="IsFavorateMethod(item,index)"></i>
+                                                </td>
+                                                <td class="inbox-small-cells" style="min-width:60px;max-width:80px;">
+                                                    <span class="">{{item.dateConversation}}</span>
+                                                </td>
+                                                <td class="view-message  dont-show" style="cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">{{item.userName}}</td>
+                                                <td><span class="badge badge-danger">{{item.priolti}}</span></td>
+
+                                                <td class="view-message" style="min-width:120px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)"> {{item.lastSubjectBody}}</td>
+                                                <td style="min-width:50px;max-width:50px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">
+                                                    <span class="badge badge-success" v-if="item.messageCountNotRead>0" style="word-spacing:2px;">
+                                                        {{item.messageCountNotRead}}
+                                                        <span style="letter-spacing:2px">ردود</span>
+                                                    </span>
+                                                </td>
+                                                <td class="view-message  inbox-small-cells">
+                                                    <i class="fa" v-bind:class=" {'fa-paperclip':item.isAttachment}"></i>
+                                                </td>
+
+                                                <td class="view-message  text-right" style="min-width:20px;max-width:20px;">
+                                                    <a href="#" v-on:click="DeleteInbox(index,item)">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="view-message text-right" style="min-width:20px;max-width:20px;">
+                                                    <a href="#" v-on:click="ArchaveInbox(index,item)">
+                                                        <i class="fa fa-archive"></i>
+                                                    </a>
+                                                </td>
 
 
-                            <div style="text-align: center; margin-top: 10px;">
-                                <el-pagination background
-                                               layout="prev, pager, next"
-                                               :current-page="pageNo"
-                                               :page-size="pageSize"
-                                               :total="pages"
-                                               @current-change="GetInbox($event)">
-                                </el-pagination>
+                                            </tr>
+                                        </template>
 
-                            </div>
+                                    </tbody>
+                                </table>
+
+
+                                <div style="text-align: center; margin-top: 10px;">
+                                    <el-pagination background
+                                                   layout="prev, pager, next"
+                                                   :current-page="pageNo"
+                                                   :page-size="pageSize"
+                                                   :total="pages"
+                                                   @current-change="GetSent($event)">
+                                    </el-pagination>
+
+                                </div>
+
+                            </template>
+                         
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,10 @@ export default {
         quillEditor
     },
     data() {
+
         return {
+
+
             form: {
                 from: "",
                 users: [],
@@ -23,6 +26,9 @@ export default {
                 priority:"",
                 dialogImageUrl: '',
                 content: "",
+                selectedOption: 3,
+                files: []
+
             },
             state: 1,
             list: [],
@@ -48,6 +54,12 @@ export default {
             dialogVisible: false,
             Prioritytexts: [' عادي ', ' متوسط ', ' مهم '],
             priorityint: null,
+            checkAll: false,
+            options: ['البريد الإلكتروني', 'رسالة نصية'],
+            isIndeterminate: false,
+            checkOptions: [],
+            selectFiles: []
+
         };
     },
     created() {
@@ -56,8 +68,57 @@ export default {
     },
 
     methods: {
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
+        handleCheckAllChange(val) {
+            
+            this.checkOptions = val ? this.options : [];
+            this.form.selectedOption = val ? 0 : null;
+            this.isIndeterminate = false;
+            
+        },
+        handleCheckedOptionChange(value) {
+            
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.options.length;
+           
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.options.length;
+            if (this.checkAll) {
+                this.form.selectedOption = 0;
+                return;
+            } else if (value[0]== this.options[0]) {
+                this.form.selectedOption = 1;
+            } else if (value[0]== this.options[1]) {
+                this.form.selectedOption = 2;
+            } else {
+                this.form.selectedOption = 3;
+            }
+
+        },
+        FileChangedTest(file, fileList) {
+        
+            console.log(file.raw);
+           
+            var $this = this;
+            var reader = new FileReader();
+            reader.readAsDataURL(file.raw);
+            reader.onload = function (e) {
+                var obj =
+                {
+                    fileName: file.raw.name,
+                    fileBase64: reader.result,
+                    type: file.raw.type
+                };
+                $this.form.files.push(obj);
+            }
+        },
+        handleRemove(file,raw) {
+            var $this = this;
+            var reader = new FileReader();
+            reader.readAsDataURL(file.raw);
+            reader.onload = function (e) {
+                $this.form.files.splice($this.form.files.indexOf(reader.result), 1);
+            }
+            console.log($this.form.files);
+            
         },
         handlePictureCardPreview(file) {
             this.form.dialogImageUrl = file.url;
@@ -117,6 +178,8 @@ export default {
         },
         SendMessage()
         {
+ 
+
             if (this.form.selectedusers.length < 1)
             {
                 this.$message({
@@ -146,9 +209,8 @@ export default {
                 });
                 return;
             }
-
+            this.$blockUI.Start();
             this.form.priority = this.Prioritytexts[this.priorityint - 1];
-            console.log(this.form.priority);
             this.$http.NewMessage(this.form)
                 .then(response => {
                     this.$message({
@@ -156,12 +218,16 @@ export default {
                         message: response.data
                     });
                     this.form = [];
+                    //window.location.href = '/Inbox';
+                    this.$router.push('/Inbox');
+                    this.$blockUI.Stop();
                 })
                 .catch((err) => {
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: "error"
                     }); 
+                    this.$blockUI.Stop();
                 });
         }
 

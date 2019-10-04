@@ -8,7 +8,8 @@ export default {
         'message-Display': MessageDisplay,
     },
     created() {
-        this.GetSent(this.pageNo);  
+      //  this.GetSent(this.pageNo);  
+        this.filterMessage();
     },
     data() {
         return {
@@ -20,10 +21,46 @@ export default {
             isRead: false,
             resultState: false,
             conversationId: "",
+            filter: "0",
+            messageFiltter: ""
         };
     },
     methods: {
-        
+        RefreshInpox() {
+            this.filter = "0";
+            this.messageFiltter = "";
+            this.filterMessage();
+
+        },
+
+        getPagintion(pageNo) {
+            this.pageNo = pageNo;
+
+            let inboxType = 1;
+            this.$blockUI.Start();
+            this.$http.FilterInbox(this.pageNo, this.pageSize, inboxType, this.filter, this.messageFiltter)
+                .then(response => {
+                    this.$blockUI.Stop();
+                    this.sent = response.data.data;
+                    this.pages = response.data.count;
+
+                    console.log(response.data);
+                })
+                .catch((err) => {
+                    this.$blockUI.Stop();
+                    this.pages = 0;
+                    this.$message({
+                        type: 'error',
+                        message: err.message.data
+                    });
+                });
+
+        },
+
+        filterMessage() {
+            this.pageNo = 1;
+            this.getPagintion(this.pageNo);
+        },
         RedirectToMessageDisplay(conversationId) {
             this.conversationId = conversationId;
             this.state = 2;

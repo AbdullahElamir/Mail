@@ -8,19 +8,21 @@ export default {
         'message-Display': MessageDisplay,
     },
     created() {
-        this.GetInbox(this.pageNo);  
+        this.filterMessage();
     },
     data() {
         return {
             state: 1,
             inbox: {},
             pageNo: 1,
-            pageSize: 20,
+            pageSize: 5,
             pages: 0,
             isAttachment: "",
             isFavorate: false,
             conversationId: "",
-            resultState:false
+            resultState: false,
+            filter: "0",
+            messageFiltter:""
         
         };
     },
@@ -38,6 +40,40 @@ export default {
         }
     },
     methods: {
+
+        RefreshInpox() {
+            this.filter = "0";
+            this.messageFiltter = "";
+            this.filterMessage();
+
+        },
+
+        getPagintion(pageNo) {
+            this.pageNo = pageNo;
+
+            let inboxType = 0;
+            this.$blockUI.Start();
+            this.$http.FilterInbox(this.pageNo, this.pageSize, inboxType, this.filter, this.messageFiltter)
+                .then(response => {
+                    this.$blockUI.Stop();
+                    this.inbox = response.data.data;
+                    this.pages = response.data.count;
+                })
+                .catch((err) => {
+                    this.$blockUI.Stop();
+                    this.pages = 0;
+                    this.$message({
+                        type: 'error',
+                        message: err.message.data
+                    });
+                });
+
+        },
+
+        filterMessage() {
+            this.pageNo = 1;
+            this.getPagintion(this.pageNo);
+        },
         RedirectToMessageDisplay(conversationId) {
             this.conversationId = conversationId;
             this.state = 2;
@@ -68,32 +104,35 @@ export default {
                     this.resultState = false;
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: err.message.data
                     }); 
                 });
         },
         
-        GetInbox(pageNo) {
-            this.pageNo = pageNo;
-            if (this.pageNo === undefined) {
-                this.pageNo = 1;
-            }
-            this.$blockUI.Start();
-            this.$http.GetInbox(this.pageNo, this.pageSize)
-                .then(response => {
-                    this.$blockUI.Stop();
-                    this.inbox = response.data.inbox;
-                    this.pages = response.data.count;
-                })
-                .catch((err) => {
-                    this.$blockUI.Stop();
-                    this.pages = 0;
-                    this.$message({
-                        type: 'error',
-                        message: response.data
-                    }); 
-                });
-        },
+        //GetInbox(pageNo) {
+            
+
+        //    this.pageNo = pageNo;
+        //    if (this.pageNo === undefined) {
+        //        this.pageNo = 1;
+        //    }
+        //    this.$blockUI.Start();
+        //    this.$http.GetInbox(this.pageNo, this.pageSize)
+        //        .then(response => {
+        //            this.$blockUI.Stop();
+        //            this.inbox = response.data.inbox;
+        //            this.pages = response.data.count;
+        //        })
+        //        .catch((err) => {
+        //            this.$blockUI.Stop();
+        //            this.pages = 0;
+        //            this.$message({
+        //                type: 'error',
+        //                message: "Error"
+        //            }); 
+        //        });
+        //},
+
         ArchaveInbox(index, item) {
 
             let setArchive = !item.isArchive;
@@ -122,7 +161,7 @@ export default {
                     this.resultState = false;
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: err.message.data
                     }); 
                 });
             },
@@ -143,7 +182,7 @@ export default {
                     this.resultState = false;
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: err.message.data
                     }); 
                 });
         },
@@ -176,9 +215,25 @@ export default {
                     this.resultState = false;
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: err.message.data
                     }); 
                 });
-        }
+        },
+        FilterInbox() {
+            
+            this.$blockUI.Start();
+            this.$http.FilterInbox(1,20,0,4,"خ")
+                .then(response => {
+                    this.$blockUI.Stop();
+                    console.log(response.data.data);
+                })
+                .catch((err) => {
+                    this.$blockUI.Stop();
+                    this.$message({
+                        type: 'error',
+                        message: err.message.data
+                    });
+                });
+        },
     }
 }

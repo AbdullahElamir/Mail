@@ -7,7 +7,7 @@ namespace Managegment.DTOs
 {
     public class DetailsConversationDTO
     {
-        public string ConversationID { get; set; }
+        public long ConversationID { get; set; }
         public string SubjectBody { get; set; }
         public string Subject { get; set; }
         public string Type { get; set; }

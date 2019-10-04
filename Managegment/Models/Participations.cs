@@ -5,7 +5,7 @@ namespace Managegment.Models
 {
     public partial class Participations
     {
-        public string ConversationId { get; set; }
+        public long ConversationId { get; set; }
         public long UserId { get; set; }
         public bool? Archive { get; set; }
         public DateTime? CreatedOn { get; set; }
