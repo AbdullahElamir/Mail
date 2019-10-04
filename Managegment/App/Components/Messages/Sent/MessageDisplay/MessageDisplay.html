@@ -44,14 +44,14 @@
                             <ul class="mailbox-attachments clearfix">
                                 <template v-for="(item,index) in contentInbox.attachmentDTOs">
                                     <!--Image-->
-                                    <li>
+                                    <li style="width: auto;">
                                         <span class="mailbox-attachment-icon has-img"></span>
                                         <div class="mailbox-attachment-info">
                                             <a href="#" class="mailbox-attachment-name">
-                                                <i class="  attachment-margin" v-bind:class="test"></i> {{item.fileName}}
+                                                <i class="  attachment-margin fa fa-file"  ></i> {{item.fileName}}
                                             </a>
                                             <span class="mailbox-attachment-size">
-                                                <a href="#" class="btn btn-default btn-xs pull-right">
+                                                <a href="#" @click.prevent="downloadFile(item)" class="btn btn-default btn-xs pull-right">
                                                     <i class="fa fa-cloud-download"></i>
                                                 </a>
                                             </span>

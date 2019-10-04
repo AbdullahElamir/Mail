@@ -657,8 +657,6 @@ namespace Management.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-
         [HttpGet("{UserId}/image")]
         public IActionResult GetUserImage(long UserId)
         {
@@ -670,9 +668,8 @@ namespace Management.Controllers
 
                 if (UserImage == null)
                 {
-                    return NotFound("المستخدم غير موجــود");
+                   return NotFound("المستخدم غير موجــود");
                 }
-
                 return File(UserImage, "image/jpeg");
             }
             catch (Exception e)
@@ -680,7 +677,5 @@ namespace Management.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-        
     }
 }

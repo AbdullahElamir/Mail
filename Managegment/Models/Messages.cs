@@ -10,8 +10,8 @@ namespace Managegment.Models
             Transactions = new HashSet<Transactions>();
         }
 
-        public string MessageId { get; set; }
-        public string ConversationId { get; set; }
+        public long MessageId { get; set; }
+        public long? ConversationId { get; set; }
         public long? AuthorId { get; set; }
         public DateTime? DateTime { get; set; }
         public string Subject { get; set; }

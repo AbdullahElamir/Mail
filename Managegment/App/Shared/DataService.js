@@ -90,10 +90,7 @@ export default {
         return axios.post(`/Api/Admin/Branches/Edit`, Branch);
     },
 
-    GetInbox(pageNo, pageSize) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-        return axios.get(`/Api/Messages/GetAllInbox?page=${pageNo}&pagesize=${pageSize}`);
-    },
+
     IsFavorate(isFavorate, conversationId) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/EnabelDisplayFavorate?isFavorate=${isFavorate}&conversationId=${conversationId}`);
@@ -134,6 +131,20 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.post(`/Api/Messages/ReplayMessages`, replayMessages);
     },
+    downloadFile(fileId) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios({
+            url: `/Api/NewMessage/DownLoadFile?attachmentId=${fileId}`,
+            method: 'GET',
+            responseType: 'blob',
+        });
+    },
+
+    FilterInbox(page, pageSize, messageTypeFilter, filterType, inputMessgeText) {
+ 
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/Messages/getMessageFilter?page=${page}&pagesize=${pageSize}&messageTypeFilter=${messageTypeFilter}&filterType=${filterType}&inputMessgeText=${inputMessgeText}`);
+    }
 
     
 }

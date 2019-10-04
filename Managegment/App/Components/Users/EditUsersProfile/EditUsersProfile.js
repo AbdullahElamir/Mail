@@ -46,13 +46,10 @@
 
             }, 
             
-
             form2: {
-               
                
                 Phone: '',
                 Email: '',
-            
                 Status: 0,
             },   
             
@@ -109,7 +106,6 @@
                         type: 'info',
                         message: response.data
                     });
-
                     setTimeout(() =>
                         window.location.href = '/EditUsersProfile'
                         , 500);

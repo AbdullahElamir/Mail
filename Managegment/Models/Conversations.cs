@@ -12,7 +12,7 @@ namespace Managegment.Models
             Participations = new HashSet<Participations>();
         }
 
-        public string ConversationId { get; set; }
+        public long ConversationId { get; set; }
         public string LastSubject { get; set; }
         public DateTime? TimeStamp { get; set; }
         public string Subject { get; set; }
@@ -20,7 +20,7 @@ namespace Managegment.Models
         public long? Creator { get; set; }
         public string Body { get; set; }
         public string Priolti { get; set; }
-        public string AdTypeId { get; set; }
+        public long? AdTypeId { get; set; }
 
         public AdTypes AdType { get; set; }
         public Users CreatorNavigation { get; set; }

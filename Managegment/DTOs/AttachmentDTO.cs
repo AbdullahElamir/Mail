@@ -7,7 +7,7 @@ namespace Managegment.DTOs
 {
     public class AttachmentDTO
     {
-        public string AttachmentId { get; set; }
+        public long AttachmentId { get; set; }
         public string FileName { get; set; }
         public string Extension { get; set; }
         public byte[] ContentFile { get; set; }

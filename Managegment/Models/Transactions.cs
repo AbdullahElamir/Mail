@@ -5,8 +5,8 @@ namespace Managegment.Models
 {
     public partial class Transactions
     {
-        public string TransactionId { get; set; }
-        public string MessageId { get; set; }
+        public long TransactionId { get; set; }
+        public long? MessageId { get; set; }
         public long? UserId { get; set; }
         public bool? IsRead { get; set; }
         public DateTime? TimeStamp { get; set; }

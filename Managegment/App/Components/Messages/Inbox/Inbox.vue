@@ -4,6 +4,13 @@
 <script src="./Inbox.js"></script>
 <style>
 
+.el-popper{
+    margin-top: -46px !important;
+   
+}
+::-webkit-scrollbar { 
+    display: none; 
+}
 .fa.fa-refresh:hover{
      cursor: pointer;
      color:#409EFF;
@@ -64,4 +71,38 @@
 .el-message {
 width:260px;
 }
+
+
+.el-input__inner {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 34px;
+    line-height: 1;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+
+ .el-input__icon {
+    height: 100%;
+    /* width: 25px; */
+    text-align: center;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    /* line-height: 40px; */
+    font-size: 21px;
+}
+
+
+
 </style>

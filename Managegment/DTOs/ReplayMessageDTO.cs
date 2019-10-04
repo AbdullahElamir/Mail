@@ -7,7 +7,7 @@ namespace Managegment.DTOs
 {
     public class ReplayMessageDTO
     {
-        public string ConversationId { get; set; }
+        public long ConversationId { get; set; }
         public string MessageReplay { get; set; }
     }
 }
