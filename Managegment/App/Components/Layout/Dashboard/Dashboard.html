@@ -22,7 +22,7 @@
 
 
             </div>
-            
+           
 
 
         </div>
@@ -35,9 +35,10 @@
                        href="bootstrap-components.html"
                        icon="el-icon-plus"
                        round style="background-color:#009688;
-                       border:none;outline:none"> 
+                       border:none;outline:none;border-bottom: 4px solid #212423;
+    border-top: 4px solid #272828;"> 
                         
-                        انشاء تعميم 
+                        انشاء رسالة 
             </el-button>
         
         </div>
@@ -47,7 +48,7 @@
 
             <li @click="active = 1" :class="{'active':1 == active}">
 
-                <a class="app-menu__item active" href="#" @click.prevent="href('/')">
+                <a class="app-menu__item " href="#" @click.prevent="href('/')">
 
                     <i class="app-menu__icon fa fa-dashboard"></i>
 
@@ -63,7 +64,7 @@
 
             <li @click="active = 2" :class="{'active':2 == active}">
 
-                <a class="app-menu__item" href="#" @click.prevent="href('/Inbox')">
+                <a class="app-menu__item " href="#" @click.prevent="href('/Inbox')">
 
                     <i class="app-menu__icon fa fa-inbox"></i>
 
@@ -96,55 +97,99 @@
 
             </li>
 
-            <li class="treeview">
+            <li @click="active = 4" :class="{'active':4 == active}">
 
-                <a class="app-menu__item" href="" data-toggle="treeview">
+                <a class="app-menu__item" @click.prevent="href('/AdTypes')" href="">
 
-                    <i class="app-menu__icon fa fa-location-arrow"></i>
-
+                    <i class="app-menu__icon fa fa-envelope-o"></i>
                     <span class="app-menu__label">
-                        إدارة النظام
+
+                        نوع الرسالة
+
                     </span>
-
-                    <i class="treeview-indicator fa fa-angle-right"></i>
-
+                    
                 </a>
 
-                <ul class="treeview-menu">
+            </li>
 
-                    <li @click="active = 4" :class="{'active':4 == active}">
+            <li @click="active = 5" :class="{'active':5 == active}">
 
-                        <a class="treeview-item" @click.prevent="href('/AdTypes')" href="">
+                <a class="app-menu__item" @click.prevent="href('/Branches')" href="">
 
-                            <i class="icon fa fa-circle-t"></i>
-                            نوع الرسالة
-                        </a>
+                    <i class="app-menu__icon pe-7s-settings"></i>
+                  
+                    <span class="app-menu__label">
 
-                    </li>
+                        إدارة المكاتب
 
-                    <li @click="active = 5" :class="{'active':5 == active}">
-
-                        <a class="treeview-item" @click.prevent="href('/Branches')" href="">
-
-                            <i class="icon fa fa-circle-o"></i>
-                            إدارة المكاتب
-                        </a>
-
-                    </li>
-
-                    <li @click="active = 6" :class="{'active':6 == active}">
-
-                        <a @click.prevent="href('/Users')" class="treeview-item" href="">
-
-                            <i class="icon fa fa-circle-o"></i>
-                            إدارة المستخدمين
-                        </a>
-
-                    </li>
-
-                </ul>
+                    </span>
+                </a>
 
             </li>
+
+            <li @click="active = 6" :class="{'active':6 == active}">
+
+                <a @click.prevent="href('/Users')" class="app-menu__item" href="">
+
+                    <i class="app-menu__icon fa fa-users"></i>
+                    <span class="app-menu__label">
+
+                        إدارة المستخدمين
+
+                    </span>
+               
+                </a>
+
+            </li>
+            <!--<li class="treeview">
+
+        <a class="app-menu__item" href="" data-toggle="treeview">
+
+            <i class="app-menu__icon fa fa-location-arrow"></i>
+
+            <span class="app-menu__label">
+                إدارة النظام
+            </span>
+
+            <i class="treeview-indicator fa fa-angle-right"></i>
+
+        </a>
+
+        <ul class="treeview-menu">
+
+            <li @click="active = 4" :class="{'active':4 == active}">
+
+                <a class="treeview-item" @click.prevent="href('/AdTypes')" href="">
+
+                    <i class="icon fa fa-circle-t"></i>
+                    نوع الرسالة
+                </a>
+
+            </li>
+
+            <li @click="active = 5" :class="{'active':5 == active}">
+
+                <a class="treeview-item" @click.prevent="href('/Branches')" href="">
+
+                    <i class="icon fa fa-circle-o"></i>
+                    إدارة المكاتب
+                </a>
+
+            </li>
+
+            <li @click="active = 6" :class="{'active':6 == active}">
+
+                <a @click.prevent="href('/Users')" class="treeview-item" href="">
+
+                    <i class="icon fa fa-circle-o"></i>
+                    إدارة المستخدمين
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li>-->
 
         </ul>
 

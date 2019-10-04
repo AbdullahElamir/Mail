@@ -13781,23 +13781,20 @@ be a descendant of the grid when it is being dragged.
 }
 
 .app-sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding-top: 70px;
-  width: 230px;
-  overflow: auto;
-  z-index: 10;
-  background-color: #222d32;
-  -webkit-box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
-  -webkit-transition: left 0.3s ease,
- width 0.3s ease;
-  -o-transition: left 0.3s ease,
- width 0.3s ease;
-  transition: left 0.3s ease,
- width 0.3s ease;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: 70px;
+    width: 230px;
+    overflow: auto;
+    z-index: 10;
+    background-color: #07453f80;
+    -webkit-box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
+    -webkit-transition: left 0.3s ease, width 0.3s ease;
+    -o-transition: left 0.3s ease, width 0.3s ease;
+    transition: left 0.3s ease, width 0.3s ease;
 }
 
 .app-sidebar::-webkit-scrollbar {
@@ -13864,32 +13861,36 @@ be a descendant of the grid when it is being dragged.
   padding-bottom: 40px;
 }
 
+
 .app-menu__item {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 12px 15px;
-  font-size: 1.08em;
-  border-left: 3px solid transparent;
-  -webkit-transition: border-left-color 0.3s ease,
- background-color 0.3s ease;
-  -o-transition: border-left-color 0.3s ease,
- background-color 0.3s ease;
-  transition: border-left-color 0.3s ease,
- background-color 0.3s ease;
-  color: #fff;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 12px 15px;
+    background: #009688;
+    border-right-color: #000;
+    font-size: 1.08em;
+    border-right: 7px solid #000;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    -webkit-transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    -o-transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    color: #fff;
 }
 
-.app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
-  background: #0d1214;
-  border-left-color: #009688;
-  text-decoration: none;
-  color: #fff;
-}
+    .app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
+        background: #0d1214;
+        border-right-color: #009688;
+        text-decoration: none;
+        color: #fff;
+    }
+
 
 .app-menu__icon {
   -webkit-box-flex: 0;

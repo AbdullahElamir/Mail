@@ -47,7 +47,22 @@
   --font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-
+.app-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: 70px;
+    width: 230px;
+    overflow: auto;
+    z-index: 10;
+    background-color: #7f9d9ac7;
+    -webkit-box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
+    -webkit-transition: left 0.3s ease, width 0.3s ease;
+    -o-transition: left 0.3s ease, width 0.3s ease;
+    transition: left 0.3s ease, width 0.3s ease;
+}
 *,
 *::before,
 *::after {
@@ -1674,31 +1689,44 @@ pre code {
   }
   .offset-xl-11 {
     margin-right: 91.6666666667%;
+
   }
 }
 
 .table {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 1rem;
-  background-color: transparent;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: #f6fefd;
+    text-align: center;
+    border-right: 1px solid #009688;
+    border-left: 1px solid #009688;
+    border-bottom: 1px solid #009688;
+    border-top: 2px solid #009688;
 }
 
-.table th,
-.table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
+    .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+        background-color: #53beb4;
+    }
+.el-pagination.is-background .el-pager li.active {
+    background-color: #009688;
+    color: #fff;
 }
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #009688;
+    }
 
-.table thead th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
-}
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 1px solid #009688;
+    }
 
-.table tbody + tbody {
-  border-top: 2px solid #dee2e6;
-}
+    .table tbody + tbody {
+        border-top: 1px solid #009688;
+    }
 
 .table .table {
   background-color: #FFF;
@@ -4697,10 +4725,10 @@ input[type="button"].btn-block {
 }
 
 .card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #daedebb5;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .card-header:first-child {
@@ -13803,15 +13831,8 @@ be a descendant of the grid when it is being dragged.
   width: 230px;
   overflow: auto;
   z-index: 10;
-  background-color: #222d32;
-  -webkit-box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
-  -webkit-transition: right 0.3s ease,
- width 0.3s ease;
-  -o-transition: right 0.3s ease,
- width 0.3s ease;
-  transition: right 0.3s ease,
- width 0.3s ease;
+
+
 }
 
 .app-sidebar::-webkit-scrollbar {
@@ -13840,15 +13861,15 @@ be a descendant of the grid when it is being dragged.
 }
 
 .app-sidebar__user {
-  display: -webkit-box;
-  display: -ms-flexbox;
-
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 10px;
-  margin-bottom: 20px;
-  color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    border-bottom: 4px solid #009688;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #fff;
 }
 
 .app-sidebar__user-avatar {
@@ -13878,31 +13899,33 @@ be a descendant of the grid when it is being dragged.
 }
 
 .app-menu__item {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 12px 15px;
-  font-size: 1.08em;
-  border-right: 3px solid transparent;
-  -webkit-transition: border-right-color 0.3s ease,
- background-color 0.3s ease;
-  -o-transition: border-right-color 0.3s ease,
- background-color 0.3s ease;
-  transition: border-right-color 0.3s ease,
- background-color 0.3s ease;
-  color: #fff;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 12px 15px;
+    background: #009688;
+    border-right-color: #000;
+    font-size: 1.08em;
+    border-right: 7px solid #000;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    -webkit-transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    -o-transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    transition: border-right-color 0.3s ease, background-color 0.3s ease;
+    color: #fff;
 }
 
-.app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
-  background: #0d1214;
-  border-right-color: #009688;
-  text-decoration: none;
-  color: #fff;
-}
+    .app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
+        background: #0d1214;
+        border-right-color: #009688;
+        text-decoration: none;
+        color: #fff;
+    }
 
 .app-menu__icon {
   -webkit-box-flex: 0;
@@ -14098,24 +14121,27 @@ be a descendant of the grid when it is being dragged.
 }
 
 .app-title {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  background-color: #FFF;
-  margin: -30px -30px 30px;
-  padding: 20px 30px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    background-color: #FFF;
+    margin: -30px -30px 30px;
+    padding: 20px 30px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(5deg, rgb(255, 255, 255),#b7dbd7);
+    -webkit-box-shadow: 0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2);
+    box-shadow: 0 12px 20px -10px rgba(20, 69, 157, 0.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(14, 20, 52, 0.2);
 }
 
 @media print {

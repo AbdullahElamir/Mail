@@ -99,6 +99,20 @@
   <ItemGroup>
     <None Include="Properties\wwwroot\css\site.rtl.less" />
     <None Include="Views\Security\Login.cshtml" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\img\fontawesome-webfont.svg" />
+    <None Include="wwwroot\img\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\img\Pe-icon-7-stroke.svg" />
+    <None Include="wwwroot\js\login.js" />
+    <None Include="wwwroot\js\login.js.map" />
+    <None Include="wwwroot\js\main.js" />
+    <None Include="wwwroot\js\main.js.map" />
+    <None Include="wwwroot\js\manifest.js" />
+    <None Include="wwwroot\js\manifest.js.map" />
+    <None Include="wwwroot\js\vendor.js" />
+    <None Include="wwwroot\js\vendor.js.map" />
+    <None Include="wwwroot\js\vueui.js" />
+    <None Include="wwwroot\js\vueui.js.map" />
   </ItemGroup>
 
  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot') ">

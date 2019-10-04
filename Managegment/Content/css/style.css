@@ -2597,11 +2597,17 @@ hr {
 	color:#333;
 	padding:15px 15px;
 }
-.table.table-condensed>tbody>tr>td, .table.table-condensed>tbody>tr>th, .table.table-condensed>tfoot>tr>td, .table.table-condensed>tfoot>tr>th, .table.table-condensed>thead>tr>td, .table.table-condensed>thead>tr>th{
-	border-top: 1px solid #F5F5F5;
-	font-size:14px;
-	color:#333;
-	padding:10px;
+
+
+
+.table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+    background-color: #009688;
+}
+.table.table-condensed > tbody > tr > td, .table.table-condensed > tbody > tr > th, .table.table-condensed > tfoot > tr > td, .table.table-condensed > tfoot > tr > th, .table.table-condensed > thead > tr > td, .table.table-condensed > thead > tr > th {
+    border-top: 1px solid #009688;
+    font-size: 14px;
+    color: #333;
+    padding: 10px;
 }
 .table.table-cl>tbody>tr>td, .table.table-cl>tbody>tr>th, .table.table-cl>tfoot>tr>td, .table.table-cl>tfoot>tr>th, .table.table-cl>thead>tr>td, .table.table-cl>thead>tr>th{
 	border-top: 0px solid #F5F5F5;

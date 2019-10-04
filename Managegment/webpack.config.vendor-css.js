@@ -1,28 +1,62 @@
 const path = require('path');
-const glob = require('glob-all')
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const outputDir = './wwwroot';
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
     return [{
         stats: { modules: false },
-        entry: {            
-            vendor: [ path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
+        devtool: 'source-map',
+        entry: {
+            main: ['./App/app.js', './Content/site.css'],
+            login: ['./App/login.js', './Content/login.css'],
+            vueui: [path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
+            vendor: ['vue', 'vue-router', 'axios']
         },
         output: {
             path: path.join(__dirname, outputDir),
-            filename: 'css/[name].css',
-            publicPath: '/'
+            filename: 'js/[name].js',
+            publicPath: '/',
+            hotUpdateChunkFilename: 'hot-update.js',
+            hotUpdateMainFilename: 'hot-update.json'
         },
         resolve: {
-            extensions: ['.js', '.css', '.less'],            
+            extensions: ['.js', '.vue'],
+            alias: {
+                'vue$': 'vue/dist/vue.common.js'
+            }
         },
         module: {
-            rules: [                                
+            rules: [
+                {
+                    test: /\.vue$/,
+                    include: /App/,
+                    use: 'vue-loader'
+                },
+                {
+                    test: /\.js$/,
+                    include: /App/,
+                    use: 'babel-loader',
+                    exclude: /node_modules/
+                },
+                //{
+                //    enforce: 'pre',
+                //    test: /\.js$/,
+                //    exclude: /node_modules/,
+                //    loader: 'eslint-loader'
+                //},
+                //{
+                //    enforce: 'pre',
+                //    test: /\.(js|vue)$/,
+                //    exclude: /node_modules/,
+                //    loader: "eslint-loader",
+                //    options: {
+                //    formatter: require('eslint-friendly-formatter')
+                //  }
+                //},
                 {
                     test: /\.css$/,
                     use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader' })
@@ -53,16 +87,15 @@ module.exports = (env) => {
             ]
         },
         plugins: [
-            new OptimizeCSSPlugin({
-                cssProcessorOptions: {
-                    safe: true
-                }
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ['vendor', 'manifest'],
+                minChunks: Infinity
             }),
-            new ExtractTextPlugin('css/[name].css'),
-            // Uncomment the following line to strip out unused CSS
-            //new PurifyCSSPlugin({
-            //    paths: glob.sync(path.join(__dirname, 'App/*.html'))
-            //})   
-        ]
-    }];
-};
+            new CopyWebpackPlugin([{ from: 'Content/Images', to: 'img' }])
+        ].concat(isDevBuild ? [
+        ] : [
+                new webpack.optimize.UglifyJsPlugin(),
+                new ExtractTextPlugin('css/[name].css')
+            ])
+    }]
+}
