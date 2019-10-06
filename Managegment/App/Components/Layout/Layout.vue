@@ -18,10 +18,15 @@
         background-size: cover;
         background-position: center center;
     }
-
+        .sidebar:after {
+           
+            background-size: 150% 150%;
+            z-index: 3;
+            opacity: 1;
+        }
         .sidebar:before {
-            opacity: .33;
-            background: #009688;
+            opacity: 2.33;
+            background: #1f69b67d;
         }
 </style>
   

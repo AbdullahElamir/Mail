@@ -526,7 +526,7 @@ namespace Managegment.Controllers
                 {
                     
                     await clinet.ConnectAsync("smtp.gmail.com", 587, false);
-                    await clinet.AuthenticateAsync("nxn4ever@gmail.com", "19941994mohmed");
+                    await clinet.AuthenticateAsync("mailkittest1@gmail.com", "P@$$w0rd123");
                     await clinet.SendAsync(messageEmail);
                     await clinet.DisconnectAsync(true);
                 }
