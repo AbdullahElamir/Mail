@@ -9,12 +9,11 @@ module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
     return [{
         stats: { modules: false },
+        devtool: 'source-map',
         entry: {
-            main: ['./App/app.js', './Content/site.css'],
-            vueui: [path.resolve(__dirname, './node_modules/vuetify/dist/vuetify.min.css'),
-            path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')
-            ],
-            login: ['./App/login.js', './Content/login.css'],
+            main: ['./App/app.js', './Content/site.css'], 
+            login: ['./App/login.js', './Content/login.css'],            
+            vueui: [path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/index.css')],
             vendor: ['vue', 'vue-router', 'axios']
         },
         output: {
@@ -35,15 +34,8 @@ module.exports = (env) => {
                 {
                     test: /\.vue$/,
                     include: /App/,
-                    use: 'vue-loader',
-                    exclude: /node_modules/
+                    use: 'vue-loader'
                 },
-                //{
-                //    test: /\.vue$/,
-                //    include: '/node_modules/vue-full-calendar',
-                //    use: 'vue-loader'
-                //},
-
                 {
                     test: /\.js$/,
                     include: /App/,
@@ -87,29 +79,23 @@ module.exports = (env) => {
                     test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
                     use: {
                         loader: 'file-loader',
-                        options: {
+                        options: {                         
                             name: 'fonts/[name].[ext]?[hash]'
                         }
                     }
                 }
             ]
         },
-        plugins: [
+        plugins: [      
             new webpack.optimize.CommonsChunkPlugin({
                 name: ['vendor', 'manifest'],
                 minChunks: Infinity
             }),
-            new webpack.ProvidePlugin({
-                $: "jquery",
-                jQuery: "jquery",
-                "window.jQuery": "jquery"
-            })
-            ,
             new CopyWebpackPlugin([{ from: 'Content/Images', to: 'img' }])
-        ].concat(isDevBuild ? [
-        ] : [
+            ].concat(isDevBuild ? [
+            ] : [
                 new webpack.optimize.UglifyJsPlugin(),
                 new ExtractTextPlugin('css/[name].css')
             ])
-    }]
+        }]
 }
