@@ -54,7 +54,6 @@
             this.$http.loginUserAccount(this.form)
                 .then(response => {
                     $blockUI.close();
-                    debugger;
                     sessionStorage.setItem('currentUser', JSON.stringify(response.data));
                     window.location.href = '/';
                 })

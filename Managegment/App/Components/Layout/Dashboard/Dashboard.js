@@ -9,10 +9,7 @@
         this.loginDetails = JSON.parse(loginDetails);
         if (loginDetails != null) {
             this.loginDetails = JSON.parse(loginDetails);
-            //if (this.loginDetails.userType == 5) {
-            //    this.ColorCode = '#933c3c';
-            //    this.ColorCode1 = '#933c31';
-            //}
+          
         } else {
             window.location.href = '/Security/Login';
         }

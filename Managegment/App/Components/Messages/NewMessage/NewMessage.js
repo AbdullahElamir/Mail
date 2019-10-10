@@ -93,10 +93,17 @@ export default {
             }
 
         },
-        FileChangedTest(file, fileList) {
-        
-            console.log(file.raw);
-           
+        FileChanged(file, fileList) {
+          
+            var fileSize = (file.size / 1024) | 0;
+            if (fileSize > 8000) 
+            {
+                this.$message({
+                    type: 'error',
+                    message: "حجم الملف كبير لايمكن تحميله"
+                }); 
+                return;
+            }
             var $this = this;
             var reader = new FileReader();
             reader.readAsDataURL(file.raw);
@@ -108,17 +115,18 @@ export default {
                     type: file.raw.type
                 };
                 $this.form.files.push(obj);
+                
+
             }
+            console.log($this.form.files);
         },
-        handleRemove(file,raw) {
+        handleRemove(file) {
             var $this = this;
             var reader = new FileReader();
             reader.readAsDataURL(file.raw);
             reader.onload = function (e) {
                 $this.form.files.splice($this.form.files.indexOf(reader.result), 1);
             }
-            console.log($this.form.files);
-            
         },
         handlePictureCardPreview(file) {
             this.form.dialogImageUrl = file.url;
@@ -143,10 +151,9 @@ export default {
                     .catch((err) => {
                         this.loading = false;
                         this.$blockUI.Stop();
-                        console.error(err);
                         this.$message({
                             type: 'error',
-                            message: response.data
+                            message: err.message.data
                         }); 
                     });
             } else {
@@ -169,10 +176,9 @@ export default {
                 .catch((err) => {
                     this.loading = false;
                     this.$blockUI.Stop();
-                    console.error(err);
                     this.$message({
                         type: 'error',
-                        message: response.data
+                        message: err.message.data
                     }); 
                 });
         },
@@ -218,14 +224,13 @@ export default {
                         message: response.data
                     });
                     this.form = [];
-                    //window.location.href = '/Inbox';
                     this.$router.push('/Inbox');
                     this.$blockUI.Stop();
                 })
                 .catch((err) => {
                     this.$message({
                         type: 'error',
-                        message: "error"
+                        message: err.message.data
                     }); 
                     this.$blockUI.Stop();
                 });

@@ -11,5 +11,7 @@ namespace Managegment.DTOs
         public string UserName { get; set; }
         public string DateTime { get; set; }
         public string Subject { get; set; }
+
+        public string ImageUser { get; set; }
     }
 }

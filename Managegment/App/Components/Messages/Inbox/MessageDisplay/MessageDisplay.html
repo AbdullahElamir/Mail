@@ -83,7 +83,8 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="user-comment user-coment2">
-                                    <img src="../../../../../Img/User.png" alt="" class="img-circle">
+                                     <!--<img src="../../../../../Img/User.png" alt="" class="img-circle">-->
+                                    <img :src="`data:image/png;base64,${item.imageUser}`" alt="" class="img-circle">
                                     <div class="comment-details">
                                         <h4>
                                             {{item.userName}}

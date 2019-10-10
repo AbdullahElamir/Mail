@@ -94,14 +94,13 @@
                                     </tbody>
                                 </table>
 
-
                                 <div style="text-align: center; margin-top: 10px;">
                                     <el-pagination background
                                                    layout="prev, pager, next"
                                                    :current-page="pageNo"
                                                    :page-size="pageSize"
                                                    :total="pages"
-                                                   @current-change="GetSent($event)">
+                                                   @current-change="getPagintion($event)">
                                     </el-pagination>
 
                                 </div>

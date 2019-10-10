@@ -45,13 +45,12 @@ namespace Managegment
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
 
             services.AddMvc();
-
+            
 
             services.AddAuthentication(o =>
             {

@@ -234,7 +234,9 @@ namespace Management.Controllers
                     //cUser.Office.OfficeName,
                     Gender = cUser.Gender,
                     Status = cUser.Status,
-                    Phone = cUser.Phone
+                    Phone = cUser.Phone,
+                    Photo=cUser.Photo
+
                     //OfficeStatus=cUser.Office.Status        
                 };
 

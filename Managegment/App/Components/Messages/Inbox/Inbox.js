@@ -156,7 +156,7 @@ export default {
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
-                    console.error(err);
+                    
                     this.pages = 0;
                     this.resultState = false;
                     this.$message({
@@ -177,7 +177,6 @@ export default {
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
-                    console.error(err);
                     this.pages = 0;
                     this.resultState = false;
                     this.$message({
@@ -210,7 +209,6 @@ export default {
                 })
                 .catch((err) => {
                     this.$blockUI.Stop();
-                    console.error(err);
                     this.pages = 0;
                     this.resultState = false;
                     this.$message({
@@ -219,21 +217,6 @@ export default {
                     }); 
                 });
         },
-        FilterInbox() {
-            
-            this.$blockUI.Start();
-            this.$http.FilterInbox(1,20,0,4,"خ")
-                .then(response => {
-                    this.$blockUI.Stop();
-                    console.log(response.data.data);
-                })
-                .catch((err) => {
-                    this.$blockUI.Stop();
-                    this.$message({
-                        type: 'error',
-                        message: err.message.data
-                    });
-                });
-        },
+       
     }
 }

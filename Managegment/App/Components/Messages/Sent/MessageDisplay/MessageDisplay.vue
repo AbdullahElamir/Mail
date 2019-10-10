@@ -46,14 +46,14 @@
 .user-comment img {
     float: right;
     margin-left: 15px;
-     margin-bottom: 10px; 
+    margin-bottom: 10px; 
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    border: 2px solid #968c8c;
 }
 img {
     max-width: 50px;
-  
 }
 
 .user-coment2 {

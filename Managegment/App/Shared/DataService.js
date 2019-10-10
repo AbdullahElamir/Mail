@@ -144,10 +144,10 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/getContentConversation?conversationId=${conversationId}`);
     },
-    GetSent(pageNo, pageSize) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-        return axios.get(`/Api/Messages/GetAllInboxSender?page=${pageNo}&pagesize=${pageSize}`);
-    },
+    //GetSent(pageNo, pageSize) {
+    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+    //    return axios.get(`/Api/Messages/GetAllInboxSender?page=${pageNo}&pagesize=${pageSize}`);
+    //},
     GetAllUsers() {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/NewMessage/GetAllUsers`);
@@ -177,7 +177,7 @@ export default {
  
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/getMessageFilter?page=${page}&pagesize=${pageSize}&messageTypeFilter=${messageTypeFilter}&filterType=${filterType}&inputMessgeText=${inputMessgeText}`);
-    }
+    },
 
     GetBranchesByLevel(BranchLevel) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
