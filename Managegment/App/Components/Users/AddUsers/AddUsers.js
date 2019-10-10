@@ -23,6 +23,8 @@
                 DateOfBirth: '',
                 Status: 0, 
                 BranchId:1,
+                UserType: '2',
+                
                 
               
             },         
@@ -68,7 +70,7 @@
        
 
         Save() {   
-            this.form.UserType = this.$parent.UserType;   
+              
             this.form.BranchId=this.$parent.BrancheModel;
             if (!this.form.LoginName) {
                 this.$message({

@@ -271,6 +271,36 @@ namespace Management.Controllers
             {
                 var userId = this.help.GetCurrentUser(HttpContext);
 
+                if (string.IsNullOrWhiteSpace(user.LoginName))
+                {
+                    return BadRequest("الرجاء ادحال اسم المسنخدم بطريقة صحيحة");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.FullName))
+                {
+                    return BadRequest("الرجاء إدخال الاسم الرباعي");
+                }
+
+                if (!Validation.IsValidEmail(user.Email))
+                {
+                    return BadRequest("الرجاء ادخال الايميل بالطريقة الصحيحة");
+                }
+
+                if (user.Gender != 1 && user.Gender != 2)
+                {
+                    return BadRequest("الرجاء ادخال الجنس (ذكر - انثي)");
+
+                }
+                if (user.UserType != 1 && user.UserType != 2)
+                {
+                    return BadRequest("الرجاء تحديد الصلاحيات للمستخدم)");
+
+                }
+                if (string.IsNullOrWhiteSpace(user.DateOfBirth.ToString()))
+                {
+                    return BadRequest("الرجاء دخال تاريخ الميلاد المستخدم");
+                }
+
                 if ((DateTime.Now.Year - user.DateOfBirth.Year) < 18)
                 {
                     return BadRequest("يجب ان يكون عمر المستخدم اكبر من 18");
@@ -316,6 +346,7 @@ namespace Management.Controllers
                 cUser.FullName = user.FullName;
                 cUser.BranchId = user.BranchId;
                 cUser.Email = user.Email;
+                cUser.UserType = user.UserType;
 
                 cUser.DateOfBirth = user.DateOfBirth;
                 cUser.Gender = (short)user.Gender;

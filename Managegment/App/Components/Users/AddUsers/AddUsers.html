@@ -164,13 +164,26 @@
 
                         </div>
 
+                        <!--Permations-->
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+
+                                <label>صلاحيات الإستخدام</label><br />
+
+                                <el-radio v-model="form.UserType" label="1" border><label style="padding-right:10px">مسئول</label></el-radio>
+                                <el-radio v-model="form.UserType" label="2" border><label style="padding-right:10px">مستخدم</label></el-radio>
+                            
+                            </div>
+
+                        </div>
+
                         <!--Add User-->
                         <div class="row">
 
-
                             <div class="col-md-12">
 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top:22px">
 
                                     <button type="submit" @click.prevent="Save()" style="width:100px" class="btn btn-info btn-fill pull-right">حـفظ</button>
 

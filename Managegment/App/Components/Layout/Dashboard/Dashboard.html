@@ -35,12 +35,12 @@
                        href="bootstrap-components.html"
                        icon="el-icon-plus"
                        round style="background-color: rgb(40, 114, 206);
-    border-top: 4px solid rgb(39, 40, 40);
-    border-right: none;
-    border-bottom: 4px solid rgb(33, 36, 35);
-    border-left: none;
-    border-image: initial;
-    outline: none;"> 
+                       border-top: 4px solid rgb(39, 40, 40);
+                       border-right: none;
+                       border-bottom: 4px solid rgb(33, 36, 35);
+                       border-left: none;
+                       border-image: initial;
+                       outline: none;"> 
                         
                         انشاء رسالة 
             </el-button>
@@ -116,7 +116,7 @@
 
             </li>
 
-            <li @click="active = 5" :class="{'active':5 == active}">
+            <li @click="active = 5" :class="{'active':5 == active}" v-if="loginDetails.userType==1">
 
                 <a class="app-menu__item" @click.prevent="href('/Branches')" href="">
 
@@ -131,7 +131,7 @@
 
             </li>
 
-            <li @click="active = 6" :class="{'active':6 == active}">
+            <li @click="active = 6" :class="{'active':6 == active}" v-if="loginDetails.userType==1">
 
                 <a @click.prevent="href('/Users')" class="app-menu__item" href="">
 
