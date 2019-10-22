@@ -69,5 +69,16 @@
 .mailbox-attachment-icon.has-img {
     padding: 0;
 }
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: white;  
+    text-align: center;
+    border-right: 1px solid #bcc5d0;  
+    border-left: 1px solid #bcc5d0;  
+    border-bottom: 1px solid #bcc5d0;   
+    border-top: 0px solid #bcc5d0;  
+}
 
 </style>

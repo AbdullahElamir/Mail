@@ -150,12 +150,13 @@ namespace Managegment.Controllers
                         Subject = message.Subject,
                         UserName = message.Author.FullName,
                         ImageUser= message.Author.Photo!=null? Convert.ToBase64String(message.Author.Photo): imageDefult
-                    }).OrderByDescending(order=>order.MessageID).ToList(),
+                    }).OrderBy(order=>order.MessageID).ToList(),
                     AttachmentDTOs = conversation.Attachments.Select(attachment => new AttachmentDTO()
                     {
                         AttachmentId = attachment.AttachmentId,
                         FileName = attachment.FileName,
                     }).ToList(),
+                    UsersSender= conversation.Participations.Where(w=>w.UserId != conversation.Creator).Select(s=> s.User.FullName).ToList()
                 }).SingleOrDefaultAsync(s => s.ConversationID == conversationId);
                 if(result !=null && isReadUnread)
                 {

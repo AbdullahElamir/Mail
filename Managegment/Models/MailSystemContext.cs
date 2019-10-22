@@ -9,10 +9,12 @@ namespace Managegment.Models
         public MailSystemContext()
         {
         }
+
         public MailSystemContext(DbContextOptions<MailSystemContext> options)
             : base(options)
         {
         }
+
         public virtual DbSet<AdTypes> AdTypes { get; set; }
         public virtual DbSet<Attachments> Attachments { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
@@ -27,12 +29,14 @@ namespace Managegment.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=.;Database=MailSystem;user id=sa;password=123456");
+                optionsBuilder.UseSqlServer("Server=.;Database=MailSystem;user id=sa;password=123456");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
+
             modelBuilder.Entity<AdTypes>(entity =>
             {
                 entity.HasKey(e => e.AdTypeId);
@@ -127,6 +131,10 @@ namespace Managegment.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSendSms).HasColumnName("IsSendSMS");
 
                 entity.HasOne(d => d.Conversation)
                     .WithMany(p => p.Participations)

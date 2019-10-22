@@ -19,11 +19,27 @@
                             <span class="font-extra-bold">موضوع: </span> {{contentInbox.subject}}
                         </div>
                         <div style="margin-bottom:8px">
+                            <span class="font-extra-bold">التاريخ: </span> {{contentInbox.dateConversation}}
+                        </div>
+                        <div style="margin-bottom:8px">
                             <span class="font-extra-bold">من: </span>
                             <a href="#">{{contentInbox.userName}}</a>
                         </div>
                         <div style="margin-bottom:8px">
-                            <span class="font-extra-bold">التاريخ: </span> {{contentInbox.dateConversation}}
+                            <span class="font-extra-bold">الي: </span>
+                            <el-dropdown>
+                                <span class="el-dropdown-link">
+                                    <span class="fa fa-user"></span><i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <template v-for="item in contentInbox.usersSender">
+                                        <el-dropdown-item>{{item}}</el-dropdown-item>
+                                    </template>
+
+
+                                </el-dropdown-menu>
+                            </el-dropdown>
+
                         </div>
                     </div>
                 </div>

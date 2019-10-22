@@ -21,11 +21,12 @@ namespace Managegment.Models
         public string Body { get; set; }
         public string Priolti { get; set; }
         public long? AdTypeId { get; set; }
+        public short? TypeSend { get; set; }
 
-        public AdTypes AdType { get; set; }
-        public Users CreatorNavigation { get; set; }
-        public ICollection<Attachments> Attachments { get; set; }
-        public ICollection<Messages> Messages { get; set; }
-        public ICollection<Participations> Participations { get; set; }
+        public virtual AdTypes AdType { get; set; }
+        public virtual Users CreatorNavigation { get; set; }
+        public virtual ICollection<Attachments> Attachments { get; set; }
+        public virtual ICollection<Messages> Messages { get; set; }
+        public virtual ICollection<Participations> Participations { get; set; }
     }
 }

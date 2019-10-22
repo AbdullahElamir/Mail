@@ -18,8 +18,8 @@ namespace Managegment.Models
         public DateTime? ModifiedOn { get; set; }
         public long? ModifiedBy { get; set; }
 
-        public Users CreatedByNavigation { get; set; }
-        public Users ModifiedByNavigation { get; set; }
-        public ICollection<Conversations> Conversations { get; set; }
+        public virtual Users CreatedByNavigation { get; set; }
+        public virtual Users ModifiedByNavigation { get; set; }
+        public virtual ICollection<Conversations> Conversations { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Managegment.Models
         public bool? IsRead { get; set; }
         public DateTime? TimeStamp { get; set; }
 
-        public Messages Message { get; set; }
-        public Users User { get; set; }
+        public virtual Messages Message { get; set; }
+        public virtual Users User { get; set; }
     }
 }

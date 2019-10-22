@@ -13,7 +13,7 @@ namespace Managegment.Models
         public DateTime? CreatedOn { get; set; }
         public long? CreatedBy { get; set; }
 
-        public Conversations Conversation { get; set; }
-        public Users CreatedByNavigation { get; set; }
+        public virtual Conversations Conversation { get; set; }
+        public virtual Users CreatedByNavigation { get; set; }
     }
 }

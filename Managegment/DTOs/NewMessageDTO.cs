@@ -13,10 +13,10 @@ namespace Managegment.DTOs
         public string Priority { get; set; }
         public long[] Selectedusers { get; set; }
         public string Content { get; set; }
-        public SelectedOption SelectedOption { get; set; }
+        public SelectedOption SelectedOption { get; set; } = SelectedOption.NONE;
         public AttachmentUpload[] Files { get; set; }
     }
-    public enum SelectedOption
+    public  enum SelectedOption
     {
         All,
         Email,

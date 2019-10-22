@@ -52,21 +52,21 @@
                            
                             <template v-if="sent!=0">
                                 <table class="table table-inbox table-hover">
-                                    <tbody>
+                                    <tbody style="background-color: white;">
 
                                         <template v-for="(item,index) in sent">
-                                            <tr style="cursor:none">
+                                            <tr style="cursor:none" >
                                                 <td class="inbox-small-cells " style="min-width:20px;max-width:20px;cursor:pointer">
                                                     <i class="fa fa-star" :plain="true" v-bind:class="{'inbox-started':item.isFavorate}" @click="IsFavorateMethod(item,index)"></i>
                                                 </td>
                                                 <td class="inbox-small-cells" style="min-width:60px;max-width:80px;">
                                                     <span class="">{{item.dateConversation}}</span>
                                                 </td>
-                                                <td class="view-message  dont-show" style="cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">{{item.userName}}</td>
+                                                <td class="view-message  dont-show" style="cursor:pointer" v-on:click="RedirectToMessageDisplay(item)">{{item.userName}}</td>
                                                 <td><span class="badge badge-danger">{{item.priolti}}</span></td>
 
-                                                <td class="view-message" style="min-width:120px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)"> {{item.lastSubjectBody}}</td>
-                                                <td style="min-width:50px;max-width:50px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item.conversationID)">
+                                                <td class="view-message" style="min-width:120px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item)"> {{item.lastSubjectBody}}</td>
+                                                <td style="min-width:50px;max-width:50px;cursor:pointer" v-on:click="RedirectToMessageDisplay(item)">
                                                     <span class="badge badge-success" v-if="item.messageCountNotRead>0" style="word-spacing:2px;">
                                                         {{item.messageCountNotRead}}
                                                         <span style="letter-spacing:2px">ردود</span>

@@ -15,7 +15,7 @@ export default {
             state: 1,
             inbox: {},
             pageNo: 1,
-            pageSize: 5,
+            pageSize: 20,
             pages: 0,
             isAttachment: "",
             isFavorate: false,
@@ -74,9 +74,15 @@ export default {
             this.pageNo = 1;
             this.getPagintion(this.pageNo);
         },
-        RedirectToMessageDisplay(conversationId) {
-            this.conversationId = conversationId;
+        RedirectToMessageDisplay(item) {
+            var count = item.messageCountNotRead;
+            this.conversationId = item.conversationID;
             this.state = 2;
+            if (!item.isRead) {
+                this.$store.commit("decementReadMessage");
+                this.$store.commit("decrementReadReaplays", count);
+            }
+            
         },
         IsFavorateMethod(item, index) {
             let msg="";
@@ -109,32 +115,10 @@ export default {
                 });
         },
         
-        //GetInbox(pageNo) {
-            
-
-        //    this.pageNo = pageNo;
-        //    if (this.pageNo === undefined) {
-        //        this.pageNo = 1;
-        //    }
-        //    this.$blockUI.Start();
-        //    this.$http.GetInbox(this.pageNo, this.pageSize)
-        //        .then(response => {
-        //            this.$blockUI.Stop();
-        //            this.inbox = response.data.inbox;
-        //            this.pages = response.data.count;
-        //        })
-        //        .catch((err) => {
-        //            this.$blockUI.Stop();
-        //            this.pages = 0;
-        //            this.$message({
-        //                type: 'error',
-        //                message: "Error"
-        //            }); 
-        //        });
-        //},
+      
 
         ArchaveInbox(index, item) {
-
+            var count = item.messageCountNotRead;
             let setArchive = !item.isArchive;
             let msg="";
             if(setArchive)
@@ -151,6 +135,10 @@ export default {
                     {
                         this.inbox.splice(index, 1);
                         this.showMessage(msg);
+                        if (!item.isRead) {
+                            this.$store.commit("decementReadMessage");
+                            this.$store.commit("decrementReadReaplays", count);
+                        }
                     }
                     this.resultState = false;
                 })
@@ -166,13 +154,21 @@ export default {
                 });
             },
         DeleteInbox(index, item) {
+            var count = item.messageCountNotRead;
             let setDelete = true;
             this.$http.DeleteInbox(setDelete, item.conversationID)
                 .then(response => {
                     this.$blockUI.Stop();
                     this.resultState = response.data.state;
                     if (this.resultState)
+                    {
                         this.inbox.splice(index, 1);
+                        if (!item.isRead) {
+                            this.$store.commit("decementReadMessage");
+                            this.$store.commit("decrementReadReaplays", count);
+                        }
+                    }
+                     
                     this.resultState = false;
                 })
                 .catch((err) => {
@@ -195,6 +191,8 @@ export default {
             });
         },
         ReadInbox(index, item) {
+            var count = item.messageCountNotRead;
+            
             let readUnRead = !item.isRead;
             this.$http.ReadUnReadInbox(readUnRead, item.conversationID)
                 .then(response => {
@@ -203,6 +201,13 @@ export default {
                     if (this.resultState) {
                         this.inbox[index].isRead = readUnRead;
                         this.inbox[index].messageCountNotRead = 0;
+                        if (readUnRead) {
+                            this.$store.commit("decementReadMessage");
+                            this.$store.commit("decrementReadReaplays", count);
+                        } else {
+                            this.$store.commit("incrementReadMessage");
+                           
+                        }
                     }
                    
                     this.resultState = false;

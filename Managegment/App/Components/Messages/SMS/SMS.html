@@ -1,0 +1,437 @@
+﻿<main class="app-content" dir="rtl">
+
+
+
+
+    <div class="col col-md-12" style="margin-bottom:3px;">
+        <el-card class="box-card">
+            <el-badge :value="messageData.successConversation" class="item" style="margin-right:20px;">
+                <span class="el-icon-success" style="font-size:20px;color:green;margin-right:6px;"> </span>
+            </el-badge> <span>المرسلة </span>
+            <el-badge :value="messageData.failedConversation" class="item" type="warning" style="margin-right:10px;">
+                <span class="el-icon-warning" style="font-size:20px;color:orange;margin-right:5px;"> </span>
+            </el-badge> <span>تحذير</span>
+            <el-badge :value="messageData.processConversation" class="item" type="primary" style="margin-right:10px;">
+                <span class="el-icon-loading" style="font-size:20px;color:darkblue;margin-right:5px;"> </span>
+            </el-badge> <span>معالجة</span>
+            <el-badge :value="messageData.sendInWebOnly" class="item" type="primary" style="margin-right:10px;">
+                <span class="fa fa-laptop" style="font-size:20px;color:darkblue;margin-right:5px;"> </span>
+            </el-badge> <span>النظام</span>
+            <div style="float:left;">
+                <el-button type="primary" v-on:click="CleareFilters" size="mini" icon="el-icon-refresh"> تحديث</el-button>
+            </div>
+        </el-card>
+    </div>
+
+
+
+    <template v-if="messageData.result!=0 || loginDetails.userType==1 ">
+        <div class="col-md-12" style="margin-bottom:3px;">
+
+            <el-card class="box-card">
+                <el-collapse v-model="activeName" accordion>
+
+                    <el-collapse-item name="-1">
+                        <template slot="title">
+                            <table width="95%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span style="margin-right:20px">  فلترة الرسائل   </span> <span class="fa fa-search"></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </template>
+
+                        <template>
+                            <div class="col-md-12" style="">
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <span class="demonstration">فلترة بالتاريخ</span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:5px;">
+                                            <div class="col-lg-6">
+                                                <div class=" col-lg-6" style="margin-bottom:10px;">
+                                                    <el-date-picker v-model="dateFilter"
+                                                                    type="daterange"
+                                                                    range-separator="إلي"
+                                                                    start-placeholder="تاريخ البداية"
+                                                                    end-placeholder="تاريخ الهاية"
+                                                                    value-format="yyyy-MM-dd">
+                                                    </el-date-picker>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <span class="demonstration">فلترة بالحالة</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div style="margin-top:11px;">
+                                                    <el-radio v-model="form.stateTransaction" label="4">الكل</el-radio>
+                                                    <el-radio v-model="form.stateTransaction" label="0">المرسلة</el-radio>
+                                                    <el-radio v-model="form.stateTransaction" label="1">تحذير</el-radio>
+                                                    <el-radio v-model="form.stateTransaction" label="2">معالجة</el-radio>
+                                                    <el-radio v-model="form.stateTransaction" label="3">النظام</el-radio>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <template v-if="loginDetails.userType==1">
+                                <div class="col-md-12">
+                                    <div class="row">
+
+                                        <!--********  Type Message **********-->
+                                        <div class="col-md-4">
+
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <span class="demonstration">فرز الرسائل</span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" style="margin-top:5px;">
+                                                <div class="col-lg-12">
+                                                    <div class=" col-lg-12" style="margin-bottom:10px;">
+                                                        <el-select v-model="form.isAllShowMessagess" placeholder="اختر طريقة البحث">
+                                                            <el-option v-for="item in filterUserMessage"
+                                                                       :key="item.value"
+                                                                       :label="item.label"
+                                                                       :value="item.value">
+                                                            </el-option>
+
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <!--********  Branch **********-->
+
+                                        <template v-if="form.isAllShowMessagess=='true'">
+
+                                            <div class="col-md-4">
+
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <span class="demonstration">المكتب</span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row" style="margin-top:5px;">
+                                                    <div class="col-lg-12">
+                                                        <div class=" col-lg-12" style="margin-bottom:10px;">
+                                                            <el-select v-model="branchId" placeholder="اخنر المكتب">
+                                                                <el-option v-for="item in ListBranch"
+                                                                           :key="item.branchId"
+                                                                           :label="item.name"
+                                                                           :value="item.branchId">
+                                                                </el-option>
+
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </template>
+
+
+
+
+
+                                        <!--********  user **********-->
+
+                                        <template v-if="branchId !=0">
+                                            <div class="col-md-4">
+
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <span class="demonstration">المستخدم</span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row" style="margin-top:5px;">
+                                                    <div class="col-lg-12">
+                                                        <div class=" col-lg-12" style="margin-bottom:10px;">
+                                                            <el-select v-model="form.searchWithUser" placeholder="اخنر المستخدم">
+                                                                <el-option v-for="item in userList"
+                                                                           :key="item.userId"
+                                                                           :label="item.userName"
+                                                                           :value="item.userId">
+                                                                </el-option>
+
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </template>
+
+
+
+
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="col-md-12 " style="margin-top:15px;margin-bottom:15px">
+                                <div class="row " style="float: left">
+
+                                    <div style="margin-left:10px">
+                                        <el-button type="danger" icon="el-icon-delete" @click.prevent="CleareFilters">الغاء النتائج</el-button>
+                                    </div>
+                                    <div style="margin-left:27px">
+                                        <el-button type="primary" icon="el-icon-search" @click.prevent="SearchFilter">عرض النتائج</el-button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </template>
+
+
+
+                    </el-collapse-item>
+
+
+
+                </el-collapse>
+            </el-card>
+
+        </div>
+    </template>
+
+
+   
+
+
+
+    <template>
+        <div class="col-md-12">
+            <el-card shadow="">
+                <template v-if="messageData.result==0">
+                    <table class="table table-inbox  " style="background-color: white;text-align: center;">
+                        <tbody>
+                            <tr style="">
+                                <td class="inbox-small-cells" style="min-width:100px;max-width:200px;">
+                                    <span class="fa fa-envelope"> </span> <span class="">  لاتوجد رسائل   </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </template>
+                <template v-if="messageData.result!=0">
+                    <el-collapse v-model="activeName" accordion>
+
+                        <template v-for="(item,messagesIndex) in messageData.result">
+                            <el-collapse-item v-bind:name="messagesIndex" v-bind:key="messagesIndex">
+                                <template slot="title">
+                                    <table width="95%" class=" ">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:25%">
+                                                    <span style="margin-right:10px">{{item.userName}}</span>
+                                                </td>
+                                                <td style="width:65%;">
+                                                    <span v-text="item.contactBodyWithSubject"></span>
+                                                </td>
+                                                <td style="">
+                                                    <el-button v-on:click.stop="showDetailes(messagesIndex)" size="mini">تفاصيل</el-button>
+                                                </td>
+                                                <td style="width:2%">
+                                                    <span v-bind:class="{'el-icon-warning':item.converationState==1,'el-icon-success':item.converationState==0,'el-icon-loading':item.converationState==2,'fa fa-laptop':item.converationState==3}" style="font-size:18px;"> </span>
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </template>
+
+
+                                <template>
+                                    <table width="100%" class="table table-responsive-md">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;color:white">
+                                                    اسم المستخدم
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    بريد الالكتروني
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    رقم الهاتف
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    تاريخ الارسال
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    تاريخ الصلاحية
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    Send SMS
+                                                </th>
+                                                <th style="text-align:center;color:white">
+                                                    Send Email
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            <template v-for="(user,userIndex) in item.usersSender">
+                                                <tr>
+                                                    <td style="text-align:center">
+                                                        {{user.userName}}
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        {{user.email}}
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        {{user.phone}}
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        {{item.dateConversation}}
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        {{user.expiryDate}}
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <a v-if="user.isSendSMS==1 && item.userIdCreator==loginDetails.userId" href="" @click.prevent="replaySendSms(user.userID,item.conversationID)"> <span class="el-icon-warning" style="font-size:14px;color:red;"> </span>  <span> اعادة الارسال </span> </a>
+                                                        <span v-else-if="user.isSendSMS==0 || user.isSendSMS==2 || user.isSendSMS==3" v-bind:class="{'el-icon-success':user.isSendSMS==0,'el-icon-loading':user.isSendSMS==2,'fa fa-laptop':user.isSendSMS==3}" style="font-size:18px;"> </span>
+                                                        <span v-else v-bind:class="{'el-icon-warning':user.isSendSMS==1}" style="font-size:18px;"> </span>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <a v-if="user.isSendEmail==1 && item.userIdCreator==loginDetails.userId" href="" @click.prevent="replaySendEmail(user.userID,item.conversationID)"> <span class="el-icon-warning" style="font-size:14px;color:red;"> </span>  <span> اعادة الارسال </span> </a>
+                                                        <span v-else-if="user.isSendEmail==0 || user.isSendEmail==2 || user.isSendEmail==3" v-bind:class="{'el-icon-success':user.isSendEmail==0,'el-icon-loading':user.isSendEmail==2,'fa fa-laptop':user.isSendEmail==3}" style="font-size:18px;"> </span>
+                                                        <span v-else v-bind:class="{'el-icon-warning':user.isSendEmail==1}" style="font-size:18px;"> </span>
+                                                    </td>
+                                                </tr>
+
+                                            </template>
+
+
+
+                                        </tbody>
+                                    </table>
+                                </template>
+                            </el-collapse-item>
+
+                        </template>
+
+                    </el-collapse>
+                </template>
+
+
+
+                <div style="text-align: center; margin-top: 10px;">
+                    <el-pagination background
+                                   layout="prev, pager, next"
+                                   :current-page="form.page"
+                                   :page-size="form.PageSize"
+                                   :total="pages"
+                                   @current-change="getPagintion($event)">
+                    </el-pagination>
+
+                </div>
+
+
+            </el-card>
+        </div>
+
+    </template>
+
+
+
+
+
+
+
+
+    <el-dialog  :visible.sync="dialogVisibleDetiales" width="50%">
+
+        <!--modelDateConvartaion: null,
+        modelSubject: null,
+        modelSubjectBody: null,-->
+        <table style="width:100%;text-align: justify;word-break: break-word; " class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+                    <td style="width:12%">
+                        <span> التاريخ</span>
+                    </td>
+                    <td style="max-width:90%">
+                        {{modelDateConvartaion}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:12%">
+                        <span> الموضوع</span>
+                    </td>
+                    <td style="max-width:90%">
+                        {{modelSubject}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:12%">
+                        <span> المحتوي</span>
+                    </td>
+                    <td style="max-width:90%">
+                        <span v-html="modelSubjectBody">
+                            
+                        </span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+      
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisibleDetiales = false">اغلاق</el-button>
+        </span>
+    </el-dialog>
+
+
+
+
+
+
+
+</main>

@@ -77,8 +77,9 @@
                         صندوق الوارد
 
                     </span>
+                    <span class="badge badge-light pull-left" style="margin-left:5px;">{{unReadReplay}}</span>
 
-                    <span class="badge badge-danger pull-left">2</span>
+                    <span class="badge badge-danger pull-left">{{unReadMessages}}</span>
 
                 </a>
 
@@ -111,7 +112,7 @@
                         نوع الرسالة
 
                     </span>
-                    
+
                 </a>
 
             </li>
@@ -121,7 +122,7 @@
                 <a class="app-menu__item" @click.prevent="href('/Branches')" href="">
 
                     <i class="app-menu__icon pe-7s-settings"></i>
-                  
+
                     <span class="app-menu__label">
 
                         إدارة المكاتب
@@ -141,9 +142,19 @@
                         إدارة المستخدمين
 
                     </span>
-               
+
                 </a>
 
+            </li>
+            <li @click="active = 7" :class="{'active':7 == active}">
+                <a @click.prevent="href('/SMS')" class="app-menu__item" href="">
+                    <i class="app-menu__icon fa fa-users"></i>
+                    <span class="app-menu__label">
+
+                        متابعة الرسائل
+                    
+                    </span>
+                </a>
             </li>
             <!--<li class="treeview">
 

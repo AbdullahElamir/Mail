@@ -20,5 +20,6 @@ namespace Managegment.DTOs
 
         public List<MessageDTO> MessageDTOs { get; set; }
         public List<AttachmentDTO> AttachmentDTOs { get; set; }
+        public List<string> UsersSender { get; set; }
     }
 }

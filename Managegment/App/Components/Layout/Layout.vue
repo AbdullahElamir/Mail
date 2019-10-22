@@ -28,5 +28,8 @@
             opacity: 2.33;
             background: #1f69b67d;
         }
+    body {
+    background-color:#e5e5e5;
+    }
 </style>
   

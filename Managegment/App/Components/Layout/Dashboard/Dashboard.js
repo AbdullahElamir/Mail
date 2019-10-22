@@ -19,8 +19,27 @@
     data() {
         return {            
             loginDetails: null,
-            active:1
+            active: 1,
+            maxCount:20
         };
+    },
+    computed: {
+        unReadMessages()
+        {
+            var _UnReadMessageCount = this.$store.state.UnReadMessageCount;
+            if (_UnReadMessageCount > this.maxCount)  
+                return "+" + this.maxCount.toString();
+            
+            return this.$store.state.UnReadMessageCount;
+        },
+        unReadReplay()
+        {
+            var _UnReadReaplayMessageCount = this.$store.state.ReaplayMessageCount;
+            if (_UnReadReaplayMessageCount > this.maxCount)  
+                return "+" + this.maxCount.toString();
+            
+            return this.$store.state.ReaplayMessageCount;
+        }
     },
   
     methods: {
@@ -51,6 +70,9 @@
             else if (route == "Users") 
             {
                 this.active = 6;
+            }
+            else if (route == "SMS") {
+                this.active = 7;
             }
             else 
             {

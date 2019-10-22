@@ -18,8 +18,8 @@ namespace Managegment.Models
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public short? Status { get; set; }
-        public short BranchLevel { get; set; }
+        public short? BranchLevel { get; set; }
 
-        public ICollection<Users> Users { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

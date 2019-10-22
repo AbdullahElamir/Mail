@@ -17,9 +17,11 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-//using Managegment.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Authorization;
+using Managegment.BackgroundServicesLog;
+using SendSMSMessage;
+using Managegment.BackgroundServices;
 
 namespace Managegment
 {
@@ -28,6 +30,7 @@ namespace Managegment
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -37,6 +40,10 @@ namespace Managegment
 
             services.AddDbContext<Models.MailSystemContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mail")));
 
+            services.AddHostedService<BackgroundServiceCheckExpiryGeneralization>();
+            services.AddHostedService<SendSMSAndEmailService>();
+
+            services.AddSingleton<MessageServicesClient>();
             //services.AddDbContext<Models.AppointmentsContext>(options => options.UseMySQL(Configuration.GetConnectionString("Appointment")));
 
 
@@ -51,6 +58,7 @@ namespace Managegment
 
             services.AddMvc();
             
+
 
             services.AddAuthentication(o =>
             {
@@ -76,9 +84,6 @@ namespace Managegment
                 };
             });
 
-
-
-
             //Handle XSRF Name for Header
             services.AddAntiforgery(options => {
                 options.HeaderName = "X-XSRF-TOKEN";
@@ -92,7 +97,7 @@ namespace Managegment
             //    var context = serviceScope.ServiceProvider.GetRequiredService<AppointmentsContext>();
             //    context.Database.Migrate();
             //}
-
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -125,6 +130,9 @@ namespace Managegment
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+           
         }
+       
+
     }
 }

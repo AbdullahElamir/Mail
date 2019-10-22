@@ -133,6 +133,7 @@ export default {
         return axios.get(`/Api/Messages/Archive?isArchive=${setArchive}&conversationId=${conversationId}`);
     },
     DeleteInbox(isDelete, conversationId) {
+      
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/DeleteConversation?isDelete=${isDelete}&conversationId=${conversationId}`);
     },
@@ -144,10 +145,7 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Messages/getContentConversation?conversationId=${conversationId}`);
     },
-    //GetSent(pageNo, pageSize) {
-    //    axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
-    //    return axios.get(`/Api/Messages/GetAllInboxSender?page=${pageNo}&pagesize=${pageSize}`);
-    //},
+   
     GetAllUsers() {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/NewMessage/GetAllUsers`);
@@ -183,6 +181,25 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
         return axios.get(`/Api/Admin/Branches/GetBranchesByLevel?branchLevel=${BranchLevel}`);
     },
+    GetInforamtionCount() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/SystemInformation/getInforamtionMessages`);
+    },
+    GetAllUsersByBranch(branchId) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/Admin/MonitorMessages/getAllUsersByBranch?branchId=${branchId}`);
+    },
 
-    
+    GetTransactions(transactionMessages) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.post(`/Api/Admin/MonitorMessages/GetTransactions`, transactionMessages);
+    },
+    replaySendSms(userID, conversationID) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/Admin/MonitorMessages/reaplaySendMessagesToSMS?userId=${userID}&conversationId=${conversationID}`);
+    },
+    replaySendEmail(userID, conversationID) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.querySelector('meta[name="api-token"]').getAttribute('content');
+        return axios.get(`/Api/Admin/MonitorMessages/replaySendEmail?userId=${userID}&conversationId=${conversationID}`);
+    },
 }

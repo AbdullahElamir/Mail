@@ -72,10 +72,10 @@ export default {
         },
         thereIsReplay() {
             return true;
-            //return this.contentInbox.messageDTOs.length > 0
+            
         },
         thereIsAttachment() {
-            // return this.contentInbox.attachmentDTOs.length > 0
+             
             return true;
         },
         TestDataReplay() {

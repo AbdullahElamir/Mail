@@ -57,21 +57,35 @@ export default {
 	//$("[data-toggle='tooltip']").tooltip();
 
 
-          });
-
+        });
+        this.getCountMessages();
 
     },
    
     data() {
         return {
             isAuthenticated: false,
-            isActive: false
+            isActive: false,
+            MessageInformation: {}
         };
     },
     methods: {
         href(path) {
             this.$router.push(path);
-        }
+        },
+        getCountMessages() {
+            this.$http.GetInforamtionCount()
+                .then(response => {
+                    
+                    this.MessageInformation = response.data.data;
+                    this.$store.commit("UnReadMessages", this.MessageInformation.countMessageUnRead);
+                    this.$store.commit("UnReadReaplays", this.MessageInformation.countReplayMessageUnRead);
+                })
+                .catch((err) => {
+                  
+                });
+
+        },
 
 
       

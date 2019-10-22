@@ -16,8 +16,8 @@ namespace Managegment.Models
         public DateTime? DateTime { get; set; }
         public string Subject { get; set; }
 
-        public Users Author { get; set; }
-        public Conversations Conversation { get; set; }
-        public ICollection<Transactions> Transactions { get; set; }
+        public virtual Users Author { get; set; }
+        public virtual Conversations Conversation { get; set; }
+        public virtual ICollection<Transactions> Transactions { get; set; }
     }
 }

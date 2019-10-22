@@ -3,7 +3,6 @@ import { release } from 'os';
 
 export default {
     name: 'Sent',
-
     components: {
         'message-Display': MessageDisplay,
     },
@@ -30,12 +29,10 @@ export default {
             this.filter = "0";
             this.messageFiltter = "";
             this.filterMessage();
-
         },
 
         getPagintion(pageNo) {
             this.pageNo = pageNo;
-
             let inboxType = 1;
             this.$blockUI.Start();
             this.$http.FilterInbox(this.pageNo, this.pageSize, inboxType, this.filter, this.messageFiltter)
@@ -52,18 +49,22 @@ export default {
                         message: err.message.data
                     });
                 });
-
         },
 
         filterMessage() {
             this.pageNo = 1;
             this.getPagintion(this.pageNo);
         },
-        RedirectToMessageDisplay(conversationId) {
-            this.conversationId = conversationId;
+        RedirectToMessageDisplay(item) {
+            let read = item.isRead;
+            var count = item.messageCountNotRead;
+            this.conversationId = item.conversationID;
             this.state = 2;
+            if (!read ) {
+                this.$store.commit("decementReadMessage");
+                this.$store.commit("decrementReadReaplays", count);
+            }
         },
-        
         IsFavorateMethod(item, index) {
             let msg = "";
             if (!item.isFavorate) {
@@ -92,7 +93,7 @@ export default {
                 });
         },
         ArchaveInbox(index, item) {
-
+            var count = item.messageCountNotRead;
             let setArchive = !item.isArchive;
             let msg = "";
             if (setArchive) {
@@ -107,6 +108,11 @@ export default {
                     if (this.resultState) {
                         this.sent.splice(index, 1);
                         this.showMessage(msg);
+                        if (!item.isRead) {
+                            this.$store.commit("decementReadMessage");
+                            this.$store.commit("decrementReadReaplays", count);
+                        }
+                        
                     }
                     this.resultState = false;
                 })
@@ -121,13 +127,20 @@ export default {
                 });
         },
         DeleteInbox(index, item) {
+            var count = item.messageCountNotRead;
             let setDelete = true;
             this.$http.DeleteInbox(setDelete, item.conversationID)
                 .then(response => {
                     this.$blockUI.Stop();
                     this.resultState = response.data.state;
                     if (this.resultState)
+                    {
                         this.sent.splice(index, 1);
+                        if (!item.isRead) {
+                            this.$store.commit("decementReadMessage");
+                            this.$store.commit("decrementReadReaplays", count);
+                        }
+                    }
                     this.resultState = false;
                 })
                 .catch((err) => {

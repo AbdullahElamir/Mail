@@ -1,19 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
+   
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +52,7 @@
     <Compile Remove="Content\element-ui\**" />
     <Compile Remove="Content\Quiz\**" />
     <Compile Remove="Content\vuetify\**" />
+    <Compile Remove="DataBase\**" />
     <Compile Remove="Modelss\**" />
     <Compile Remove="Modelsv1\**" />
     <Compile Remove="Uploads\**" />
@@ -53,6 +61,7 @@
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="App\**" />
     <Content Remove="Content\**" />
+    <Content Remove="DataBase\**" />
     <Content Remove="Modelss\**" />
     <Content Remove="Modelsv1\**" />
     <Content Remove="Uploads\**" />
@@ -68,6 +77,7 @@
     <EmbeddedResource Remove="Content\element-ui\**" />
     <EmbeddedResource Remove="Content\Quiz\**" />
     <EmbeddedResource Remove="Content\vuetify\**" />
+    <EmbeddedResource Remove="DataBase\**" />
     <EmbeddedResource Remove="Modelss\**" />
     <EmbeddedResource Remove="Modelsv1\**" />
     <EmbeddedResource Remove="Uploads\**" />
@@ -83,6 +93,7 @@
     <None Remove="Content\element-ui\**" />
     <None Remove="Content\Quiz\**" />
     <None Remove="Content\vuetify\**" />
+    <None Remove="DataBase\**" />
     <None Remove="Modelss\**" />
     <None Remove="Modelsv1\**" />
     <None Remove="Uploads\**" />
@@ -92,6 +103,7 @@
     <Compile Remove="Controllers\DateController.cs" />
     <Compile Remove="Controllers\Security.cs" />
     <Compile Remove="Controllers\Validation.cs" />
+    <Compile Remove="DTOs\TransactionProccessEnum.cs" />
     <Compile Remove="Migrations\MailContextModelSnapshot.cs" />
     <Content Remove="package-lock.json" />
    

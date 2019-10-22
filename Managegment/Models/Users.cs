@@ -38,13 +38,13 @@ namespace Managegment.Models
         public long? ModifiedBy { get; set; }
         public long? BranchId { get; set; }
 
-        public Branches Branch { get; set; }
-        public ICollection<AdTypes> AdTypesCreatedByNavigation { get; set; }
-        public ICollection<AdTypes> AdTypesModifiedByNavigation { get; set; }
-        public ICollection<Attachments> Attachments { get; set; }
-        public ICollection<Conversations> Conversations { get; set; }
-        public ICollection<Messages> Messages { get; set; }
-        public ICollection<Participations> Participations { get; set; }
-        public ICollection<Transactions> Transactions { get; set; }
+        public virtual Branches Branch { get; set; }
+        public virtual ICollection<AdTypes> AdTypesCreatedByNavigation { get; set; }
+        public virtual ICollection<AdTypes> AdTypesModifiedByNavigation { get; set; }
+        public virtual ICollection<Attachments> Attachments { get; set; }
+        public virtual ICollection<Conversations> Conversations { get; set; }
+        public virtual ICollection<Messages> Messages { get; set; }
+        public virtual ICollection<Participations> Participations { get; set; }
+        public virtual ICollection<Transactions> Transactions { get; set; }
     }
 }

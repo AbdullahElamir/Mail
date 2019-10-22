@@ -12,8 +12,12 @@ namespace Managegment.Models
         public bool? IsRead { get; set; }
         public bool? IsDelete { get; set; }
         public bool? IsFavorate { get; set; }
+        public bool? IsSendSms { get; set; }
+        public bool? IsSendEmail { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public short? TransactionProccess { get; set; }
 
-        public Conversations Conversation { get; set; }
-        public Users User { get; set; }
+        public virtual Conversations Conversation { get; set; }
+        public virtual Users User { get; set; }
     }
 }
