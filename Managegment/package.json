@@ -8,7 +8,7 @@
     "vendor:css": "cross-env NODE_ENV=Production webpack --config webpack.config.vendor-css.js --env.prod --progress --hide-modules"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "element-ui": "^2.2.0",
     "jquery": "^3.4.1",
     "moment": "^2.15.2",
